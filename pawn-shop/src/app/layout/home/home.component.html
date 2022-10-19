@@ -217,10 +217,26 @@
         <!--        form quick register-->
         <form class="contact-form p-3" [formGroup]="quickContractForm" (ngSubmit)="submit()">
           <div class="form-group">
+            <label for="name" class="text-light"><strong>Tên bạn <span class="text-warning">*</span></strong></label>
+            &nbsp;
+            <span *ngIf="quickContractForm.controls.name.invalid && quickContractForm.controls.name.touched"
+                  class="text-warning">
+            <span *ngIf="quickContractForm.controls.name.errors.required">Vui lòng nhập</span>
+              </span>
+
             <input formControlName="name" name="name" id="name"
                    type="text" class="form-control" placeholder="Tên bạn">
           </div>
           <div class="form-group">
+            <label for="phoneNumber" class="text-light">
+              <strong>Số điện thoại <span class="text-warning">*</span></strong>
+            </label>
+            &nbsp;
+            <span *ngIf="quickContractForm.controls.phoneNumber.invalid && quickContractForm.controls.phoneNumber.touched"
+                  class="text-warning">
+            <span *ngIf="quickContractForm.controls.phoneNumber.errors.required">Vui lòng nhập</span>
+              </span>
+
             <input formControlName="phoneNumber" name="phoneNumber" id="phoneNumber"
                    type="text" class="form-control" placeholder="Số điện thoại">
           </div>

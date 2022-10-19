@@ -6,13 +6,14 @@ import {City} from '../../model/address/city';
 import {District} from '../../model/address/district';
 import {PawnType} from '../../model/pawn/pawn-type';
 import {QuickContractDto} from '../../model/dto/quick-contract-dto';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QuickContractService} from '../../service/quick-contract.service';
 import {QuickDistrictDto} from '../../model/dto/quick-district-dto';
 import {QuickAddressDto} from '../../model/dto/quick-address-dto';
 import {QuickCustomerDto} from '../../model/dto/quick-customer-dto';
 import {QuickPawnItemDto} from '../../model/dto/quick-pawn-item-dto';
 import {QuickPawnTypeDto} from '../../model/dto/quick-pawn-type-dto';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +36,8 @@ export class HomeComponent implements OnInit {
   constructor(private pawnTypeService: PawnTypeService,
               private cityService: CityService,
               private districtService: DistrictService,
-              private quickContractService: QuickContractService) {
+              private quickContractService: QuickContractService,
+              private toastrService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -60,29 +62,31 @@ export class HomeComponent implements OnInit {
   buildForm() {
     this.quickContractForm = new FormGroup({
       id: new FormControl(),
-      name: new FormControl(),
-      phoneNumber: new FormControl(),
-      districtId: new FormControl(),
-      pawnTypeId: new FormControl()
+      name: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('', [Validators.required]),
+      districtId: new FormControl(null, [Validators.required]),
+      pawnTypeId: new FormControl(null, [Validators.required])
     });
   }
 
   submit() {
     console.info(this.quickContractForm.value);
-    const contractInfo = this.quickContractForm.value;
-    this.quickDistrictDto.id = contractInfo.districtId;
-    this.quickAddressDto.quickDistrictDto = this.quickDistrictDto;
-    this.quickCustomerDto.quickAddressDto = this.quickAddressDto;
-    this.quickCustomerDto.name = contractInfo.name;
-    this.quickCustomerDto.phoneNumber = contractInfo.phoneNumber;
-    this.quickPawnTypeDto.id = contractInfo.pawnTypeId;
-    this.quickPawnItemDto.quickPawnTypeDto = this.quickPawnTypeDto;
-    this.quickContractDto.quickCustomerDto = this.quickCustomerDto;
-    this.quickContractDto.quickPawnItemDto = this.quickPawnItemDto;
-    console.info(this.quickContractDto);
+    if (this.quickContractForm.valid) {
+      const contractInfo = this.quickContractForm.value;
+      this.quickDistrictDto.id = contractInfo.districtId;
+      this.quickAddressDto.quickDistrictDto = this.quickDistrictDto;
+      this.quickCustomerDto.quickAddressDto = this.quickAddressDto;
+      this.quickCustomerDto.name = contractInfo.name;
+      this.quickCustomerDto.phoneNumber = contractInfo.phoneNumber;
+      this.quickPawnTypeDto.id = contractInfo.pawnTypeId;
+      this.quickPawnItemDto.quickPawnTypeDto = this.quickPawnTypeDto;
+      this.quickContractDto.quickCustomerDto = this.quickCustomerDto;
+      this.quickContractDto.quickPawnItemDto = this.quickPawnItemDto;
+      console.info(this.quickContractDto);
 
-    this.quickContractService.createQuickContract(this.quickContractDto).subscribe(next => {
-      alert("thafnh cong");
-    });
+      this.quickContractService.createQuickContract(this.quickContractDto).subscribe(next => {
+        this.toastrService.success('Cửa hàng sẽ sớm liên hệ bạn!', 'Đăng ký thành công');
+      });
+    }
   }
 }
