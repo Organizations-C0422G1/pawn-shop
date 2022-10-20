@@ -1,7 +1,7 @@
-import {PawnItem} from "./pawn-item";
+import {PawnItem} from './pawn-item';
 
 export interface PawnImg {
-  id?:number;
-  imgUrl?:string;
-  pawnItem?:PawnItem;
+  id?: number;
+  imgUrl?: string;
+  pawnItem?: PawnItem;
 }

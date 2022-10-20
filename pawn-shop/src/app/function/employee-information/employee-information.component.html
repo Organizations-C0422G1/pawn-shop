@@ -1,1 +1,130 @@
-<p>employee-information works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <table class="table table-bordered">
+        <thead>
+        <tr class="p-bg">
+          <td class="text-white" style="padding-left: 30px">Tổng hợp tính năng</td>
+        </tr>
+        <tr>
+          <td style="padding-left: 30px">
+            <a href="" class="p-a">Cầm đồ</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 30px">
+            <a href="" class="p-a">Thanh lý</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 30px">
+            <a href="" class="p-a">Trả đồ</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 30px">
+            <a href="" class="p-a">Thông tin cửa hàng</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 30px">
+            <a href="" class="p-a"> Quản lý khách hàng</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 30px">
+            <a href="/employee/details" class="p-a">Thông tin cá nhân</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 30px">
+            <a href="" class="p-a">Nhắn tin</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 30px">
+            <a href="/news/create" class="p-a">Thêm tin tức</a>
+          </td>
+        </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="col-lg-9">
+      <div class="row">
+        <h2 class="text-center">THÔNG TIN CÁ NHÂN</h2>
+      </div>
+      <div class="row">
+        <div class="col-lg-9">
+          <table class="table">
+            <tr>
+              <td class="row">
+                <span class="col-lg-4">Tên đăng nhập:</span>
+                <span class="col-lg-8">{{employeeDetail.username}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="row">
+                <span class="col-lg-4">Họ tên:</span>
+                <span class="col-lg-8">{{employeeDetail.name}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="row" *ngIf="employeeDetail.gender">
+                <span class="col-lg-4">Giới tính:</span>
+                <span class="col-lg-8" >Nam</span>
+              </td>
+              <td class="row" *ngIf="!employeeDetail.gender">
+                <span class="col-lg-4">Giới tính:</span>
+                <span class="col-lg-8">Nữ</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="row">
+                <span class="col-lg-4">Ngày sinh</span>
+                <span class="col-lg-8">{{employeeDetail.dateOfBirth}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="row">
+                <span class="col-lg-4">Email:</span>
+                <span class="col-lg-8">{{employeeDetail.email}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="row">
+                <span class="col-lg-4">Địa chỉ:</span>
+                <span class="col-lg-8">{{employeeDetail.address}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="row">
+                <span class="col-lg-4">SDT:</span>
+                <span class="col-lg-8">{{employeeDetail.phoneNumber}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="row"><span class="col-lg-4">CMND/Hộ chiếu:</span>
+                <span class="col-lg-8">{{employeeDetail.idCard}}</span>
+              </td>
+            </tr>
+          </table>
+          <button [routerLink]="['/employee/update/',employeeDetail.username]" class="p-btn text-white" style="background-color: #f05403; width: 100px">Sửa</button>
+        </div>
+        <div class="col-lg-3">
+          <div class="row">
+            <div class="card" style="width: 18rem;">
+<!--              <img [src]="employeeDetail.imgUrl">-->
+              <img class="mb-2 avt"
+                   [src]="imgLoad"
+                   alt=""> <br>
+              <div class="card-body">
+                <p class="card-text text-center">Ảnh</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
