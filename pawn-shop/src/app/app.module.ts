@@ -12,18 +12,19 @@ import {HttpClientModule} from '@angular/common/http';
   declarations: [
     AppComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    ToastrModule.forRoot({
-      timeOut: 2500,
-      progressBar: true,
-      preventDuplicates: true
-    }),
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        ToastrModule.forRoot({
+            timeOut: 2500,
+            progressBar: true,
+            preventDuplicates: true
+        }),
+        LayoutModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
