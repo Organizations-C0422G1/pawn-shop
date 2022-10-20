@@ -1,1 +1,30 @@
-<p>finance works!</p>
+<div class="row mt-5">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="container shadow" style="background: url('https://i.pinimg.com/564x/89/8b/01/898b01d9438b8fcfb6f47081bd530610.jpg')">
+      <table class="table text-start table-striped mt-5">
+        <tr *ngFor="let finance of finances">
+          <th>Số tiền trong két</th>
+          <th>{{finance.currentCapital}}</th>
+          <th>(VNĐ)</th>
+        </tr>
+        <tr *ngFor="let finance of finances">
+          <th>Vốn hiện tại</th>
+          <th>{{finance.strongBoxMoney}}</th>
+          <th>(VNĐ)</th>
+        </tr>
+        <tr>
+          <th>Vốn đầu tư</th>
+          <th>{{investments}}</th>
+          <th>(VNĐ)</th>
+        </tr>
+        <tr>
+          <th>Lãi dự kiến</th>
+          <th>{{profits}}</th>
+          <th>(VNĐ)</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
