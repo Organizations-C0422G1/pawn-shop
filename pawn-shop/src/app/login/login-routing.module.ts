@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
@@ -11,11 +11,11 @@ const routes: Routes = [
   {path: 'forgot-password', component: ForgotPasswordComponent}];
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]
 })
-export class LoginRoutingModule { }
+export class LoginRoutingModule {
+}

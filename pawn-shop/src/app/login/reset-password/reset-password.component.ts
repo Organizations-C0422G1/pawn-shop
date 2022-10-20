@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {LoginService} from '../../service/login.service';
 import {ToastrService} from 'ngx-toastr';
-import validate = WebAssembly.validate;
 import {TokenStorageService} from '../../service/token-storage.service';
 
 @Component({
@@ -40,7 +39,7 @@ export class ResetPasswordComponent implements OnInit {
         timeOut: 3000
       });
     },error => {
-      this.toastr.error(error, 'Đặt lại mật khẩu thất bại', {
+      this.toastr.error(error.error, 'Đặt lại mật khẩu thất bại', {
         extendedTimeOut: 1500,
         timeOut: 3000
       });
@@ -48,6 +47,6 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   compare(resetPasswordForm: AbstractControl) {
-    return resetPasswordForm.value.password === resetPasswordForm.value.confirmPassword ? null : {passwordNotMatch: true}
+    return resetPasswordForm.value.newPassword === resetPasswordForm.value.confirmPassword ? null : {passwordNotMatch: true}
   }
 }

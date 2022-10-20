@@ -6,11 +6,11 @@
         <form [formGroup]="formLogin" (ngSubmit)="login()">
           <label for="username" class="text-center p-text-login w-100">Tài khoản</label>
           <input formControlName="username" type="text" id="username" class="w-100" placeholder="tranhoanglong123"
-                 [ngStyle]="{'color': formLogin.controls.username.hasError('maxLength') ? 'red': 'black'}">
+                 [ngStyle]="{'color': formLogin.controls.username.hasError('maxlength') ? 'red': 'black'}">
           <hr>
           <label for="password" class="text-center p-text-login w-100 mt-3">Mật khẩu</label>
           <input formControlName="password" type="password" id="password" placeholder="*************" class="w-100"
-                 [ngStyle]="{'color': formLogin.controls.password.hasError('maxLength') ? 'red': 'black'}">
+                 [ngStyle]="{'color': formLogin.controls.password.hasError('maxlength') ? 'red': 'black'}">
           <hr>
           <div class="d-flex justify-content-between mt-3">
             <a class="p-link p-text-login" routerLink="/forgot-password">Quên mật khẩu</a>

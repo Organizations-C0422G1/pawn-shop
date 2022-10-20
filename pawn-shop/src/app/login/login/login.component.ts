@@ -40,7 +40,8 @@ export class LoginComponent implements OnInit {
         timeOut: 3000
       });
     }, error => {
-      this.toastr.error(error + this.tokenStorageService.getUsername(), 'Đăng nhập không thành công', {
+      console.log(error);
+      this.toastr.error("Tài khoản hoặc mật khẩu không đúng", 'Đăng nhập không thành công', {
         extendedTimeOut: 1500,
         timeOut: 3000
       });
