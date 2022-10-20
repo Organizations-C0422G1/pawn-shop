@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {PawnType} from "../../../model/pawn/pawn-type";
 import {PawnItem} from "../../../model/pawn/pawn-item";
-import {FormGroup} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {PawnItemService} from "../../../service/pawn-item.service";
-import {Router} from "@angular/router";
+import {PawnTypeService} from "../../../service/pawn-type.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-pawn-item-list',
@@ -18,26 +19,54 @@ export class PawnItemListComponent implements OnInit {
 
   pawnItemPage: any;
   itemName: string = "";
-  pawnName: string = "";
-  page: number;
+  typePawn: string = "";
+  page = 0;
   totalPage: number = 0;
   pageSelect: number[] = [];
 
   constructor(private pawnItemService: PawnItemService,
-              private route: Router) {
+              private pawnTypeService: PawnTypeService,
+              private toast: ToastrService) {
+    this.searchForm = new FormGroup({
+      pawnType: new FormControl(''),
+      name: new FormControl('')
+    })
   }
 
   ngOnInit(): void {
     // this.searchPawnItem()
     this.getAllPawnItem();
+    this.getAllPawnType();
   }
 
   getAllPawnItem() {
-    this.pawnItemService.getAllPawnItem(this.itemName, this.pawnName, this.page).subscribe(pawnItems => {
+    this.pawnItemService.getAllPawnItem(this.typePawn, this.itemName, this.page).subscribe(pawnItems => {
       this.pawnItems = pawnItems.content;
-      console.log(this.pawnItems);
-
+      this.totalPage = pawnItems.totalPages;
+      for (let i = 0; i < this.totalPage; i++) {
+        this.pageSelect.push(i);
+      }
     });
+  }
+
+  getAllPawnType() {
+    this.pawnTypeService.getAllPawnType().subscribe(pawnTypes => {
+      this.pawnTypes = pawnTypes;
+    });
+  }
+
+  updateStatusContract(idContract) {
+    this.pageSelect.splice(0, this.totalPage);
+    console.log(idContract);
+    if (idContract != null) {
+      this.pawnItemService.updateStatusContract(idContract).subscribe(n => {
+        this.toast.success("Thành công!");
+        this.getAllPawnItem();
+      }, error => {
+        console.error(error)
+      })
+    }
+
   }
 
   getDetailModal(pawnItems: PawnItem) {
@@ -46,66 +75,59 @@ export class PawnItemListComponent implements OnInit {
   }
 
   searchPawnItem() {
+    console.log(this.searchForm.value)
     this.page = 0;
-    this.pawnItemService.getAllPawnItem(this.itemName, this.pawnName, this.page).subscribe(pawnItem => {
+    this.pawnItemService.getAllPawnItem(this.searchForm.value.pawnType, this.searchForm.value.name, this.page).subscribe(pawnItem => {
       if (pawnItem == null) {
-        this.pawnItemPage = [];
+        this.pawnItems = null
       } else {
+        this.pawnItems = pawnItem.content;
         this.pageSelect = [];
-        this.pawnItemPage = pawnItem.content;
         this.totalPage = pawnItem.totalPages;
         for (let i = 0; i < this.totalPage; i++) {
           this.pageSelect.push(i);
         }
       }
+
     });
   }
 
   previous() {
     this.page = this.page - 1;
-    this.pawnItemService.getAllPawnItem(this.itemName, this.pawnName, this.page).subscribe(pawnItem => {
+    this.pawnItemService.getAllPawnItem(this.typePawn, this.itemName, this.page).subscribe(pawnItem => {
       if (pawnItem == null) {
         this.pawnItemPage = [];
       } else {
         this.pageSelect = [];
         this.pawnItemPage = pawnItem.content;
-        this.totalPage = pawnItem.totalPages;
-        for (let i = 0; i < this.totalPage; i++) {
-          this.pageSelect.push(i);
-        }
       }
     });
+    this.getAllPawnItem();
   }
 
   next() {
     this.page = this.page + 1;
-    this.pawnItemService.getAllPawnItem(this.itemName, this.pawnName, this.page).subscribe(pawnItem => {
+    this.pawnItemService.getAllPawnItem(this.typePawn, this.itemName, this.page).subscribe(pawnItem => {
       if (pawnItem == null) {
         this.pawnItemPage = [];
       } else {
         this.pageSelect = [];
         this.pawnItemPage = pawnItem.content;
-        this.totalPage = pawnItem.totalPages;
-        for (let i = 0; i < this.totalPage; i++) {
-          this.pageSelect.push(i);
-        }
       }
     });
+    this.getAllPawnItem();
   }
 
   changePage(pageNow: number) {
     this.page = pageNow;
-    this.pawnItemService.getAllPawnItem(this.itemName, this.pawnName, this.page).subscribe(pawnItem => {
+    this.pawnItemService.getAllPawnItem(this.typePawn, this.itemName, this.page).subscribe(pawnItem => {
       if (pawnItem == null) {
         this.pawnItemPage = [];
       } else {
         this.pageSelect = [];
         this.pawnItemPage = pawnItem.content;
-        this.totalPage = pawnItem.totalPages;
-        for (let i = 0; i < this.totalPage; i++) {
-          this.pageSelect.push(i);
-        }
       }
     });
+    this.getAllPawnItem();
   }
 }

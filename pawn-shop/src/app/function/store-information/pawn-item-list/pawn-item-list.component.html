@@ -1,70 +1,85 @@
-<!--<div class="container">-->
-<!--  <form style="position: relative" [formGroup]="searchForm" (ngSubmit)="searchPawnItem()">-->
-<!--    <div class="row">-->
-<!--      <div class="col-lg-3"></div>-->
-<!--      <div class="input-group-sm col-lg-3 ">-->
-<!--        <label class="form-label">Loại đồ</label>-->
-<!--        <select class="form-select" aria-label="Search" formControlName="pawnType">-->
-<!--          <option *ngFor="let pawnType of pawnTypes" [ngValue]="pawnType.id">{{pawnType.name}}</option>-->
-<!--        </select>-->
-<!--      </div>-->
+<div class="container">
+  <form [formGroup]="searchForm" style="position: relative">
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="input-group-sm col-lg-3 ">
+        <label class="form-label">Loại đồ</label>
+        <select class="form-select" aria-label="Search" formControlName="pawnType">
+          <option value="">Chọn loại đồ</option>
+          <ng-container *ngFor="let pawnType of pawnTypes">
+            <option ngValue="{{pawnType.name}}" name="typePawn" (click)="searchPawnItem()">{{pawnType.name}}</option>
+          </ng-container>
+        </select>
+      </div>
 
-<!--      <div class="input-group-sm col-lg-3 ">-->
-<!--        <label class="form-label font-weight-bold">Tên đồ cầm</label>-->
-<!--        <input id="nameSearch" type="text" name="nameSearch" placeholder="VD: iphone XS"-->
-<!--               class="form-control bg-white border-left-0 border-md" formControlName="name">-->
-<!--      </div>-->
-<!--      <div class="col-lg-3"></div>-->
-<!--      <div class="form-group-lg col-lg-2 mx-auto mb-4 mt-3 justify-content-center d-flex">-->
-<!--        <button type="submit" data-bs-dismiss="modal"-->
-<!--                class="p-btn btn-block ps-lg-3 pe-lg-3 page-link">-->
-<!--          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"-->
-<!--               class="bi bi-search" viewBox="0 0 16 16">-->
-<!--            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>-->
-<!--          </svg>-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </form>-->
-<!--</div>-->
+      <div class="input-group-sm col-lg-3 ">
+        <label class="form-label font-weight-bold">Tên đồ cầm</label>
+        <input id="nameSearch" type="text" name="itemName" placeholder="VD: iphone XS"
+               class="form-control bg-white border-left-0 border-md" formControlName="name">
+      </div>
+      <div class="col-lg-3"></div>
+      <div class="form-group-lg col-lg-2 mx-auto mb-4 mt-3 justify-content-center d-flex">
+        <button type="button" (click)="searchPawnItem()" data-bs-dismiss="modal"
+                class="p-btn btn-block ps-lg-3 pe-lg-3 page-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+               class="bi bi-search" viewBox="0 0 16 16">
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
 
 <div class="container ">
   <div class="row">
     <table class="table table-striped text-center w-75 container">
       <thead>
       <tr class="p-bg">
-        <th>STT</th>
-        <th>Tên đồ</th>
-        <th>Loại đồ</th>
-        <th>Trạng thái</th>
-        <th>Ngày đến hạn</th>
-        <th>Giá mua (VNĐ)</th>
-        <th colspan="2">Chức năng</th>
+        <th style="width: 10%">STT</th>
+        <th style="width: 20%">Tên đồ</th>
+        <th style="width: 10%">Loại đồ</th>
+        <th style="width: 20%">Ngày đến hạn</th>
+        <th style="width: 15%">Giá mua (VNĐ)</th>
+        <th style="width: 10%">Trạng thái</th>
+        <th style="width: 15%" colspan="2">Chức năng</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let pawnItem of pawnItems ; index as i">
         <td>{{i + 1}}</td>
-        <td>{{pawnItem.namePawnItem}}</td>
-        <td>{{pawnItem.namePawnType}}</td>
-        <td>{{pawnItem.status}}</td>
+        <td data-toggle="tooltip" data-placement="bottom"
+            title="{{pawnItem.namePawnItem}}">{{pawnItem.namePawnItem}}</td>
+        <td data-toggle="tooltip" data-placement="bottom"
+            title="{{pawnItem.namePawnType}}">{{pawnItem.namePawnType}}</td>
         <td>{{pawnItem.endDate}}</td>
         <td>{{pawnItem.itemPrice}}</td>
-        <td>
-          <button style="border: none" data-bs-toggle="modal" (click)="getDetailModal(pawnItem)" data-bs-target="#deTailModal">
-            <i class="fa-solid fa-circle-info"></i>
-          </button>
-<!--          <button (click)="getDetailModal(pawnItem)">Test</button>-->
+        <td *ngIf="pawnItem.status === 0" class="text-center" style="color: lawngreen" data-toggle="tooltip"
+            data-placement="bottom" title="Đang tồn tại">
+          <i class="fa-solid fa-circle"></i>
         </td>
         <td>
-          <button style="border: none">
+          <button class="text-primary" style="border: none;background: none" data-bs-toggle="modal"
+                  (click)="getDetailModal(pawnItem)"
+                  data-toggle="tooltip" data-placement="bottom" title="Chi tiết" data-bs-target="#deTailModal">
+            <i class="fa-solid fa-circle-info"></i>
+          </button>
+        </td>
+        <td>
+          <button style="border: none;background: none" (click)="updateStatusContract(pawnItem.idContract)"
+                  data-toggle="tooltip" data-placement="bottom" title="Thanh lý">
             <i class="fa-solid fa-sack-dollar"></i>
           </button>
         </td>
       </tr>
+      <tr *ngIf="pawnItems== null">
+        <td colspan="8">Không có kêt quả phù hợp</td>
+      </tr>
       </tbody>
     </table>
 
+    <!--    Start Pagination-->
     <div class="container d-flex justify-content-center align-items-center mt-5">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
@@ -80,13 +95,15 @@
               <li class="page-item"><a class="page-link" (click)="changePage(pageNow)">{{pageNow + 1}}</a></li>
             </ng-container>
           </ng-container>
-          <li class="page-item" *ngIf="page != totalPage - 1"><a class="page-link text-warning" href="#" (click)="next()">Trang sau</a></li>
+          <li class="page-item" *ngIf="page != totalPage - 1"><a class="page-link text-warning" href="#"
+                                                                 (click)="next()">Trang sau</a></li>
         </ul>
       </nav>
     </div>
+    <!--    End Pagination-->
 
-<!--    Modal Detail-->
-    <div class="modal fade" id="deTailModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <!--    Modal Detail-->
+    <div *ngIf="pawnItemDetail" class="modal fade" id="deTailModal" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content ">
@@ -94,11 +111,9 @@
 
             <div class="col-1"></div>
             <div class="col-10">
-              <h4 class="modal-title p-center-box" id="exampleModalLabel">Chi tiết hợp đồng món
-                đồ</h4>
+              <h4 class="modal-title p-center-box" id="exampleModalLabel">Chi tiết hợp đồng món đồ</h4>
             </div>
             <div class="col-1"></div>
-
 
           </div>
           <div class="modal-body">
@@ -136,6 +151,7 @@
         </div>
       </div>
     </div>
-<!--    End Modal Detail-->
+    <!--    End Modal Detail-->
+
   </div>
 </div>
