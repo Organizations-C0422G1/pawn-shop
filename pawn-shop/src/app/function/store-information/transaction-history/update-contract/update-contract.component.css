@@ -78,3 +78,13 @@ td{
   justify-content: center;
   align-items: center;
 }
+#toast-container > .toast-success {
+  background-image: none;
+  background-color: #e9e9e9;
+  color: black;
+}
+#toast-container > .toast-error {
+  background-image: none;
+  background-color: #e9e9e9;
+  color: red;
+}

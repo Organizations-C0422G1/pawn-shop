@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UpdateContractService} from './update-contract.service';
 import {Contract} from '../../../../model/contract/contract';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
@@ -29,6 +29,7 @@ export class UpdateContractComponent implements OnInit {
   url: any;
   msg = '';
   buttonBook = true;
+  private abstractControl: any;
   constructor(private updateService: UpdateContractService,
               private activatedRoute: ActivatedRoute,
               private storage: AngularFireStorage,
@@ -42,20 +43,21 @@ export class UpdateContractComponent implements OnInit {
       customer: new FormControl(''),
       pawnItem: new FormGroup({
         id: new FormControl(''),
-        name: new FormControl(''),
+        name: new FormControl('', [Validators.required]),
         status: new FormControl(''),
         pawnType: new FormControl(''),
       }),
-      itemPrice: new FormControl(''),
-      interestRate: new FormControl(''),
+      itemPrice: new FormControl('', [Validators.required, Validators.min(0)]),
+      interestRate: new FormControl('', [Validators.required, Validators.min(0.2), Validators.max(0.4)]),
       startDate: new FormControl(''),
-      endDate: new FormControl(''),
+      endDate: new FormControl('', [Validators.required]),
       returnDate: new FormControl(''),
       liquidationPrice: new FormControl(''),
       employee: new FormControl(''),
       type: new FormControl(''),
       status: new FormControl('')
-    });
+    }, this.checkDateEnd);
+
     const id = this.activatedRoute.snapshot.params.id;
     console.log(id);
 
@@ -164,5 +166,20 @@ export class UpdateContractComponent implements OnInit {
   compareWithId(item1, item2) {
     return item1 && item2 && item1.id === item2.id;
   }
-
+  checkDateEnd(abstractControl: AbstractControl): any {
+    const start = new Date(abstractControl.value.startDate);
+    const now = new Date(abstractControl.value.endDate);
+    if (now > start) {
+      return null;
+    } else if (now < start) {
+      return {checkDate: true};
+    }
+    if (now > start) {
+      return null;
+    } else if (now < start) {
+      return {checkDate: true};
+    } else {
+      return null;
+    }
+  }
 }

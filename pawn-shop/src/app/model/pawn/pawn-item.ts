@@ -1,4 +1,4 @@
-import {PawnType} from "./pawn-type";
+import {PawnType} from './pawn-type';
 
 export interface PawnItem {
   id?: number;

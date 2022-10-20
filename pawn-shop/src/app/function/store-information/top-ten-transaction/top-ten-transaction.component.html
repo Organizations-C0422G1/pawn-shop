@@ -1,4 +1,4 @@
-<div class="content ">
+<div class="content mb-5 ">
   <div class="container">
     <div class="d-flex row header m-3">
       <div class="col-md-3"></div>
@@ -18,18 +18,22 @@
     <div class="row align-items-stretch no-gutters contact-wrap" style="overflow-x:auto;">
       <table class="table table-hover m-0">
         <tr style="border: 0" class="bg-header">
-          <th>Mã HĐ</th>
-          <th>Tên KH</th>
-          <th>Tên loại đồ</th>
-          <th>Loại đồ</th>
-          <th>Ngày làm HĐ</th>
-          <th>Ngày kết thúc HĐ</th>
-          <th>Loại HĐ</th>
-          <th>Trạng thái</th>
-          <th colspan="3">Chức năng</th>
+          <th style="width: 5%">#</th>
+          <th style="width: 10%">Mã HĐ</th>
+          <th style="width: 10%">Tên KH</th>
+          <th style="width: 10%">Tên loại đồ</th>
+          <th style="width: 10%">Loại đồ</th>
+          <th style="width: 10%">Ngày làm HĐ</th>
+          <th style="width: 10%">Ngày kết thúc HĐ</th>
+          <th style="width: 10%">Loại HĐ</th>
+          <th style="width: 5%">Trạng thái</th>
+          <th style="width: 20%" colspan="3">Chức năng</th>
         </tr>
-        <tr *ngFor="let contract of contractList" style="border: 0; border-bottom: solid 1px #eeee">
-          <td>{{contract.code}}</td>
+        <tr *ngFor="let contract of contractList ;index as i" style="border: 0; border-bottom: solid 1px #eeee">
+          <td>{{i + 1}}</td>
+          <td data-toggle="tooltip" data-placement="bottom" title="{{contract.code}}">
+            {{contract.code}}
+          </td>
           <td data-toggle="tooltip" data-placement="bottom" title="{{contract.customer.name}}">
           {{contract.customer.name}}
           </td>
@@ -43,12 +47,25 @@
           <td>{{contract.endDate | date: "dd/MM/yyyy"}}</td>
           <td *ngIf="contract.type === true">Thanh lý</td>
           <td *ngIf="contract.type === false">Cầm đồ</td>
-          <td class="text-center text-success" data-toggle="tooltip" data-placement="bottom" title="Đang mở">
+          <td *ngIf="contract.status === 0" class="text-center" style="color: lawngreen" data-toggle="tooltip" data-placement="bottom" title="Hợp đồng cầm đồ còn hạn">
             <i class="fa-solid fa-circle"></i>
           </td>
+          <td *ngIf="contract.status === 1" class="text-center text-warning" data-toggle="tooltip" data-placement="bottom" title="Hợp đồng cầm đồ trả đúng hạn">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+          <td *ngIf="contract.status === 2" class="text-center text-primary" data-toggle="tooltip" data-placement="bottom" title="Hợp đồng chờ thanh lý">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+          <td *ngIf="contract.status === 3" class="text-center text-secondary"  data-toggle="tooltip" data-placement="bottom" title="Hợp đồng đã thanh lý">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+          <td *ngIf="contract.status === 4" class="text-center text-info" data-toggle="tooltip" data-placement="bottom" title="Hợp đồng đăng ký nhanh">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+
           <td >
             <!--                    boostrap tooltip-->
-            <button class="icon" type="button" style="border: 0; background: none"
+            <button class="icon  text-primary" type="button" style="border: 0; background: none"
                     data-toggle="tooltip" data-placement="bottom" title="Chi tiết">
               <i class="fa-solid fa-circle-info"></i>
             </button>
@@ -61,8 +78,8 @@
             </button>
           </td>
           <td >
-            <button class="icon" type="button" style="border: 0; background: none"
-                    data-toggle="tooltip" data-placement="bottom" title="Xóa hợp đồng">
+            <button class="icon text-danger" type="button" style="border: 0; background: none"
+                    data-dismiss="modal" data-toggle="tooltip" data-placement="bottom" title="Xóa hợp đồng">
               <i class="fa-solid fa-trash"></i>
             </button>
 
