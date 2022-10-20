@@ -1,5 +1,5 @@
 export interface City {
-  id?:number;
-  prefix?:string;
-  name?:string;
+  id?: number;
+  prefix?: string;
+  name?: string;
 }
