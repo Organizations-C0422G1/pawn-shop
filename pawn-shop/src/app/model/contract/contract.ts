@@ -6,7 +6,7 @@ export interface Contract {
   id?: number;
   code?: string;
   itemPrice?: number;
-  interesRate?: number;
+  interestRate?: number;
   startDate?: string;
   endDate?: string;
   returnDate?: string;
