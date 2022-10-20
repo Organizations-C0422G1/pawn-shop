@@ -14,13 +14,23 @@ import { PawnItemListComponent } from './store-information/pawn-item-list/pawn-i
 import { TopTenTransactionComponent } from './store-information/top-ten-transaction/top-ten-transaction.component';
 import { ProfitStatisticsComponent } from './store-information/profit-statistics/profit-statistics.component';
 import { TransactionHistoryComponent } from './store-information/transaction-history/transaction-history.component';
+import { PawnContractAddComponent } from './pawn-contract/pawn-contract-add/pawn-contract-add.component';
+import {RouterModule} from "@angular/router";
+import {NgxPaginationModule} from "ngx-pagination";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
 @NgModule({
-  declarations: [PawnContractComponent, LiquidationComponent, ReturnItemComponent, StoreInformationComponent, CustomerManagementComponent, IndividualInformationComponent, NewsComponent, EmployeeManagementComponent, EmployeeInformationComponent, FinanceComponent, PawnItemListComponent, TopTenTransactionComponent, ProfitStatisticsComponent, TransactionHistoryComponent],
+    declarations: [PawnContractComponent, LiquidationComponent, ReturnItemComponent, StoreInformationComponent, CustomerManagementComponent, IndividualInformationComponent, NewsComponent, EmployeeManagementComponent, EmployeeInformationComponent, FinanceComponent, PawnItemListComponent, TopTenTransactionComponent, ProfitStatisticsComponent, TransactionHistoryComponent, PawnContractAddComponent],
+    exports: [
+        PawnContractComponent
+    ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule,
+    NgxPaginationModule,
+    ReactiveFormsModule
   ]
 })
 export class FunctionModule { }
