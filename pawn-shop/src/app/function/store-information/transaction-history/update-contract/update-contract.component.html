@@ -1,0 +1,134 @@
+<div class="content">
+
+  <div class="container">
+    <div class="row align-items-stretch no-gutters contact-wrap">
+      <div class="col-md-12">
+        <div class="form h-100">
+          <div class="row">
+            <div class="col-md-11">
+              <h3 class="header-color text-center">Chỉnh sửa hợp đồng</h3>
+            </div>
+            <div class="col-md-1">
+            </div>
+          </div>
+
+          <form class="mb-5" method="post" id="contactForm" name="contactForm" [formGroup]="contractForm">
+            <div class="row">
+              <div class="col-md-6 form-group mb-3">
+                <label class="col-form-label">
+                  Mã hợp đồng
+                  <span style="color: red">*</span>
+                </label>
+                <input formControlName="code" type="text" class="form-control pl-2" >
+              </div>
+              <div class="col-md-6 form-group mb-3">
+                <label class="col-form-label">
+                  Khách hàng
+                  <span style="color: red">*</span>
+                </label>
+                <select [compareWith]="compareWithId" class="custom-select form-select" formControlName="customer">
+                  <option *ngFor="let customer of customerList" [ngValue]="customer">{{customer.name}} (Mã KH: {{customer.id}})</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="row" formGroupName="pawnItem">
+              <div class="col-md-6 form-group mb-3">
+                <label class="col-form-label">
+                  Loại đồ
+                </label>
+                  <span style="color: red">*</span>
+                  <select [compareWith]="compareWithId" class="custom-select form-select" formControlName="pawnType">
+                    <option *ngFor="let pawnType of pawnTypeList" [ngValue]="pawnType">{{pawnType.name}}</option>
+                  </select>
+              </div>
+
+              <div class="col-md-6 form-group mb-3">
+                <label  class="col-form-label">
+                  Tên đồ
+                  <span style="color: red">*</span>
+                </label>
+                <input type="text" class="form-control pl-2" formControlName="name">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group mb-3">
+                <label class="col-form-label">
+                  Tiền cầm đồ
+                  <span style="color: red">*</span>
+                </label>
+                <input type="number" class="form-control pl-2"formControlName="itemPrice">
+              </div>
+              <div class="col-md-6 form-group mb-3">
+                <label class="col-form-label">
+                  Tiền lãi (%)
+                  <span style="color: red">*</span>
+                </label>
+                <input type="text" class="form-control pl-2" formControlName="interestRate">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group mb-3">
+                <label class="col-form-label">
+                  Ngày làm hợp đồng
+                  <span style="color: red">*</span>
+                </label>
+                <input type="date" class="form-control pl-2" formControlName="startDate">
+              </div>
+              <div class="col-md-6 form-group mb-3">
+                <label class="col-form-label">
+                  Ngày kết thúc hợp đồng
+                  <span style="color: red">*</span>
+                </label>
+                <input type="date" class="form-control pl-2" formControlName="endDate">
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6 form-group mb-3">
+                <label class="col-form-label">
+                  Loại hợp đồng
+                </label>
+                <input hidden type="text" class="form-control pl-2" formControlName="type">
+                <div *ngIf="contractForm.value.type === true" class="form-control pl-2">
+                  Cầm đồ
+                  </div>
+                <div *ngIf="contractForm.value.type === false" class="form-control pl-2">
+                  Thanh lý
+                  </div>
+              </div>
+
+              <div class="col-md-6 form-group mb-3">
+                <label  class="col-form-label">
+                  Trạng thái
+                  <span style="color: red">*</span>
+                </label>
+                <select class="custom-select form-select">
+                  <option value="0">Đóng</option>
+                  <option value="1">Mở</option>
+                  <option value="2">Xóa</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-9 form-group"></div>
+              <div class="col-md-3 form-group" style="float: right">
+                <button style="margin-left:40px " value="Chỉnh sửa" class="icon p-btn  py-2 px-4" (click)="submit()">
+                  Chỉnh sửa
+                </button>
+
+                <button  style="float: right" value="Đóng" class="icon p-btn-close py-2 px-4">
+                  Đóng
+                </button>
+              </div>
+              <div class="col-md-3 form-group"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Contract} from '../../../model/contract/contract';
+import {TopTenTransactionService} from './top-ten-transaction.service';
 
 @Component({
   selector: 'app-top-ten-transaction',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./top-ten-transaction.component.css']
 })
 export class TopTenTransactionComponent implements OnInit {
-
-  constructor() { }
+  contractList: Contract[];
+  constructor(private topTen: TopTenTransactionService) {
+  }
 
   ngOnInit(): void {
+    this.topTen.getAll().subscribe(
+       value => this.contractList = value
+    );
   }
 
 }
