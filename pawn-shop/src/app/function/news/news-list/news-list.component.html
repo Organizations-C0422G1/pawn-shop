@@ -18,7 +18,8 @@
                     <div>
                       <input placeholder="Select date" type="date"
                              class="form-control"
-                             id="firstDate" formControlName="firstDate" [class.is-invalid]="searchForm.controls.firstDate.invalid && searchForm.controls.firstDate.touched">
+                             id="firstDate" formControlName="firstDate"
+                             [class.is-invalid]="searchForm.controls.firstDate.invalid && searchForm.controls.firstDate.touched">
                       <i class="fas fa-calendar input-prefix" tabindex=0></i>
                       <div *ngIf="searchForm.controls.firstDate.invalid " class="invalid-feedback">
                         Ngày đăng không được lớn hơn ngày hiện tại!.
@@ -33,7 +34,8 @@
                        data-bs-placement="top">
                     <div class="input-group has-validation">
                       <input placeholder="Select date" type="date" id="prefill-example"
-                             class="form-control" formControlName="lastDate" [class.is-invalid]="searchForm.invalid && searchForm.controls.lastDate.touched">
+                             class="form-control" formControlName="lastDate"
+                             [class.is-invalid]="searchForm.invalid && searchForm.controls.lastDate.touched">
                       <i class="fas fa-calendar input-prefix" tabindex=0></i>
                       <div *ngIf="searchForm.controls.lastDate.valid " class="invalid-feedback">
                         Không được nhỏ hơn ngày đăng!.
@@ -77,10 +79,12 @@
               </li>
             </ul>
           </div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 pb-1 text-center font-weight-bold text-white"
-             style="font-size: 30px !important;" *ngIf="newsList.length <= 0">
-          Không có dữ liệu !!!.
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 pb-1 text-center font-weight-bold text-white"
+                 style="font-size: 30px !important;" *ngIf="newsList.length < 0">
+              Không có dữ liệu !!!.
+            </div>
+          </div>
         </div>
         <nav aria-label="Page navigation example" *ngIf="newsList.length >0">
           <ul class="pagination justify-content-center">
@@ -123,7 +127,7 @@
                 <form [formGroup]="searchTitleForm" (ngSubmit)="searchTitle()">
                   <div class="input-group mb-3 mt-3 w-100" data-bs-toggle="titleSearch" data-bs-content=""
                        data-bs-trigger="manual" data-bs-placement="bottom">
-                    <input (input)="checkErrorTitle()" type="text" class="form-control" formControlName="titleSearch"
+                    <input type="text" class="form-control" formControlName="titleSearch"
                            placeholder="Nhập tiêu đề cần tìm kiếm..."
                            aria-label="Recipient's username"
                            aria-describedby="basic-addon2">
@@ -135,6 +139,15 @@
                           d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                       </svg>
                     </button>
+                  </div>
+                  <div *ngIf="searchTitleForm.controls.titleSearch.hasError('required') &&
+              searchTitleForm.controls.titleSearch.touched" class="text-danger"> Nhập tiêu đề cần tìm kiếm!
+                  </div>
+                  <div *ngIf="searchTitleForm.controls.titleSearch.hasError('maxlength') &&
+              searchTitleForm.controls.titleSearch.touched" class="text-danger"> Độ dài không quá 100 ký tự!.
+                  </div>
+                  <div *ngIf="searchTitleForm.controls.titleSearch.hasError('pattern') &&
+              searchTitleForm.controls.titleSearch.touched" class="text-danger"> Không được bắt đầu bằng khoảng trắng.
                   </div>
                 </form>
               </li>

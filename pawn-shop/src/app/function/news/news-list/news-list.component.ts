@@ -1,8 +1,8 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {formatDate} from '@angular/common';
-import {News} from '../../../model/news/news';
 import {NewsService} from '../../../service/news.service';
+import {News} from '../../../model/news/news';
 
 declare var $: any;
 
@@ -41,7 +41,7 @@ export class NewsListComponent implements OnInit {
       lastDate: new FormControl()
     },this.checkDateBefore);
     this.searchTitleForm = new FormGroup({
-      titleSearch: new FormControl('', [Validators.required]),
+      titleSearch: new FormControl('',[Validators.required, Validators.maxLength(100), Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     });
   }
 
@@ -145,10 +145,6 @@ export class NewsListComponent implements OnInit {
     const curDate = formatDate(new Date(), 'MM-dd-yyyy', 'en-US');
     if (value > curDate) {
       return {'checkDate': true};
-    } else if (value.match('^(?:(?:31(/|-|.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(/|-|.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})' +
-      '$|^(?:29(/|-|.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))' +
-      '$|^(?:0?[1-9]|1\\d|2[0-8])(/|-|.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$')) {
-      return {'pattern': true};
     }
   }
 
@@ -173,16 +169,9 @@ export class NewsListComponent implements OnInit {
     }
   }
 
+  checkInputTitleSearch(form: AbstractControl) {
+    let titleSearch = form.value;
 
-  checkErrorTitle() {
-    let dataToggleTitle = $('[data-bs-toggle="titleSearch"]');
-    if (this.searchForm.controls.firstDate.hasError('required')) {
-      dataToggleTitle.attr('data-bs-content', 'Vui lòng nhập thông tin');
-      setTimeout(() => {
-        dataToggleTitle.popover('hide');
-      }, 2000);
-      dataToggleTitle.popover('show');
-    }
   }
 
 }
