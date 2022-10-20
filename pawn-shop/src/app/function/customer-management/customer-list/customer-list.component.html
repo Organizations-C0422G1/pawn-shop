@@ -50,7 +50,6 @@
     </tr>
 
 
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -75,7 +74,9 @@
 
     </tbody>
   </table>
-
+  <div class="text-center" *ngIf="customerPage == '' ">
+    <div class="text-center" ><h4 class="text-danger">Hiện không có người bạn cần tìm <i class="fa-solid fa-magnifying-glass"></i></h4></div>
+  </div>
   <div class="p-page container d-flex justify-content-center align-items-center mt-5">
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">

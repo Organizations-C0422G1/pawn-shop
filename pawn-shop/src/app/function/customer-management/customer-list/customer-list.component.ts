@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Customer} from "../../../model/customer/customer";
-import {FormControl, FormGroup} from "@angular/forms";
 import {CustomerService} from "../../../service/customer.service";
 import {ToastrService} from "ngx-toastr";
 
