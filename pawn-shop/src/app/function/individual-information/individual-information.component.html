@@ -1,1 +1,94 @@
-<p>individual-information works!</p>
+<div class="content mb-5 ">
+  <div class="container">
+    <div class="d-flex row header m-3">
+      <div class="col-md-3"></div>
+      <div class="col-md-6"  style="font-weight: bold;text-align:center;font-size: 25px ">Top 10 hợp đồng mới nhất </div>
+      <div class="col-md-3" style="float: right">
+        <input type="text" style="border: solid 2px; border-radius: 7px; " class="pl-2 h-100 w-75">
+        <button class="ml-3 p-btn"  style="border: none;border-radius: 5px;width: 40px; float: right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div>
+      </div>
+    </div>
+    <div class="row align-items-stretch no-gutters contact-wrap" style="overflow-x:auto;">
+      <table class="table table-hover m-0">
+        <tr style="border: 0" class="bg-header">
+          <th style="width: 5%">#</th>
+          <th style="width: 10%">Mã HĐ</th>
+          <th style="width: 10%">Tên KH</th>
+          <th style="width: 10%">Tên loại đồ</th>
+          <th style="width: 10%">Loại đồ</th>
+          <th style="width: 10%">Ngày làm HĐ</th>
+          <th style="width: 10%">Ngày kết thúc HĐ</th>
+          <th style="width: 10%">Loại HĐ</th>
+          <th style="width: 5%">Trạng thái</th>
+          <th style="width: 20%" colspan="3">Chức năng</th>
+        </tr>
+        <tr *ngFor="let contract of contractList ;index as i" style="border: 0; border-bottom: solid 1px #eeee">
+          <td>{{i + 1}}</td>
+          <td data-toggle="tooltip" data-placement="bottom" title="{{contract.code}}">
+            {{contract.code}}
+          </td>
+          <td data-toggle="tooltip" data-placement="bottom" title="{{contract.customer.name}}">
+            {{contract.customer.name}}
+          </td>
+          <td data-toggle="tooltip" data-placement="bottom" title="{{contract.pawnItem.name}}">
+            {{contract.pawnItem.name}}
+          </td>
+          <td data-toggle="tooltip" data-placement="bottom" title="{{contract.pawnItem.pawnType.name}}">
+            {{contract.pawnItem.pawnType.name}}
+          </td>
+          <td>{{contract.startDate | date: "dd/MM/yyyy"}}</td>
+          <td>{{contract.endDate | date: "dd/MM/yyyy"}}</td>
+          <td *ngIf="contract.type === true">Thanh lý</td>
+          <td *ngIf="contract.type === false">Cầm đồ</td>
+          <td *ngIf="contract.status === 0" class="text-center" style="color: lawngreen" data-toggle="tooltip" data-placement="bottom" title="Hợp đồng cầm đồ còn hạn">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+          <td *ngIf="contract.status === 1" class="text-center text-warning" data-toggle="tooltip" data-placement="bottom" title="Hợp đồng cầm đồ trả đúng hạn">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+          <td *ngIf="contract.status === 2" class="text-center text-primary" data-toggle="tooltip" data-placement="bottom" title="Hợp đồng chờ thanh lý">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+          <td *ngIf="contract.status === 3" class="text-center text-secondary"  data-toggle="tooltip" data-placement="bottom" title="Hợp đồng đã thanh lý">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+          <td *ngIf="contract.status === 4" class="text-center text-info" data-toggle="tooltip" data-placement="bottom" title="Hợp đồng đăng ký nhanh">
+            <i class="fa-solid fa-circle"></i>
+          </td>
+
+          <td >
+            <!--                    boostrap tooltip-->
+            <button class="icon  text-primary" type="button" style="border: 0; background: none"
+                    data-toggle="tooltip" data-placement="bottom" title="Chi tiết">
+              <i class="fa-solid fa-circle-info"></i>
+            </button>
+          </td>
+          <td>
+            <button class="icon" type="button" style="border: 0; background: none"
+                    data-placement="bottom" title="Chỉnh sửa"
+                    routerLink="/update-contract/{{contract.id}}">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </td>
+          <td >
+            <button class="icon text-danger" type="button" style="border: 0; background: none"
+                    data-dismiss="modal" data-toggle="tooltip" data-placement="bottom" title="Xóa hợp đồng">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+

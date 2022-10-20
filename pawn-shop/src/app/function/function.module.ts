@@ -5,7 +5,6 @@ import { LiquidationComponent } from './liquidation/liquidation.component';
 import { ReturnItemComponent } from './return-item/return-item.component';
 import { StoreInformationComponent } from './store-information/store-information.component';
 import { CustomerManagementComponent } from './customer-management/customer-management.component';
-import { IndividualInformationComponent } from './individual-information/individual-information.component';
 import { NewsComponent } from './news/news.component';
 import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 import { EmployeeInformationComponent } from './employee-information/employee-information.component';
@@ -15,7 +14,11 @@ import { TopTenTransactionComponent } from './store-information/top-ten-transact
 import { ProfitStatisticsComponent } from './store-information/profit-statistics/profit-statistics.component';
 import { TransactionHistoryComponent } from './store-information/transaction-history/transaction-history.component';
 import { TransactionListComponent } from './store-information/transaction-history/transaction-list/transaction-list.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AppRoutingModule} from '../app-routing.module';
+import {RouterModule} from '@angular/router';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { PawnContractAddComponent } from './pawn-contract/pawn-contract-add/pawn-contract-add.component';
 
 
 
@@ -26,7 +29,6 @@ import {FormsModule} from '@angular/forms';
     ReturnItemComponent,
     StoreInformationComponent,
     CustomerManagementComponent,
-    IndividualInformationComponent,
     NewsComponent,
     EmployeeManagementComponent,
     EmployeeInformationComponent,
@@ -35,13 +37,20 @@ import {FormsModule} from '@angular/forms';
     TopTenTransactionComponent,
     ProfitStatisticsComponent,
     TransactionHistoryComponent,
-    TransactionListComponent],
+    TransactionListComponent,
+    PawnContractAddComponent],
   exports: [
-    TransactionListComponent
+    TransactionListComponent,
+    PawnContractAddComponent,
+    ReturnItemComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule,
+    RouterModule,
+    NgxPaginationModule,
+    ReactiveFormsModule
   ]
 })
 export class FunctionModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {UpdateContractService} from './update-contract.service';
 import {Contract} from '../../../../model/contract/contract';
 import {ActivatedRoute, Router} from '@angular/router';

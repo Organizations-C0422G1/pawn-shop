@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Contract} from '../../model/contract/contract';
+import {TopTenTransactionService} from '../store-information/top-ten-transaction/top-ten-transaction.service';
+
 
 @Component({
-  selector: 'app-individual-information',
-  templateUrl: './individual-information.component.html',
-  styleUrls: ['./individual-information.component.css']
+  selector: 'app-top-ten-transaction',
+  templateUrl: './top-ten-transaction.component.html',
+  styleUrls: ['./top-ten-transaction.component.css']
 })
-export class IndividualInformationComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class TopTenTransactionComponent implements OnInit {
+  contractList: Contract[];
+  constructor(private topTen: TopTenTransactionService) {
   }
 
+  ngOnInit(): void {
+    this.topTen.getAll().subscribe(
+      value => this.contractList = value
+    );
+  }
 }
