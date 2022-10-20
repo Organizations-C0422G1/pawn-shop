@@ -114,9 +114,9 @@ export class TransactionListComponent implements OnInit {
   deleteContract(id: number) {
     return this.transactionListService.deleteContract(id).subscribe(() => {
       this.onSearchPageContract();
-      this.toastr.success("Xóa thành công", "Thông báo");
+      this.toastr.success("Xóa thành công");
     }, error => {
-      this.toastr.error("Xóa thất bại", "Thông báo");
+      this.toastr.error("Xóa thất bại");
     })
   }
 }

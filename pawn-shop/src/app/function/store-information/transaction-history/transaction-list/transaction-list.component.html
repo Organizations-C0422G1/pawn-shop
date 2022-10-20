@@ -61,15 +61,15 @@
   <table class="table shadow table-responsive table-hover">
     <thead>
     <tr class="p-bg-warning bg-gradient">
-      <th class="font-weight-bold">#</th>
-      <th class="font-weight-bold">Mã HĐ</th>
-      <th class="font-weight-bold">Tên KH</th>
-      <th class="font-weight-bold">Tên Đồ</th>
-      <th class="font-weight-bold">Ngày Bắt Đầu</th>
-      <th class="font-weight-bold">Ngày Kết Thúc</th>
-      <th class="font-weight-bold">Loại HĐ</th>
-      <th class="font-weight-bold text-center">Trạng thái</th>
-      <th class="font-weight-bold text-center" colspan="3">Chức năng</th>
+      <th class="font-weight-bold" style="width: 1%;">#</th>
+      <th class="font-weight-bold" style="width: 3%;">Mã HĐ</th>
+      <th class="font-weight-bold" style="width: 3%;">Tên KH</th>
+      <th class="font-weight-bold" style="width: 4%;">Tên Đồ</th>
+      <th class="font-weight-bold" style="width: 4%;">Ngày Bắt Đầu</th>
+      <th class="font-weight-bold" style="width: 4%;">Ngày Kết Thúc</th>
+      <th class="font-weight-bold" style="width: 4%">Loại HĐ</th>
+      <th class="font-weight-bold text-center" style="width: 2%;">Trạng thái</th>
+      <th class="font-weight-bold text-center" colspan="3" style="width: 3%">Chức năng</th>
     </tr>
     </thead>
     <tbody>
@@ -90,7 +90,7 @@
         <td>Cầm đồ</td>
       </ng-container>
       <td class="text-center" *ngIf="!contracts.status">
-        <span class="fa fa-circle text-center text-success" data-bs-toggle="tooltip" data-bs-placement="top"
+        <span class="fa fa-circle text-center p-text-success" data-bs-toggle="tooltip" data-bs-placement="top"
               title="Hợp đồng cầm đồ còn hạn"></span>
       </td>
       <td class="text-center" *ngIf="contracts.status == 1">
@@ -136,7 +136,7 @@
   </ng-container>
 
   <div class="container justify-content-center d-flex align-content-center">
-    <ul class="p-pagination modal-2">
+    <ul class="p-pagination modal-2 shadow">
       <li class="page-item" *ngIf="page">
         <a class="page-link text-dark" (click)="previousPage()">&laquo;</a>
       </li>

@@ -14,6 +14,23 @@ export class TransactionListService {
   getPageContract(page:number, customerName: string, pawnItemName: string,
                   type: string, startDate: string,
                   endDate: string, status: string): Observable<any>{
+    if (customerName == "#"
+      || customerName == "%"
+      || customerName == "^"
+      || customerName == "&"
+      || customerName == "+"
+      || customerName == "_"
+      || customerName == "{}"
+      || pawnItemName == "#"
+      || pawnItemName == "%"
+      || pawnItemName == "^"
+      || pawnItemName == "&"
+      || pawnItemName == "+"
+      || pawnItemName == "_"
+      || pawnItemName == "{}" ){
+        customerName = "?";
+        pawnItemName = "?";
+    }
     if (startDate == null){
       startDate = "0000-00-00";
     }
