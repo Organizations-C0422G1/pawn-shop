@@ -14,13 +14,23 @@ import { PawnItemListComponent } from './store-information/pawn-item-list/pawn-i
 import { TopTenTransactionComponent } from './store-information/top-ten-transaction/top-ten-transaction.component';
 import { ProfitStatisticsComponent } from './store-information/profit-statistics/profit-statistics.component';
 import { TransactionHistoryComponent } from './store-information/transaction-history/transaction-history.component';
+import { CompleteContractComponent } from './store-information/profit-statistics/complete-contract/complete-contract.component';
+import { LiquidationContractComponent } from './store-information/profit-statistics/liquidation-contract/liquidation-contract.component';
+import { ExpectedContractComponent } from './store-information/profit-statistics/expected-contract/expected-contract.component';
+import {FormsModule} from "@angular/forms";
 
 
 
 @NgModule({
-  declarations: [PawnContractComponent, LiquidationComponent, ReturnItemComponent, StoreInformationComponent, CustomerManagementComponent, IndividualInformationComponent, NewsComponent, EmployeeManagementComponent, EmployeeInformationComponent, FinanceComponent, PawnItemListComponent, TopTenTransactionComponent, ProfitStatisticsComponent, TransactionHistoryComponent],
+  declarations: [PawnContractComponent, LiquidationComponent, ReturnItemComponent, StoreInformationComponent, CustomerManagementComponent, IndividualInformationComponent, NewsComponent, EmployeeManagementComponent, EmployeeInformationComponent, FinanceComponent, PawnItemListComponent, TopTenTransactionComponent, ProfitStatisticsComponent, TransactionHistoryComponent, CompleteContractComponent, LiquidationContractComponent, ExpectedContractComponent],
+  exports: [
+    CompleteContractComponent,
+    ExpectedContractComponent,
+    LiquidationContractComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 })
 export class FunctionModule { }
