@@ -86,6 +86,7 @@ export class HomeComponent implements OnInit {
 
       this.quickContractService.createQuickContract(this.quickContractDto).subscribe(next => {
         this.toastrService.success('Cửa hàng sẽ sớm liên hệ bạn!', 'Đăng ký thành công');
+        this.quickContractForm.reset();
       });
     }
   }

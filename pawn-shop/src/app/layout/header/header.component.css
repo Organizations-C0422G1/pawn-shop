@@ -1,12 +1,14 @@
 .fixed{
   position: fixed;
   width: 100%;
+  background-color: #ffffff;
   transition: 0.2s linear;
   top: 0;
 }
 
 .nofixed{
   position: static;
+  background-color: transparent;
   transition: 0.2s linear;
   top: -50px;
 }
