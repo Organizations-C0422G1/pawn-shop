@@ -1,0 +1,119 @@
+<div class="content mt-5">
+  <div class="container w-50">
+    <div class="row align-items-stretch no-gutters contact-wrap">
+      <div class="col-md-12">
+        <div class="form h-100">
+          <form class="mb-5 shadow bg-light mt-3" id="contactForm" name="contactForm"
+                [formGroup]="customerForm" *ngIf="customerForm" (ngSubmit)="update()">
+            <h2 class="text-center">ChỈNH SỬA KHÁCH HÀNG</h2>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="col-md-12 form-group mb-3">
+                  <label class="col-form-label" for="name">
+                    Họ tên:
+                    <span style="color: red">*</span>
+                  </label>
+                  <input type="text" class="form-control pl-2" id="name"
+                         placeholder="Họ và tên" formControlName="name">
+                </div>
+                <div class="col-md-12 form-group mb-3">
+                  <label class="col-form-label" for="dateOfBirth">
+                    Ngày sinh:
+                    <span style="color: red">*</span>
+                  </label>
+                  <input id="dateOfBirth" type="date" class="form-control pl-2" formControlName="dateOfBirth">
+                </div>
+                <div class="col-md-12 form-group mb-3">
+                  <label class="col-form-label" for="gender">
+                    Giới tính:
+                    <span style="color: red">*</span>
+                  </label>
+                  <select id="gender" class="custom-select form-select" formControlName="gender">
+                    <option [value]="true">Nam</option>
+                    <option [value]="false">Nữ</option>
+                  </select>
+                </div>
+                <div class="col-md-12 form-group mb-3">
+                  <label class="col-form-label" for="idCard">
+                    CMND/Hộ chiếu:
+                    <span style="color: red">*</span>
+                  </label>
+                  <input id="idCard" type="text" class="form-control pl-2" formControlName="idCard">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div formGroupName="address">
+                  <div class="col-md-12 form-group mb-3">
+                    <label class="col-form-label" for="city">Thành phố:
+                      <span style="color: red">*</span>
+                    </label>
+                    <select class="form-select" id="city" formControlName="city"
+                            (change)="changeCity($event.target)">
+                      <option value="0"> Chọn thành phố</option>
+                      <option *ngFor="let city of cityList " [value]="city.id">{{city.name}} </option>
+                    </select>
+                  </div>
+                  <div cclass="col-md-12 form-group mb-3">
+                    <label class="col-form-label" for="district">Quận:
+                      <span style="color: red">*</span>
+                    </label>
+                    <select class="form-select" id="district" formControlName="district">
+                      <option value="0"> Chọn quận/huyện</option>
+                      <option *ngFor="let district of districtList" [ngValue]="district">{{district.name}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12 form-group mb-3">
+                    <label class="col-form-label" for="street">
+                      Tên đường:
+                      <span style="color: red">*</span>
+                    </label>
+                    <input id="street" type="text" class="form-control pl-2" formControlName="street">
+                  </div>
+                </div>
+                <div class="col-md-12 form-group mb-3">
+                  <label class="col-form-label" for="phoneNumber">
+                    SĐT:
+                    <span style="color: red">*</span>
+                  </label>
+                  <input id="phoneNumber" type="text" class="form-control pl-2" formControlName="phoneNumber">
+                </div>
+                <div class="col-md-12 form-group mb-3">
+                  <label class="col-form-label" for="email">
+                    Email:
+                    <span style="color: red">*</span>
+                  </label>
+                  <input id="email" type="email" class="form-control pl-2" formControlName="email">
+                </div>
+              </div>
+              <div class="col-md-12 form-group mb-3">
+                <label class="col-form-label" for="imgUrl">
+                  File ảnh:
+                  <span style="color: red">*</span>
+                </label>
+                <input id="imgUrl" type="file" class="form-control pl-2"
+                       accept="image/png, image/jpg" formControlName="imgUrl">
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                </div>
+                <div class="col-lg-6 d-flex justify-content-end">
+                  <div class="row">
+                    <div class="col-3">
+                      <button style="border-radius: 2px !important;" class="btn btn-secondary"
+                              type="reset">Hủy
+                      </button>
+                    </div>
+                    <div class="col-9">
+                      <button class="p-btn" style="margin-right:1px " type="submit">Chỉnh sửa khách hàng</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
