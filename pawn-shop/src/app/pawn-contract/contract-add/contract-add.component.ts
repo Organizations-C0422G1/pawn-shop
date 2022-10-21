@@ -87,6 +87,7 @@ export class ContractAddComponent implements OnInit {
   getAll() {
     this.contractService.findAllCustomer().subscribe(data => {
       // @ts-ignore
+      console.log(data)
       this.customerList = data;
       console.log(this.customerList);
     });

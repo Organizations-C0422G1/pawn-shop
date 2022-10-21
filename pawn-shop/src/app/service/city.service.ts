@@ -8,21 +8,11 @@ import {TokenStorageService} from "./token-storage.service";
   providedIn: 'root'
 })
 export class CityService {
-  token = '';
-  httpOptions: any;
 
-  constructor(private httpClient: HttpClient, private jwtService: TokenStorageService) {
-    this.token = jwtService.getJwt();
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.token
-      })
-    };
+  constructor(private httpClient: HttpClient) {
   }
 
   findAll(): Observable<City[]> {
-    // @ts-ignore
-    return this.httpClient.get<City[]>("http://localhost:8080/api/public/cities", this.httpOptions);
+    return this.httpClient.get<City[]>("http://localhost:8080/api/public/cities");
   }
 }

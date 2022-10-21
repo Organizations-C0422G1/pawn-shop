@@ -28,7 +28,7 @@ export class LoginService {
   }
 
   public sendMail(email: string) {
-    return this.httpClient.post('http://localhost:8080/api/public/forgot-password', email, this.httpOptions);
+    return this.httpClient.post('http://localhost:8080/api/public/forgot-password', email);
   }
 
   public resetPassword(newPassword: string, jwt: string) {

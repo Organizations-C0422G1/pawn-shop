@@ -12,6 +12,6 @@ export class QuickContractService {
   }
 
   createQuickContract(quickContractDto: QuickContractDto) {
-    return this.httpClient.post('http://localhost:8080/api/employee/contracts/createQuickContract', quickContractDto);
+    return this.httpClient.post('http://localhost:8080/api/public/createQuickContract', quickContractDto);
   }
 }

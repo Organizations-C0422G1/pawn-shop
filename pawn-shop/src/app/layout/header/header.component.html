@@ -13,9 +13,22 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#register">Đăng ký nhanh</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Tính năng</a>
-        </li>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Chức năng
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" routerLink="/contract-add">Cầm đồ</a></li>
+            <li><a class="dropdown-item" routerLink="/liquidation">Thanh lý</a></li>
+            <li><a class="dropdown-item" routerLink="/return-item">Trả đồ</a></li>
+            <li><a class="dropdown-item" routerLink="/customer-list">Quản lý khách hàng</a></li>
+            <li><a class="dropdown-item" routerLink="/employee-information">Thông tin cá nhân</a></li>
+            <li><a class="dropdown-item" routerLink="/new-list">tin tức</a></li>
+            <li><a class="dropdown-item" routerLink="/finance">Tài chính</a></li>
+            <li><a class="dropdown-item" routerLink="/complete-contract">Thống kê</a></li>
+            <li><a class="dropdown-item" routerLink="/transaction-history">Lịch sử giao dịch</a></li>
+          </ul>
+        </div>
       </ul>
       <a class="p-link" routerLink="/login">Đăng nhập</a>
       <div class="d-flex">

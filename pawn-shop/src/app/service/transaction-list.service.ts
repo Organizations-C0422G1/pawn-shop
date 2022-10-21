@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
 
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
+import {TokenStorageService} from "./token-storage.service";
 
 const API_URL = `${environment.apiUrl}`;
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionListService {
-
-  constructor(private httpClient: HttpClient) { }
+  token = '';
+  httpOptions: any;
+  constructor(private httpClient: HttpClient, private  jwtService: TokenStorageService) {
+    this.token = jwtService.getJwt();
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.token
+      })
+    };
+  }
 
   getPageContract(page:number, customerName: string, pawnItemName: string,
                   type: string, startDate: string,
@@ -39,15 +49,15 @@ export class TransactionListService {
       endDate = "2032-01-01";
     }
     return this.httpClient.get<any>(API_URL + "/api/employee/contracts?page="+ page + "&customerName=" + customerName +
-    "&pawnItemName=" + pawnItemName + "&type=" + type + "&startDate=" + startDate + "&endDate=" + endDate + "&status=" + status);
+    "&pawnItemName=" + pawnItemName + "&type=" + type + "&startDate=" + startDate + "&endDate=" + endDate + "&status=" + status,this.httpOptions);
   }
 
 
   getContractDetail(id: number): Observable<any>{
-    return this.httpClient.get<any>(`${API_URL}/api/employee/contracts/${id}`);
+    return this.httpClient.get<any>(`${API_URL}/api/employee/contracts/${id}`,this.httpOptions);
   }
 
   deleteContract(id: number): Observable<any>{
-    return this.httpClient.patch<any>(`${API_URL}/api/employee/contracts/${id}`, null);
+    return this.httpClient.patch<any>(`${API_URL}/api/employee/contracts/${id}`, null,this.httpOptions);
   }
 }

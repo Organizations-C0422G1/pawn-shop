@@ -35,31 +35,35 @@ export class CustomerService {
   }
 
   createNewCustomer(customer: Customer) {
-    return this.http.post('http://localhost:8080/api/employee/pawnShop/goCreateCustomer', customer);
+    return this.http.post('http://localhost:8080/api/employee/pawnShop/goCreateCustomer', customer,this.httpOptions);
   }
 
   getAllCity(): Observable<City[]> {
-    return this.http.get<City[]>('http://localhost:8080/api/employee/pawnShop/goFindCity');
+    // @ts-ignore
+    return this.http.get<City[]>('http://localhost:8080/api/employee/pawnShop/goFindCity',this.httpOptions);
   }
 
   getAllDistrict(id: number): Observable<District[]> {
-    return this.http.get<District[]>('http://localhost:8080/api/employee/pawnShop/goFindDistrict?city=' + id);
+    // @ts-ignore
+    return this.http.get<District[]>('http://localhost:8080/api/employee/pawnShop/goFindDistrict?city=' + id,this.httpOptions);
   }
 
   getCityById(id: number): Observable<City> {
-    return this.http.get('http://localhost:8080/api/employee/pawnShop/findCityById?id=' + id);
+    // @ts-ignore
+    return this.http.get('http://localhost:8080/api/employee/pawnShop/findCityById?id=' + id,this.httpOptions);
   }
 
   saveAddress(address: Address) {
-    return this.http.post<Address>('http://localhost:8080/api/employee/pawnShop/saveAddress', address);
+    return this.http.post<Address>('http://localhost:8080/api/employee/pawnShop/saveAddress', address,this.httpOptions);
   }
 
   findCustomerById(id: number): Observable<Customer> {
-    return this.http.get<Customer>('http://localhost:8080/api/employee/pawnShop/findCustomer?id=' + id);
+    // @ts-ignore
+    return this.http.get<Customer>('http://localhost:8080/api/employee/pawnShop/findCustomer?id=' + id,this.httpOptions);
   }
 
   updateCustomer(customer: Customer) {
-    return this.http.patch('http://localhost:8080/api/employee/pawnShop/goUpdateCustomer', customer);
+    return this.http.patch('http://localhost:8080/api/employee/pawnShop/goUpdateCustomer', customer,this.httpOptions);
   }
 }
 

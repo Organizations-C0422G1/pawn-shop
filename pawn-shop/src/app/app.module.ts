@@ -23,6 +23,7 @@ import {PawnContractModule} from "./pawn-contract/pawn-contract.module";
 import {FinanceModule} from "./finance/finance.module";
 import {PawnItemListModule} from "./pawn-item-list/pawn-item-list.module";
 import {TopTenTransactionModule} from "./top-ten-transaction/top-ten-transaction.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {TopTenTransactionModule} from "./top-ten-transaction/top-ten-transaction
     PawnContractModule,
     FinanceModule,
     PawnItemListModule,
-    TopTenTransactionModule
+    TopTenTransactionModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

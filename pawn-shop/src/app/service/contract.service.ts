@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Contract} from '../model/contract/contract';
 import {Observable} from 'rxjs';
 import {Customer} from "../model/customer/customer";
 import {PawnType} from "../model/pawn/pawn-type";
 import {PawnItem} from "../model/pawn/pawn-item";
+import {TokenStorageService} from "./token-storage.service";
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -13,42 +14,57 @@ const API_URL = `${environment.apiUrl}`;
   providedIn: 'root'
 })
 export class ContractService {
+  token = '';
+  httpOptions: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private jwtService: TokenStorageService) {
+    this.token = jwtService.getJwt();
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.token
+      })
+    };
   }
 
   getAllPaginationAndSearch(index: number, code: string, customerName: string, pawnItem: string, startDate: string): Observable<Contract[]> {
+    // @ts-ignore
     return this.http.get<Contract[]>(API_URL + '/api/employee/contracts/listPage?page=' + index + '&code='
-      + code + '&customerName=' + customerName + '&pawnItem=' + pawnItem + '&startDate=' + startDate);
+      + code + '&customerName=' + customerName + '&pawnItem=' + pawnItem + '&startDate=' + startDate, this.httpOptions);
   }
 
   getAllNotPagination(): Observable<Contract[]> {
-    return this.http.get<Contract[]>(API_URL + '/api/employee/contracts/listNotPagination');
+    // @ts-ignore
+    return this.http.get<Contract[]>(API_URL + '/api/employee/contracts/listNotPagination',this.httpOptions);
   }
 
   returnItem(id: number, email: string, customerName: string, liquidationPrice: string): Observable<Contract> {
+    // @ts-ignore
     return this.http.get<Contract>(API_URL + '/api/employee/contracts/returnItem/'
-      + id + '?email=' + email + '&customerName=' + customerName + '&liquidationPrice=' + liquidationPrice);
+      + id + '?email=' + email + '&customerName=' + customerName + '&liquidationPrice=' + liquidationPrice,this.httpOptions);
   }
   findAllCustomer(): Observable<Customer[]> {
-    return this.http.get<Customer[]>('http://localhost:8080/customer/list');
+    // @ts-ignore
+    return this.http.get<Customer[]>('http://localhost:8080/api/employee/customer/list',this.httpOptions);
   }
 
   findAllPawnType(): Observable<PawnType[]> {
-    return this.http.get<PawnType[]>('http://localhost:8080/contract/pawnType');
+    // @ts-ignore
+    return this.http.get<PawnType[]>('http://localhost:8080/api/employee/contracts/pawntypelist',this.httpOptions);
   }
 
   search(idCard: string): Observable<any> {
-    return this.http.get<any>(`http://localhost:8080/findCustomerByIdCard?idCard=${idCard}`);
+    return this.http.get<any>(`http://localhost:8080/api/employee/findCustomerByIdCard?idCard=${idCard}`,this.httpOptions);
   }
 
   createPawnItem(pawnItem: PawnItem): Observable<PawnItem>{
-    return this.http.post<PawnItem>("http://localhost:8080/pawnItem/addPawnItem" , pawnItem);
+    // @ts-ignore
+    return this.http.post<PawnItem>("http://localhost:8080/api/employee/pawnItem/addPawnItem" , pawnItem,this.httpOptions);
   }
 
 
   createContract(value: any) {
-    return this.http.post('http://localhost:8080/api/employee/contracts/create', value);
+    return this.http.post('http://localhost:8080/api/employee/contracts/create', value,this.httpOptions);
   }
 
 }

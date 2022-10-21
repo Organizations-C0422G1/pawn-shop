@@ -1,6 +1,6 @@
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../service/login.service";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {TokenStorageService} from "../../service/token-storage.service";
 import {Component, OnInit} from "@angular/core";
@@ -17,7 +17,8 @@ export class ResetPasswordComponent implements OnInit {
   constructor(private loginService: LoginService,
               private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private router: Router) {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.jwt = paramMap.get("jwt")
       localStorage.setItem("jwt", this.jwt)
@@ -34,6 +35,7 @@ export class ResetPasswordComponent implements OnInit {
   resetPassword() {
     this.loginService.resetPassword(this.resetPasswordForm.value.newPassword, this.jwt).subscribe(loginResponse => {
       this.tokenStorageService.saveSessionStorage(loginResponse)
+      this.router.navigateByUrl("contract-add")
       this.toastr.success('Chào ' + this.tokenStorageService.getUsername(), 'Đặt lại mật khẩu thành công', {
         extendedTimeOut: 1500,
         timeOut: 3000

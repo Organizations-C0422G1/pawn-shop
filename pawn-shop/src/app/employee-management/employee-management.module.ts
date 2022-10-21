@@ -5,6 +5,7 @@ import {EmployeeManagementRoutingModule} from './employee-management-routing.mod
 import {EmployeeManagementComponent} from './employee-management/employee-management.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import {BrowserModule} from "@angular/platform-browser";
     EmployeeManagementRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    BrowserAnimationsModule
   ]
 })
 export class EmployeeManagementModule {

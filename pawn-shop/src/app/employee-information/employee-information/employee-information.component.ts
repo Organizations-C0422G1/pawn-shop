@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Employee} from "../../model/employee/employee";
 import {EmployeeService} from "../../service/employee.service";
+import {TokenStorageService} from "../../service/token-storage.service";
 
 @Component({
   selector: 'app-employee-information',
@@ -8,10 +9,12 @@ import {EmployeeService} from "../../service/employee.service";
   styleUrls: ['./employee-information.component.css']
 })
 export class EmployeeInformationComponent implements OnInit {
-  employeeDetail: Employee = {};
+  employeeDetail: any;
   imgLoad: any = '';
+  username: string;
 
-  constructor(private employeeService: EmployeeService) {
+  constructor(private employeeService: EmployeeService, private tokenStorageService: TokenStorageService) {
+    this.username = this.tokenStorageService.getUsername()
   }
 
   getInfoEmployee(user: string) {

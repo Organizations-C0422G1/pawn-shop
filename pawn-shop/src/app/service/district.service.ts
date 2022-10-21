@@ -13,6 +13,6 @@ export class DistrictService {
   }
 
   findAll(city: number): Observable<District[]> {
-    return this.httpClient.get<District[]>('http://localhost:8080/districts?city=' + city);
+    return this.httpClient.get<District[]>('http://localhost:8080/api/public/districts?city=' + city);
   }
 }

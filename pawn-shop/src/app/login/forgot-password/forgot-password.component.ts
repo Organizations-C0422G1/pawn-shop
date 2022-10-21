@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../service/login.service";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-forgot-password',
@@ -13,7 +14,8 @@ export class ForgotPasswordComponent implements OnInit {
   loadingMail = false;
 
   constructor(private loginService: LoginService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private router: Router) {
     this.emailForm = new FormGroup({
       email: new FormControl("",[Validators.maxLength(30),Validators.required])
     })
@@ -27,6 +29,7 @@ export class ForgotPasswordComponent implements OnInit {
     console.log(this.loadingMail);
     this.loginService.sendMail(this.emailForm.value.email).subscribe(next => {
       this.loadingMail = false
+      this.router.navigateByUrl('')
       this.toastr.success('Hãy kiểm tra email của bạn', 'Gửi mail thành công', {
         extendedTimeOut: 1500,
         timeOut: 3000

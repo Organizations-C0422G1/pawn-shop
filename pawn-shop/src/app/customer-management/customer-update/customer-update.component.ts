@@ -61,7 +61,7 @@ export class CustomerUpdateComponent implements OnInit {
     this.customerService.getCityById(this.customerForm.value.city);
     console.log(this.customerForm.value.address.district.city);
     this.customerService.saveAddress(address).subscribe(addresses => {
-      customerFormNew.address.id = addresses.id;
+      customerFormNew.address = addresses;
     }, error => {
 
     }, () => {
