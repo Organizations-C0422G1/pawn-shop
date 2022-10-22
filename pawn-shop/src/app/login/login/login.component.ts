@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     let loginRequest = this.formLogin.value;
-    console.log(loginRequest);
+    console.log(this.tokenStorageService.getJwt());
     this.loginService.login(loginRequest).subscribe(loginResponse => {
       if (loginRequest.rememberMe) {
         this.tokenStorageService.saveLocalStorage(loginResponse);

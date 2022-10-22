@@ -5,7 +5,7 @@
       <label for="nameSearch" class="form-label font-weight-bold">Tên Khách Hàng</label>
       <input id="nameSearch" type="text" name="customerName" placeholder="VD: Nguyễn Văn A"
              class="form-control bg-white border-left-0 border-md" [(ngModel)]="customerName"
-             (input)="onSearchPageContract()">
+             >
     </div>
 
     <div class="input-group-sm col-lg-4 mb-2">
@@ -13,12 +13,12 @@
       <input id="consignmentSearch" type="text" name="pawnItemName"
              placeholder="VD: Iphone X"
              class="form-control bg-white border-left-0 border-md" [(ngModel)]="pawnItemName"
-             (change)="onSearchPageContract()">
+             >
     </div>
     <div class="input-group-sm col-lg-4 mb-4">
       <label for="contractType" class="form-label font-weight-bold">Loại Hợp Đồng</label>
       <select id="contractType" name="typeContract" class="form-select bg-white border-left-0 border-md" [(ngModel)]="typeContract"
-              (ngModelChange)="onSearchPageContract()">
+              >
         <option value="" selected class="text-secondary">Chọn loại hợp đồng</option>
         <option [value]="0">Thanh lý</option>
         <option [value]="1">Cầm đồ</option>
@@ -29,20 +29,17 @@
       <label for="dateSearch" class="form-label font-weight-bold">Giao Dịch Từ Ngày</label>
       <input id="dateSearch" type="date" name="dateSearch"
              placeholder="Tìm kiếm theo ngày"
-             class="form-control bg-white border-left-0 border-md" [(ngModel)]="startDate"
-             (change)="onSearchPageContract()">
+             class="form-control bg-white border-left-0 border-md" [(ngModel)]="startDate">
     </div>
     <div class="input-group-sm col-lg-4 mb-4">
       <label for="dateSearch1" class="form-label font-weight-bold">Đến</label>
       <input id="dateSearch1" type="date" name="dateSearch"
              placeholder="Tìm kiếm theo ngày"
-             class="form-control bg-white border-left-0 border-md" [(ngModel)]="endDate"
-             (change)="onSearchPageContract()">
+             class="form-control bg-white border-left-0 border-md" [(ngModel)]="endDate">
     </div>
     <div class="input-group-sm col-lg-4 mb-4">
       <label for="status" class="form-label font-weight-bold">Trạng Thái</label>
-      <select id="status" name="statusContract" class="form-select bg-white border-left-0 border-md" [(ngModel)]="statusContract"
-              (ngModelChange)="onSearchPageContract()">
+      <select id="status" name="statusContract" class="form-select bg-white border-left-0 border-md" [(ngModel)]="statusContract">
         <option value="" selected class="text-secondary">Chọn Trạng thái</option>
         <option [value]="0">Hợp đồng cầm đồ còn hạn</option>
         <option [value]="1">Hợp đồng cầm đồ trả đúng hạn</option>
@@ -52,24 +49,24 @@
       </select>
     </div>
     <div class="form-group-lg col-lg-4 col-md-12 mx-auto mb-4 d-flex justify-content-center">
-      <button type="submit" data-bs-dismiss="modal" aria-label="Close"
+      <button type="submit" data-bs-dismiss="modal" aria-label="Close" (click)="onSearchPageContract()"
               class="ps-5 pe-5 p-btn btn-warning align-content-center btn-block py-2 d-flex text-center text-light">
         <span class="fa fa-search"></span>
       </button>
     </div>
   </div>
-  <table class="table shadow table-responsive table-hover">
+  <table class="table shadow table-responsive">
     <thead>
     <tr class="p-bg-warning bg-gradient">
       <th class="font-weight-bold" style="width: 1%;">#</th>
-      <th class="font-weight-bold" style="width: 3%;">Mã HĐ</th>
-      <th class="font-weight-bold" style="width: 3%;">Tên KH</th>
+      <th class="font-weight-bold" style="width: 4%;">Mã HĐ</th>
+      <th class="font-weight-bold" style="width: 4%;">Tên KH</th>
       <th class="font-weight-bold" style="width: 4%;">Tên Đồ</th>
       <th class="font-weight-bold" style="width: 4%;">Ngày Bắt Đầu</th>
       <th class="font-weight-bold" style="width: 4%;">Ngày Kết Thúc</th>
       <th class="font-weight-bold" style="width: 4%">Loại HĐ</th>
-      <th class="font-weight-bold text-center" style="width: 2%;">Trạng thái</th>
-      <th class="font-weight-bold text-center" colspan="3" style="width: 3%">Chức năng</th>
+      <th class="font-weight-bold text-center" style="width: 3%;">Trạng thái</th>
+      <th class="font-weight-bold text-center" colspan="3" style="width: 2%">Chức năng</th>
     </tr>
     </thead>
     <tbody>
@@ -117,7 +114,7 @@
           </button>
         </td>
         <td>
-          <button type="button" class="border-0 bg-white">
+          <button type="button" class="border-0 bg-white" [routerLink]="['/update-contract/', contracts.id]">
             <i class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip" data-bs-placement="top"
                title="chỉnh sửa giao dịch"></i>
           </button>
@@ -209,5 +206,6 @@
         <button type="button" class="btn p-bg-warning col-sm-6" (click)="deleteContract(contract.id)" data-bs-dismiss="modal">Xác Nhận</button>
       </div>
     </div>
+
   </div>
 </div>

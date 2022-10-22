@@ -13,7 +13,7 @@ const API_URL = `${environment.apiUrl}`;
 @Injectable({
   providedIn: 'root'
 })
-export class ContractService {
+export class  ContractService {
   token = '';
   httpOptions: any;
 

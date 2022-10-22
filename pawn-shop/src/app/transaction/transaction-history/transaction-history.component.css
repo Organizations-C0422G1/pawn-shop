@@ -60,8 +60,7 @@ select.form-control {
 }
 
 .p-page{
-  position: fixed;
-  bottom: 0px;
+  position: static;
 }
 
 .modal-2 li:first-child a {
@@ -94,7 +93,6 @@ select.form-control {
   display: inline-block;
   padding: 0;
   margin-top: 10px;
-  bottom: 10px;
   border: mediumturquoise wave;
   border-radius: 50px 50px 50px 50px;
 }

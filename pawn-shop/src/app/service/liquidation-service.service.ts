@@ -20,6 +20,7 @@ export class LiquidationServiceService {
   }
 
   findAllPawnItem(object: any): Observable<any> {
+    console.log(this.token)
     return this.httpClient.get(`http://localhost:8080/api/employee/liquidation/pawnItem/list?namePawnItem=${object.namePawnItem}&idPawnType=${object.idPawnType}&price=${object.price}`,this.httpOptions)
   }
 

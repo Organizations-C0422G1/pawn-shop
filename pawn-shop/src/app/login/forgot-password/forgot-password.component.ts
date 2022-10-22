@@ -35,7 +35,7 @@ export class ForgotPasswordComponent implements OnInit {
         timeOut: 3000
       });
     },error => {
-      console.log(error);
+      this.loadingMail = false
       this.toastr.error(error.error, 'Gửi mail thất bại', {
         extendedTimeOut: 1500,
         timeOut: 3000

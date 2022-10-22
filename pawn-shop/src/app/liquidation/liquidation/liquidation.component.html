@@ -32,7 +32,7 @@
               Tổng tiền (VNĐ)
               <span style="color: red">*</span>
             </label>
-            <input type="text" class="form-control pl-2" placeholder="1.000.000" [(ngModel)]="price" formControlName="liquidationPrice">
+            <input type="text" class="form-control pl-2" placeholder="1.000.000" formControlName="liquidationPrice">
           </div>
           <div class="text-danger" *ngIf="!liquidationPrice.valid &&  liquidationPrice.touched">
             <div [hidden]="!liquidationPrice.errors.min">Tổng tiền không được nhỏ hơn {{PriceValidate}}!</div>

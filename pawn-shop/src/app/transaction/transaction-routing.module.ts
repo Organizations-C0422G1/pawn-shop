@@ -6,7 +6,7 @@ import {UpdateContractComponent} from "./update-contract/update-contract.compone
 
 const routes: Routes = [
   {path: 'transaction-history', component: TransactionHistoryComponent},
-  {path: 'update-contract', component: UpdateContractComponent}
+  {path: 'update-contract/:id', component: UpdateContractComponent}
 ];
 
 @NgModule({

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { PawnItemListRoutingModule } from './pawn-item-list-routing.module';
 import { PawnItemComponent } from './pawn-item/pawn-item.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { PawnItemComponent } from './pawn-item/pawn-item.component';
     ],
     imports: [
         CommonModule,
-        PawnItemListRoutingModule
+        PawnItemListRoutingModule,
+        ReactiveFormsModule
     ]
 })
 export class PawnItemListModule { }

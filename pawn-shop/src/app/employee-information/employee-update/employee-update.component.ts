@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Employee} from "../../model/employee/employee";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EmployeeService} from "../../service/employee.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
@@ -12,7 +11,7 @@ import {AngularFireStorage} from "@angular/fire/storage";
   styleUrls: ['./employee-update.component.css']
 })
 export class EmployeeUpdateComponent implements OnInit {
-  employee: Employee = {};
+  employee: any;
   employeeForm: FormGroup;
   img: any = '';
 
