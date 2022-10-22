@@ -27,6 +27,6 @@ export class EmployeeInformationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getInfoEmployee("user2")
+    this.getInfoEmployee(this.username)
   }
 }

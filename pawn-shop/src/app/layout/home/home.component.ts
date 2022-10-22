@@ -88,6 +88,8 @@ export class HomeComponent implements OnInit {
         this.toastrService.success('Cửa hàng sẽ sớm liên hệ bạn!', 'Đăng ký thành công');
         this.quickContractForm.reset();
       });
+    }else {
+      this.toastrService.error('Vui lòng nhập thông tin cá nhân', 'Lỗi');
     }
   }
 }

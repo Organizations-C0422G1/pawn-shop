@@ -32,7 +32,8 @@ export class CustomerService {
 
   deleteCustomer(id: any): Observable<Customer> {
     console.log(id)
-    return this.http.delete<Customer>(this.URL_CUSTOMER + '/' + id);
+    // @ts-ignore
+    return this.http.patch<Customer>(this.URL_CUSTOMER + '/' + id,"",this.httpOptions);
   }
 
   createNewCustomer(customer: Customer) {

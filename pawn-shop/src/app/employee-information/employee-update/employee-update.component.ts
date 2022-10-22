@@ -1,4 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
+import {Employee} from "../../model/employee/employee";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EmployeeService} from "../../service/employee.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
@@ -14,18 +15,18 @@ export class EmployeeUpdateComponent implements OnInit {
   employee: any;
   employeeForm: FormGroup;
   img: any = '';
+  username
 
   constructor(private employeeService: EmployeeService, private router: Router, private activatedRoute: ActivatedRoute,
               @Inject(AngularFireStorage) private storage: AngularFireStorage) {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      let user = paramMap.get('user');
-      console.log(user);
-      this.employeeService.findByUser(user).subscribe(next => {
+      this.username = paramMap.get('username');
+      this.employeeService.findByUser(this.username).subscribe(next => {
         this.employee = next;
 
         this.employeeForm = new FormGroup({
           id: new FormControl(this.employee.id),
-          userName: new FormControl(this.employee),
+          userName: new FormControl(this.username),
           name: new FormControl(this.employee.name,[Validators.required]),
           email: new FormControl(this.employee.email,[Validators.required]),
           address: new FormControl(this.employee.address,[Validators.required]),

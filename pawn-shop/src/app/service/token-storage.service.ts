@@ -10,6 +10,7 @@ export class TokenStorageService {
 
   public saveLocalStorage(loginResponse) {
     localStorage.clear();
+    sessionStorage.clear();
     localStorage.setItem('jwt', loginResponse.jwt);
     localStorage.setItem('roles', JSON.stringify(loginResponse.roles));
     localStorage.setItem('username', loginResponse.username);
@@ -17,6 +18,7 @@ export class TokenStorageService {
   }
 
   public saveSessionStorage(loginResponse) {
+    localStorage.clear();
     sessionStorage.clear();
     sessionStorage.setItem('jwt', loginResponse.jwt);
     sessionStorage.setItem('roles', JSON.stringify(loginResponse.roles));

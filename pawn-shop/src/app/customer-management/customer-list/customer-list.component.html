@@ -12,7 +12,7 @@
         <input  class="form-control me-2" type="text"
                 placeholder="Tìm kiếm"
                 name="name"
-                [(ngModel)]="name" (input)="searchNameCustomer()">
+                [(ngModel)]="name" >
         <button class="btn p-btn" type="submit" (click)="searchNameCustomer()">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
@@ -46,7 +46,7 @@
       <td>{{customer.amountContract}}</td>
       <td><img src="{{customer.imgUrl}}" alt="" width="60"></td>
       <td><button class="btn"  ><i class="fa-solid fa-pen-to-square"></i></button></td>
-      <td><button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="elementDelete(customer.id,customer.name,customer.imgUrl)"><i class="fa-solid fa-trash"></i></button></td>
+      <td><button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="elementDelete(customer.id,customer.name,customer.imgUrl)"><i class="fa-solid fa-trash text-danger"></i></button></td>
     </tr>
 
 
@@ -77,24 +77,22 @@
   <div class="text-center" *ngIf="customerPage == '' ">
     <div class="text-center" ><h4 class="text-danger">Hiện không có người bạn cần tìm <i class="fa-solid fa-magnifying-glass"></i></h4></div>
   </div>
-  <div class="p-page container d-flex justify-content-center align-items-center mt-5">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item" *ngIf="page">
-          <a class="page-link text-warning" href="#" (click)="previous()">Trang trước
-          </a>
-        </li>
-        <ng-container *ngFor="let pageNow of pageSelect">
-          <ng-container *ngIf="pageNow == page">
-            <li class="page-item"><a class="page-link p-btn">{{pageNow + 1}}</a></li>
-          </ng-container>
-          <ng-container *ngIf="pageNow != page">
-            <li class="page-item"><a class="page-link" (click)="changePage(pageNow)">{{pageNow + 1}}</a></li>
-          </ng-container>
+  <div class="d-flex container d-flex justify-content-center align-items-center mt-5">
+    <ul class="p-pagination modal-2">
+      <li class="page-item" *ngIf="page">
+        <a class="page-link text-dark" (click)="previous()">&laquo;
+        </a>
+      </li>
+      <ng-container *ngFor="let pageNow of pageSelect">
+        <ng-container *ngIf="pageNow == page">
+          <li class="page-item"><a class="page-link active">{{pageNow + 1}}</a></li>
         </ng-container>
-        <li class="page-item" *ngIf="page != totalPage - 1"><a class="page-link text-warning" href="#" (click)="next()">Trang sau</a></li>
-      </ul>
-    </nav>
+        <ng-container *ngIf="pageNow != page">
+          <li class="page-item"><a class="page-link text-dark" (click)="changePage(pageNow)">{{pageNow + 1}}</a></li>
+        </ng-container>
+      </ng-container>
+      <li class="page-item" *ngIf="page != totalPage - 1"><a class="page-link text-dark" (click)="next()">&raquo;</a></li>
+    </ul>
   </div>
 
 </div>

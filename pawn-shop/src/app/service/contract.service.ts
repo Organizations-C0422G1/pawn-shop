@@ -27,22 +27,23 @@ export class  ContractService {
     };
   }
 
-  getAllPaginationAndSearch(index: number, code: string, customerName: string, pawnItem: string, startDate: string): Observable<Contract[]> {
+  getAllPaginationAndSearch(index: number, code: string, customerName: string, pawnItem: string, startDate: string): Observable<any> {
     // @ts-ignore
-    return this.http.get<Contract[]>(API_URL + '/api/employee/contracts/listPage?page=' + index + '&code='
+    return this.http.get<any>(API_URL + '/api/employee/contracts/listPage?page=' + index + '&code='
       + code + '&customerName=' + customerName + '&pawnItem=' + pawnItem + '&startDate=' + startDate, this.httpOptions);
   }
 
   getAllNotPagination(): Observable<Contract[]> {
     // @ts-ignore
-    return this.http.get<Contract[]>(API_URL + '/api/employee/contracts/listNotPagination',this.httpOptions);
+    return this.http.get<Contract[]>(API_URL + '/api/employee/contracts/listNotPagination', this.httpOptions);
   }
 
   returnItem(id: number, email: string, customerName: string, liquidationPrice: string): Observable<Contract> {
     // @ts-ignore
     return this.http.get<Contract>(API_URL + '/api/employee/contracts/returnItem/'
-      + id + '?email=' + email + '&customerName=' + customerName + '&liquidationPrice=' + liquidationPrice,this.httpOptions);
+      + id + '?email=' + email + '&customerName=' + customerName + '&liquidationPrice=' + liquidationPrice, this.httpOptions);
   }
+
   findAllCustomer(): Observable<Customer[]> {
     // @ts-ignore
     return this.http.get<Customer[]>('http://localhost:8080/api/employee/customer/list',this.httpOptions);

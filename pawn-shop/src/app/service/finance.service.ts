@@ -31,12 +31,12 @@ export class FinanceService {
 
   getInvestment(): Observable<number> {
     // @ts-ignore
-    return this.http.get<number>(this.URL_FINANCE + '/investment',this.httpOptions);
+    return this.http.get<number>('http://localhost:8080/api/admin/finance/investment',this.httpOptions);
   }
 
   getExpectedProfit(): Observable<number> {
     // @ts-ignore
-    return this.http.get<number>(this.URL_FINANCE + '/profit',this.httpOptions);
+    return this.http.get<number>('http://localhost:8080/api/admin/finance/profit',this.httpOptions);
   }
 
 }

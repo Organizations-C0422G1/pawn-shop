@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {ContractService} from "../../service/contract.service";
-import {Contract} from "../../model/contract/contract";
-import {ToastrService} from "ngx-toastr";
+import {Component, OnInit} from '@angular/core';
+import {ContractService} from '../../service/contract.service';
+import {ToastrService} from 'ngx-toastr';
+import {Contract} from '../../model/contract/contract';
 
 @Component({
   selector: 'app-return-item',
@@ -10,7 +10,6 @@ import {ToastrService} from "ngx-toastr";
 })
 export class ReturnItemComponent implements OnInit {
   contractList: Contract[] = [];
-  contractListNotPagination: Contract[] = [];
   indexPagination = 0;
   codeSearch = '';
   customerNameSearch = '';
@@ -29,6 +28,7 @@ export class ReturnItemComponent implements OnInit {
   totalMonth: number;
   idDelete: number;
   totalRecords: number;
+  pageSelect: number[] = [];
 
   constructor(private contractService: ContractService,
               private toastrService: ToastrService) {
@@ -38,14 +38,18 @@ export class ReturnItemComponent implements OnInit {
   }
 
   chooseContract() {
-    this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
-      this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contract: any) => {
-      this.contractList = contract.content;
-    });
-    this.contractService.getAllNotPagination().subscribe((contract: Contract[]) => {
-      this.contractListNotPagination = contract;
-      if ((this.contractListNotPagination.length % 5) !== 0) {
-        this.totalRecords = (Math.round(this.contractListNotPagination.length / 5)) + 1;
+    this.pageSelect.splice(0, this.totalRecords);
+    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+      this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
+      if (contracts == null) {
+        this.contractList = [];
+      } else {
+        this.pageSelect = [];
+        this.contractList = contracts.content;
+        this.totalRecords = contracts.totalPages;
+        for (let i = 0; i < this.totalRecords; i++){
+          this.pageSelect.push(i);
+        }
       }
     });
   }
@@ -73,12 +77,18 @@ export class ReturnItemComponent implements OnInit {
   }
 
   search() {
-    this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
-      this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contract: any) => {
-      if (contract == null) {
+    this.pageSelect.splice(0, this.totalRecords);
+    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+      this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
+      if (contracts == null) {
         this.contractList = [];
       } else {
-        this.contractList = contract.content;
+        this.pageSelect = [];
+        this.contractList = contracts.content;
+        this.totalRecords = contracts.totalPages;
+        for (let i = 0; i < this.totalRecords; i++){
+          this.pageSelect.push(i);
+        }
       }
     });
     this.codeSearch = '';
@@ -100,14 +110,57 @@ export class ReturnItemComponent implements OnInit {
     });
   }
 
-  nextPage() {
-    this.indexPagination = this.indexPagination + 1;
-    this.chooseContract();
+  previousPage() {
+    this.pageSelect.splice(0, this.totalRecords);
+    this.indexPagination = this.indexPagination - 1;
+    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+      this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
+      if (contracts == null) {
+        this.contractList = [];
+      } else {
+        this.contractList = contracts.content;
+        this.totalRecords = contracts.totalPages;
+        for (let i = 0; i < this.totalRecords; i++) {
+          this.pageSelect.push(i);
+        }
+      }
+    });
   }
 
-  previousPage() {
-    this.indexPagination = this.indexPagination - 1;
-    this.chooseContract();
+  nextPage() {
+    this.pageSelect.splice(0, this.totalRecords);
+    this.indexPagination = this.indexPagination + 1;
+    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+      this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
+      if (contracts == null) {
+        this.contractList = [];
+      } else {
+        this.contractList = contracts.content;
+        this.totalRecords = contracts.totalPages;
+        for (let i = 0; i < this.totalRecords; i++) {
+          this.pageSelect.push(i);
+        }
+      }
+    });
+  }
+
+  changePage(pageNow: number) {
+
+    this.indexPagination = pageNow;
+    this.pageSelect.splice(0, this.totalRecords);
+    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+      this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
+      if (contracts == null) {
+        this.contractList = [];
+      } else {
+
+        this.contractList = contracts.content;
+        this.totalRecords = contracts.totalPages;
+        for (let i = 0; i < this.totalRecords; i++) {
+          this.pageSelect.push(i);
+        }
+      }
+    });
   }
 
   reset() {
