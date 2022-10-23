@@ -18,10 +18,6 @@
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.p-btn:focus {
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(255, 51, 0, 0.5);
-}
 
 .p-bg{
   background: linear-gradient(to right,#f37214,#ff3300);

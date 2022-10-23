@@ -24,6 +24,7 @@ import {FinanceModule} from "./finance/finance.module";
 import {PawnItemListModule} from "./pawn-item-list/pawn-item-list.module";
 import {TopTenTransactionModule} from "./top-ten-transaction/top-ten-transaction.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NgxUiLoaderHttpModule, NgxUiLoaderModule} from "ngx-ui-loader";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,40 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     FinanceModule,
     PawnItemListModule,
     TopTenTransactionModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxUiLoaderModule.forRoot({
+      "bgsColor": "#ff3300",
+      "bgsOpacity": 0.5,
+      "bgsPosition": "bottom-right",
+      "bgsSize": 60,
+      "bgsType": "ball-spin-clockwise",
+      "blur": 5,
+      "delay": 0,
+      "fastFadeOut": true,
+      "fgsColor": "#f37214",
+      "fgsPosition": "center-center",
+      "fgsSize": 60,
+      "fgsType": "ball-scale-multiple",
+      "gap": 24,
+      "logoPosition": "center-center",
+      "logoSize": 120,
+      "logoUrl": "",
+      "masterLoaderId": "master",
+      "overlayBorderRadius": "0",
+      "overlayColor": "rgba(40, 40, 40, 0.8)",
+      "pbColor": "red",
+      "pbDirection": "ltr",
+      "pbThickness": 3,
+      "hasProgressBar": true,
+      "text": "",
+      "textColor": "#FFFFFF",
+      "textPosition": "center-center",
+      "maxTime": -1,
+      "minTime": 300
+    }),
+    NgxUiLoaderHttpModule.forRoot({
+      showForeground: true
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

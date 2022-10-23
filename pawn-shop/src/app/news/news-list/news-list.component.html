@@ -20,15 +20,12 @@
                              class="form-control"
                              id="firstDate" formControlName="firstDate"
                              [class.is-invalid]="searchForm.controls.firstDate.invalid && searchForm.controls.firstDate.touched">
-                      <i class="fas fa-calendar input-prefix" tabindex=0></i>
                       <div *ngIf="searchForm.controls.firstDate.invalid " class="invalid-feedback">
                         Ngày đăng không được lớn hơn ngày hiện tại!.
                       </div>
                     </div>
                     <label>Ngày bắt đầu đăng</label>
                   </div>
-
-
                   <div class="col-4 col-lg-4 col-md-4 col-sm-4 me-3" data-bs-toggle="lastDate" data-bs-content=""
                        data-bs-trigger="manual"
                        data-bs-placement="top">
@@ -36,7 +33,6 @@
                       <input placeholder="Select date" type="date" id="prefill-example"
                              class="form-control" formControlName="lastDate"
                              [class.is-invalid]="searchForm.invalid && searchForm.controls.lastDate.touched">
-                      <i class="fas fa-calendar input-prefix" tabindex=0></i>
                       <div *ngIf="searchForm.controls.lastDate.valid " class="invalid-feedback">
                         Không được nhỏ hơn ngày đăng!.
                       </div>
@@ -112,80 +108,77 @@
           </ul>
         </nav>
       </div>
-      <div class="col-4 col-lg-4 col-md-4 col-sm-4" style="position: fixed; top: 20px;right: 0">
-        <div class="row">
-          <div class="col-8">
-            <ul class="p-ul">
-              <li class="p-li">
-                <a href="">
-                  <button class="p-btn">
-                    Thêm tin tức
-                  </button>
-                </a>
-              </li>
-              <li class="p-li">
-                <form [formGroup]="searchTitleForm" (ngSubmit)="searchTitle()">
-                  <div class="input-group mb-3 mt-3 w-100" data-bs-toggle="titleSearch" data-bs-content=""
-                       data-bs-trigger="manual" data-bs-placement="bottom">
-                    <input type="text" class="form-control" formControlName="titleSearch"
-                           placeholder="Nhập tiêu đề cần tìm kiếm..."
-                           aria-label="Recipient's username"
-                           aria-describedby="basic-addon2">
-                    <button class="center-box p-btn" style="border-color: #ff3300">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                           fill="currentColor"
-                           class="bi bi-search" viewBox="0 0 16 16">
-                        <path
-                          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                      </svg>
-                    </button>
-                  </div>
-                  <div *ngIf="searchTitleForm.controls.titleSearch.hasError('required') &&
+    </div>
+    <div class="col-4 col-lg-4 col-md-4 col-sm-4">
+      <div class="row">
+        <ul class="p-ul">
+          <li class="p-li">
+            <a href="">
+              <button class="p-btn">
+                Thêm tin tức
+              </button>
+            </a>
+          </li>
+          <li class="p-li">
+            <form [formGroup]="searchTitleForm" (ngSubmit)="searchTitle()">
+              <div class="input-group mb-3 mt-3 w-100" data-bs-toggle="titleSearch" data-bs-content=""
+                   data-bs-trigger="manual" data-bs-placement="bottom">
+                <input type="text" class="form-control" formControlName="titleSearch"
+                       placeholder="Nhập tiêu đề cần tìm kiếm..."
+                       aria-label="Recipient's username"
+                       aria-describedby="basic-addon2">
+                <button class="center-box p-btn" style="border-color: #ff3300">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                       fill="currentColor"
+                       class="bi bi-search" viewBox="0 0 16 16">
+                    <path
+                      d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                </button>
+              </div>
+              <div *ngIf="searchTitleForm.controls.titleSearch.hasError('required') &&
               searchTitleForm.controls.titleSearch.touched" class="text-danger"> Nhập tiêu đề cần tìm kiếm!
-                  </div>
-                  <div *ngIf="searchTitleForm.controls.titleSearch.hasError('maxlength') &&
+              </div>
+              <div *ngIf="searchTitleForm.controls.titleSearch.hasError('maxlength') &&
               searchTitleForm.controls.titleSearch.touched" class="text-danger"> Độ dài không quá 100 ký tự!.
-                  </div>
-                  <div *ngIf="searchTitleForm.controls.titleSearch.hasError('pattern') &&
+              </div>
+              <div *ngIf="searchTitleForm.controls.titleSearch.hasError('pattern') &&
               searchTitleForm.controls.titleSearch.touched" class="text-danger"> Không được bắt đầu bằng khoảng trắng.
-                  </div>
-                </form>
-              </li>
+              </div>
+            </form>
+          </li>
 
-              <li class="p-li">
-                <b class="p-border">Tin tức mới cập nhật</b>
-              </li>
-              <hr class="hr">
-              <li class="p-li">
-                <a style="text-decoration-line: none" href="">Hướng dẫn cách cầm nhà đất tại tiệm
-                  cầm đồ tư
-                  nhân</a>
-              </li>
-              <hr>
-              <li class="p-li">
-                <a style="text-decoration-line: none"
-                   href="https://camdonhanh.vn/blog/thu-tuc-cam-do.html">Các
-                  thủ tục cầm đồ nhanh
-                </a>
-              </li>
-              <hr>
-              <li class="p-li">
-                <a style="text-decoration-line: none"
-                   href="https://luatminhkhue.vn/cam-do-va-cam-co-cac-van-de-phap-ly-lien-quan--.aspx">
-                  Cầm đồ và cầm cố các vấn đề pháp lý liên quan ? Mạo danh cắm xe người khác có
-                  phạm tội ?
-                </a>
-              </li>
-              <hr>
-              <li class="p-li">
-                <a style="text-decoration-line: none" href="">Các địa điểm cầm đồ uy tín ở các
-                  Tỉnh/Thành
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-4"></div>
-        </div>
+          <li class="p-li">
+            <b class="p-border">Tin tức mới cập nhật</b>
+          </li>
+          <hr class="hr">
+          <li class="p-li">
+            <a style="text-decoration-line: none" href="">Hướng dẫn cách cầm nhà đất tại tiệm
+              cầm đồ tư
+              nhân</a>
+          </li>
+          <hr>
+          <li class="p-li">
+            <a style="text-decoration-line: none"
+               href="https://camdonhanh.vn/blog/thu-tuc-cam-do.html">Các
+              thủ tục cầm đồ nhanh
+            </a>
+          </li>
+          <hr>
+          <li class="p-li">
+            <a style="text-decoration-line: none"
+               href="https://luatminhkhue.vn/cam-do-va-cam-co-cac-van-de-phap-ly-lien-quan--.aspx">
+              Cầm đồ và cầm cố các vấn đề pháp lý liên quan ? Mạo danh cắm xe người khác có
+              phạm tội ?
+            </a>
+          </li>
+          <hr>
+          <li class="p-li">
+            <a style="text-decoration-line: none" href="">Các địa điểm cầm đồ uy tín ở các
+              Tỉnh/Thành
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

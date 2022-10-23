@@ -22,11 +22,6 @@
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.p-btn:focus {
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(255, 51, 0, 0.5);
-}
-
 .p-bg-warning{
   background-color: #f37214;
   color: #f9fafb;

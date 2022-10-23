@@ -119,13 +119,12 @@ export class ContractAddComponent implements OnInit {
     let contractNew = this.contractForm.value;
     this.contractService.createPawnItem(pawnItem).subscribe(pawnItems => {
         contractNew.pawnItem.id = pawnItems.id;
-
       }, error => {
       },
       () => {
         this.contractService.createContract(contractNew).subscribe(() => {
-          console.log(contractNew)
           this.toast.success("Thông báo", "Thêm mới thành công")
+          this.ngOnInit()
         }, error => {
           this.toast.error("Thông báo", "Thêm mới thất bại");
           this.isLoading = false;
