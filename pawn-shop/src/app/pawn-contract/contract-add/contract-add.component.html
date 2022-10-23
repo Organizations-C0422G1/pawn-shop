@@ -1,5 +1,4 @@
-
-<div class="content shadow w-50 container mt-5 d-flex justify-content-center" >
+<div class="content shadow w-50 container mt-5 d-flex justify-content-center">
   <div class="container">
     <div class="row align-items-stretch no-gutters contact-wrap mt-3">
       <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
@@ -11,7 +10,8 @@
             </div>
             <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3"></div>
           </div>
-          <form [formGroup]="contractForm" (ngSubmit)="create()" *ngIf="contractForm" class="mb-5" method="post" id="contactForm" name="contactForm">
+          <form [formGroup]="contractForm" (ngSubmit)="save()" *ngIf="contractForm" class="mb-5" method="post"
+                id="contactForm" name="contactForm">
             <div class="col-md-12 form-group mb-3 col-lg-12 col-sm-12 col-xs-12">
               <label class="col-form-label">
                 Khách Hàng
@@ -23,13 +23,13 @@
                   Chọn Khách Hàng
                 </button>
 
-                <button type="button" class="p-btn" data-bs-toggle="modal"
+                <button routerLink="/customer-add" type="button" class="p-btn" data-bs-toggle="modal"
                         data-bs-target="#">
                   Thêm Khách Hàng
                 </button>
               </div>
               <input type="text" formControlName="customer" hidden>
-              <p *ngIf="customer" class="mt-3" style="color: red">Bạn đã chọn khách hàng: {{customer.name}}</p>
+              <p *ngIf="customer" class="mt-3">Bạn đã chọn khách hàng: {{customer.name}}</p>
             </div>
             <div formGroupName="pawnItem">
               <div class="row">
@@ -37,28 +37,36 @@
                   <label class="col-form-label" for="doCam">
                     Đồ Cầm
                     <span style="color: red">*</span>
+                    <span style="color: red"
+                          *ngIf="contractForm.get('pawnItem').get('name').hasError('required') && contractForm.get('pawnItem').get('name').touched">
+                      Vui lòng nhập
+                    </span>
+                    <span style="color: red"
+                          *ngIf="contractForm.get('pawnItem').get('name').hasError('minlength') && contractForm.get('pawnItem').get('name').touched">
+                      Vui lòng nhập tối thiểu 10 kí tự
+                    </span>
+                    <span style="color: red"
+                          *ngIf="contractForm.get('pawnItem').get('name').hasError('maxlength') && contractForm.get('pawnItem').get('name').touched">
+                      Kí tự tối đa: 100 kí tự
+                    </span>
                   </label>
                   <input type="text" class="form-control pl-2" id="doCam" formControlName="name">
-                  <p style="color: red" *ngIf="contractForm.get('pawnItem').get('name').hasError('required') && contractForm.get('pawnItem').get('name').touched">
-                    Vui lòng nhập
-                  </p>
-                  <p style="color: red" *ngIf="contractForm.get('pawnItem').get('name').hasError('minlength') && contractForm.get('pawnItem').get('name').touched">
-                    Vui lòng nhập tối thiểu 10 kí tự
-                  </p>
-                  <p style="color: red" *ngIf="contractForm.get('pawnItem').get('name').hasError('maxlength') && contractForm.get('pawnItem').get('name').touched">
-                    Số lượng kí tự tối đa có thể nhập là 100 kí tự, vui lòng nhập lại
-                  </p>
                 </div>
 
                 <div class="col-md-6 form-group mb-3 col-lg-6 col-sm-6 col-xs-6 ">
                   <label class="col-form-label">
                     Loại Đồ
                     <span style="color: red">*</span>
+                    <span style="color: red"
+                          *ngIf="contractForm.get('pawnItem').get('pawnType').hasError('required') && contractForm.get('pawnItem').get('pawnType').touched">
+                      Vui lòng nhập
+                    </span>
                   </label>
-                  <select  class="form-select" id="inputGroupSelect01" formControlName="pawnType">
-                    <option value="0" >Vui Lòng Chọn Loại Đồ Cầm</option>
+                  <select class="form-select" id="inputGroupSelect01" formControlName="pawnType">
+                    <option value="">--Chọn Loại Đồ Cầm--</option>
                     <option *ngFor="let p of pawnTypeList" [ngValue]="p">{{p.name}}</option>
                   </select>
+
                 </div>
               </div>
               <input type="text" formControlName="status" hidden>
@@ -72,78 +80,76 @@
                 <label class="col-form-label" for="tienCamDo">
                   Tiền Cầm Đồ (Đơn Vị: VNĐ)
                   <span style="color: red">*</span>
+                  <span style="color: red"
+                        *ngIf="contractForm.controls.itemPrice.hasError('required') && contractForm.controls.itemPrice.touched">
+                    Vui lòng nhập
+                  </span>
+                  <span style="color: red"
+                        *ngIf="contractForm.controls.itemPrice.hasError('invalidItemPrice') && contractForm.controls.itemPrice.touched">
+                    Số phải lớn hơn 0
+                  </span>
+                  <span style="color: red"
+                        *ngIf="contractForm.controls.itemPrice.hasError('pattern') && contractForm.controls.itemPrice.touched">
+                    Định dạng số
+                  </span>
                 </label>
                 <input type="text" class="form-control pl-2" id="tienCamDo" formControlName="itemPrice">
-                <p style="color: red" *ngIf="contractForm.controls.itemPrice.hasError('required') && contractForm.controls.itemPrice.touched">
-                  Vui lòng nhập
-                </p>
-                <p style="color: red" *ngIf="contractForm.controls.itemPrice.hasError('invalidItemPrice') && contractForm.controls.itemPrice.touched">
-                  Vui lòng nhập số lớn hơn 0
-                </p>
-                <p style="color: red" *ngIf="contractForm.controls.itemPrice.hasError('pattern') && contractForm.controls.itemPrice.touched">
-                  Vui lòng nhập đúng định dạng là số
-                </p>
               </div>
               <div class="col-md-6 form-group mb-3 col-lg-6 col-sm-6 col-xs-6">
                 <label class="col-form-label" for="laiSuat">
                   Lãi suất (Đơn Vị: %)
                   <span style="color: red">*</span>
+                  <span style="color: red"
+                        *ngIf="contractForm.controls.interestRate.hasError('required') && contractForm.controls.interestRate.touched">
+                    Vui lòng nhập
+                  </span>
+                  <span style="color: red"
+                        *ngIf="contractForm.controls.interestRate.hasError('min') && contractForm.controls.interestRate.touched">
+                    Lãi suất từ 0.2%-0.4%
+                  </span>
+                  <span style="color: red"
+                        *ngIf="contractForm.controls.interestRate.hasError('max') && contractForm.controls.interestRate.touched">
+                    Lãi suất từ 0.2%-0.4%
+                  </span>
                 </label>
-                <input type="text" class="form-control pl-2" id="laiSuat" formControlName="interestRate">
-                <p style="color: red" *ngIf="contractForm.controls.interestRate.hasError('required') && contractForm.controls.interestRate.touched">
-                  Vui lòng nhập
-                </p>
-                <p style="color: red" *ngIf="contractForm.controls.interestRate.hasError('invalidInterestRate') && contractForm.controls.interestRate.touched">
-                  Vui lòng nhập lãi suất trong khoảng từ 0.2 đến 0.4
-                </p>
-                <p style="color: red" *ngIf="contractForm.controls.interestRate.hasError('pattern') && contractForm.controls.interestRate.touched">
-                  Vui lòng nhập đúng định dạng là kiểu số thập phân
-                </p>
+                <input type="number" class="form-control pl-2" id="laiSuat" formControlName="interestRate">
               </div>
             </div>
 
 
             <div class="row">
               <div class="col-md-6 form-group mb-3 col-lg-6 col-sm-6 col-xs-6">
-                <label class="col-form-label" for="startDate">
-                  Ngày Làm Hợp Đồng
+                <label class="col-form-label">
+                  Upload File Ảnh
                   <span style="color: red">*</span>
+                  <span style="color: red" *ngIf="checkImgSize">Dung lượng quá lớn</span>
+                  <span style="color: red" *ngIf="regexImg">Không đúng định dạng ảnh
+                  </span>
                 </label>
-                <input type="date" class="form-control pl-2" id="startDate" formControlName="startDate">
-                <p style="color: red" *ngIf="contractForm.controls.startDate.hasError('required') && contractForm.controls.startDate.touched">
-                  Vui lòng nhập
-                </p>
-                <p style="color: red" *ngIf="contractForm.controls.startDate.hasError('invalidStartDate') && contractForm.controls.startDate.touched">
-                  Vui lòng nhập ngày làm hợp đồng là ngày hiện tại
-                </p>
+                <input type="file" class="form-control" id="inputGroupFile02" (change)="onFileSelected($event)">
               </div>
               <div class="col-md-6 form-group mb-3 col-lg-6 col-sm-6 col-xs-6">
                 <label class="col-form-label" for="endDate">
-                  Ngày Kết Thúc Hợp Đồng
+                  Ngày Kết Thúc HĐ
                   <span style="color: red">*</span>
+                  <span style="color: red" *ngIf="contractForm.controls.endDate.hasError('required') && contractForm.controls.endDate.touched">
+                    Vui lòng nhập
+                  </span>
+                  <span style="color: red" *ngIf="contractForm.controls.endDate.hasError('invalidEndDate') && contractForm.controls.endDate.touched">
+                    Phải lớn hơn ngày hiện tại
+                  </span>
                 </label>
                 <input type="date" class="form-control pl-2" id="endDate" formControlName="endDate">
-                <p style="color: red" *ngIf="contractForm.controls.endDate.hasError('required') && contractForm.controls.endDate.touched">
-                  Vui lòng nhập
-                </p>
-                <p style="color: red" *ngIf="contractForm.controls.endDate.hasError('invalidEndDate') && contractForm.controls.endDate.touched">
-                  Vui lòng nhập ngày kết thúc hợp đồng lớn hơn ngày hiện tại
-                </p>
-
               </div>
             </div>
 
-
-            <!--            <div class="row">-->
-            <!--              <div class="col-md-12 form-group mb-3 col-lg-12 col-sm-12 col-xs-12">-->
-            <!--                <label class="col-form-label">-->
-            <!--                  Upload File Ảnh-->
-            <!--                  <span style="color: red">*</span>-->
-            <!--                </label>-->
-            <!--                <input type="file" class="form-control" id="inputGroupFile02" formControlName="imgUrl">-->
-            <!--              </div>-->
-            <!--            </div>-->
-
+            <div class="row">
+              <div class="col-md-12 form-group mb-3 col-lg-12 col-sm-12 col-xs-12">
+                <div *ngFor="let url of urlListDisplayHtml">
+                  <img [src]="url"  style="width: 150px; height: 150px; max-width: 100%; max-height: 100%; float: left">
+                </div>
+              </div>
+            </div>
 
             <div class="row mt-3">
               <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6"></div>
@@ -175,7 +181,8 @@
           <button class="center-box p-btn" style="border-color: #ff3300" (click)="search(idCard.value)">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                  class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>
           </button>
         </div>
@@ -196,6 +203,9 @@
             <td>
               <button class="btn btn-warning" data-bs-dismiss="modal" (click)="getId(cus.id,cus)">Chọn</button>
             </td>
+          </tr>
+          <tr *ngIf="customerList== null">
+            <td colspan="8">Không có kêt quả phù hợp</td>
           </tr>
           </tbody>
         </table>

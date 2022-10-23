@@ -1,9 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Customer} from "../../model/customer/customer";
 import {PawnType} from "../../model/pawn/pawn-type";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ContractService} from "../../service/contract.service";
 import {ToastrService} from "ngx-toastr";
+import {Contract} from "../../model/contract/contract";
+import {PawnImg} from "../../model/pawn/pawn-img";
+import {finalize} from "rxjs/operators";
+import {formatDate} from "@angular/common";
+import {AngularFireStorage} from "@angular/fire/storage";
+import {ContractService} from "../../service/contract.service";
+import {TokenStorageService} from "../../service/token-storage.service";
+
+function startDate() {
+  let startDate = new Date();
+  return startDate.getFullYear() + "-" + Number(startDate.getMonth() + 1) + "-" + startDate.getDate();
+}
 
 @Component({
   selector: 'app-contract-add',
@@ -18,9 +29,22 @@ export class ContractAddComponent implements OnInit {
   contractForm: FormGroup;
   img: any = '';
   idCus: number = 0;
+  checkImgSize = false;
+  regexImg = false;
+  isExits = false;
+
+  urlListDisplayHtml: any[] = [];
+  urlListToCreate: string[] = [];
+  fileList = '';
+  selectedFile: File = null;
+  selectedFileList: File[] = [];
+  maxLengthUrlInDb= 0;
+  isLoading = false ;
 
   constructor(private contractService: ContractService,
-              private toast: ToastrService) {
+              private toast: ToastrService,
+              private storage: AngularFireStorage,
+              private tokenStorageService: TokenStorageService) {
     this.contractService.findAllPawnType().subscribe(data => {
       this.pawnTypeList = data;
     });
@@ -30,21 +54,22 @@ export class ContractAddComponent implements OnInit {
     this.getAll();
     this.contractForm = new FormGroup({
         id: new FormControl(''),
-        code: new FormControl('HD-'),
-        itemPrice: new FormControl('', [Validators.required, this.validateItemPrice, Validators.pattern("^[1-9]{1}[0-9]*$")]),
-        interestRate: new FormControl('', [Validators.required, this.validateInterestRate, Validators.pattern("^\\d*\\.\\d+$")]),
-        startDate: new FormControl('', [Validators.required, this.validateStartDate]),
+        code: new FormControl('HD-'+ this.tokenStorageService.getEmployeeCode()+'-'),
+        itemPrice: new FormControl('', [Validators.required, this.validateItemPrice, Validators.pattern("^[-]*[0-9]*$")]),
+        interestRate: new FormControl('', [Validators.required, Validators.min(0.2), Validators.max(0.4)]),
+        startDate: new FormControl(startDate()),
         endDate: new FormControl('', [Validators.required, this.validateEndDate]),
         returnDate: new FormControl(null),
         liquidationPrice: new FormControl(null),
         type: new FormControl(true),
-        status: new FormControl(0),
+        status: new FormControl(1),
         customer: new FormControl(),
         pawnItem: new FormGroup({
           id: new FormControl(''),
-          name: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]),
+          name: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]),
           status: new FormControl(1),
-          pawnType: new FormControl('0')
+          pawnType: new FormControl('',[Validators.required]),
+          pawnImg: new FormControl('',[Validators.required])
         })
       }
     );
@@ -54,23 +79,6 @@ export class ContractAddComponent implements OnInit {
     let temp = itemPrice.value;
     if (temp < 0) {
       return {'invalidItemPrice': true}
-    }
-    return null;
-  }
-
-  validateStartDate(startDate: AbstractControl) {
-    let temp = startDate.value.split("-");
-    let now = new Date();
-    if (temp[0] == now.getFullYear() && temp[1] == now.getMonth() + 1 && temp[2] == now.getDate()) {
-      return null;
-    }
-    return {'invalidStartDate': true}
-  }
-
-  validateInterestRate(interestRate: AbstractControl) {
-    let temp = interestRate.value;
-    if (temp < 0.2 || temp > 0.4) {
-      return {'invalidInterestRate': true}
     }
     return null;
   }
@@ -86,17 +94,12 @@ export class ContractAddComponent implements OnInit {
 
   getAll() {
     this.contractService.findAllCustomer().subscribe(data => {
-      // @ts-ignore
-      console.log(data)
       this.customerList = data;
-      console.log(this.customerList);
     });
   }
 
   getId(id: number, cus: Customer) {
-    this.contractForm.value.customer = id;
-    console.log(this.contractForm.value.customer)
-    this.idCus = id;
+    this.contractForm.get('customer').patchValue(cus);
     this.customer = cus;
   }
 
@@ -111,10 +114,9 @@ export class ContractAddComponent implements OnInit {
   }
 
   create() {
-    this.contractForm.value.customer = this.idCus;
+    this.isLoading = true;
     let pawnItem = this.contractForm.value.pawnItem;
     let contractNew = this.contractForm.value;
-    console.log(this.contractForm.value)
     this.contractService.createPawnItem(pawnItem).subscribe(pawnItems => {
         contractNew.pawnItem.id = pawnItems.id;
 
@@ -123,12 +125,104 @@ export class ContractAddComponent implements OnInit {
       () => {
         this.contractService.createContract(contractNew).subscribe(() => {
           console.log(contractNew)
-          this.toast.success("thông báo", "thêm mới thành công")
+          this.toast.success("Thông báo", "Thêm mới thành công")
         }, error => {
-          console.log(2)
-          console.log(error);
+          this.toast.error("Thông báo", "Thêm mới thất bại");
+          this.isLoading = false;
+        },()=>{
+         this.isLoading = false;
         })
       })
   }
+
+  getCurrentDateTime(): string {
+    return formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss', 'en-US');
+  }
+
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile.size > 9000000) {
+      this.checkImgSize = true;
+      this.regexImg = false;
+      this.regexImg = false;
+      return;
+    }
+
+    if (!this.selectedFile.name.match('^.*\\.(jpg|JPG|png|PNG)$')) {
+      this.checkImgSize = false;
+      this.regexImg = true;
+      this.isExits = false;
+      return;
+    }
+    this.selectedFileList.push(this.selectedFile);
+    this.urlListDisplayHtml = [];
+    for (let i = 0; i < this.selectedFileList.length; i++) {
+      let reader = new FileReader();
+      reader.readAsDataURL(this.selectedFileList[i]);
+
+      // tslint:disable-next-line:variable-name
+      reader.onload = (_event) => {
+        this.urlListDisplayHtml.push(reader.result);
+      };
+    }
+  }
+
+  uploadFile(img: any) {
+    return new Promise((resolve, reject) => {
+      const nameImg = this.getCurrentDateTime() + img.name;
+      const fileRef = this.storage.ref(nameImg);
+      this.storage.upload(nameImg, img).snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe((url) => {
+            resolve(true)
+            this.fileList += url + ",";
+          });
+        })
+      ).subscribe()
+    });
+  }
+
+  async handleFiles() {
+    for (let i = 0; i < this.selectedFileList.length; i++) {
+      await this.uploadFile(this.selectedFileList[i])
+    }
+  }
+
+  save() {
+    this.handleFiles().then(() => {
+      this.urlListToCreate = this.fileList.split(',');
+      const contract: Contract = this.contractForm.value;
+      const pawnImgList: PawnImg[] = [];
+      for (let i = 0; i < this.urlListToCreate.length - 1; i++) {
+        let pawnImg: PawnImg = {
+          'imgUrl': this.urlListToCreate[i]
+        }
+        pawnImgList.push(pawnImg);
+      }
+      contract.pawnItem.pawnImg = pawnImgList;
+      console.log(contract);
+      this.contractService.createPawnItem(contract.pawnItem).subscribe(
+        pawnItems => {
+          contract.pawnItem.id = pawnItems.id;
+        }, error => {
+        },
+        () => {
+          this.contractService.createContract(contract).subscribe(() => {
+            this.toast.success("thông báo", "thêm mới thành công")
+          }, error => {
+            this.toast.error("thông báo", "thêm mới fail")
+          })
+        })
+    })
+
+  }
+
+  // chooseFile() {
+  //   if (!this.selectedFile || this.selectedFile.name === ''){
+  //     this.isExits = true;
+  //     this.checkImgSize = false;
+  //     this.regexImg = false;
+  //   }
+  // }
 
 }
