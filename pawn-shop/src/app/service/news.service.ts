@@ -43,6 +43,6 @@ export class NewsService {
 
   deleteNews(id: number): Observable<News> {
     // @ts-ignore
-    return this.http.patch<News>(this.URL_NEWS + '/delete/' + id,this.httpOptions);
+    return this.http.patch<News>(this.URL_NEWS + '/delete/' + id,'',this.httpOptions);
   }
 }

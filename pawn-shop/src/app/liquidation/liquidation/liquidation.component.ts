@@ -117,6 +117,7 @@ export class LiquidationComponent implements OnInit {
       if (this.formLiquidation.valid) {
         console.log(this.liquidation)
         this.liquidationServiceService.updateLiquidation(this.liquidation).subscribe(n => {
+          this.imgUrl = []
           this.toast.success("Thanh lý thành công!");
           this.formLiquidation.reset();
           this.PawnItemLiquidation = null;

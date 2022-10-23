@@ -29,7 +29,6 @@
       <th scope="col">SĐT</th>
       <th scope="col">Giới tính</th>
       <th scope="col">Số lượng hợp đồng</th>
-      <th scope="col">Ảnh khách hàng</th>
       <th>Sửa</th>
       <th>Xóa</th>
     </tr>
@@ -43,8 +42,7 @@
       <td>{{customer.phoneNumber}}</td>
       <td *ngIf="customer.gender == 0">Nữ</td>
       <td *ngIf="customer.gender == 1">Nam</td>
-      <td>{{customer.amountContract}}</td>
-      <td><img src="{{customer.imgUrl}}" alt="" width="60"></td>
+      <td class="text-center">{{customer.amountContract}}</td>
       <td><button class="btn"  [routerLink]="['/customer-update',customer.id]"><i class="fa-solid fa-pen-to-square"></i></button></td>
       <td><button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="elementDelete(customer.id,customer.name,customer.imgUrl)"><i class="fa-solid fa-trash text-danger"></i></button></td>
     </tr>

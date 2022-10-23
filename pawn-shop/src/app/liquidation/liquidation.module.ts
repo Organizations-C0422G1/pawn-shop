@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { LiquidationRoutingModule } from './liquidation-routing.module';
-import { LiquidationComponent } from './liquidation/liquidation.component';
+import {LiquidationRoutingModule} from './liquidation-routing.module';
+import {LiquidationComponent} from './liquidation/liquidation.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
-    declarations: [LiquidationComponent],
-    exports: [
-        LiquidationComponent
-    ],
+  declarations: [LiquidationComponent],
+  exports: [
+    LiquidationComponent
+  ],
   imports: [
     CommonModule,
     LiquidationRoutingModule,
@@ -18,4 +18,5 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     FormsModule
   ]
 })
-export class LiquidationModule { }
+export class LiquidationModule {
+}

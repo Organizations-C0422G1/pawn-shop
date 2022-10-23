@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {City} from "../../model/address/city";
 import {District} from "../../model/address/district";
 import {PawnType} from "../../model/pawn/pawn-type";
@@ -14,13 +14,14 @@ import {CityService} from "../../service/city.service";
 import {DistrictService} from "../../service/district.service";
 import {QuickContractService} from "../../service/quick-contract.service";
 import {ToastrService} from "ngx-toastr";
+import {ShareDataService} from "../../service/share-data.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   cities: City[] = [];
   districts: District[] = [];
   pawnTypes: PawnType[] = [];
@@ -32,12 +33,13 @@ export class HomeComponent implements OnInit {
   quickPawnItemDto: QuickPawnItemDto = {};
   quickContractForm: FormGroup;
 
-
   constructor(private pawnTypeService: PawnTypeService,
               private cityService: CityService,
               private districtService: DistrictService,
               private quickContractService: QuickContractService,
-              private toastrService: ToastrService) {
+              private toastrService: ToastrService,
+              private data: ShareDataService) {
+    data.changeLoginStatus(false);
   }
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class HomeComponent implements OnInit {
     this.findAllPawnTypes();
     this.buildForm();
   }
+
 
   findAllCities() {
     this.cityService.findAll().subscribe(next => this.cities = next);
@@ -91,5 +94,9 @@ export class HomeComponent implements OnInit {
     }else {
       this.toastrService.error('Vui lòng nhập thông tin cá nhân', 'Lỗi');
     }
+  }
+
+  ngOnDestroy(): void {
+    this.data.changeLoginStatus(true)
   }
 }

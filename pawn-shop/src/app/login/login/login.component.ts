@@ -4,6 +4,8 @@ import {LoginService} from "../../service/login.service";
 import {TokenStorageService} from "../../service/token-storage.service";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {ShareDataService} from "../../service/share-data.service";
 
 @Component({
   selector: 'app-login',
@@ -12,11 +14,17 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   formLogin: FormGroup;
+  isLogin: boolean;
+  subscription: Subscription;
 
   constructor(private loginService: LoginService,
               private tokenStorageService: TokenStorageService,
               private toastr: ToastrService,
-              private router: Router) {
+              private router: Router,
+              private data: ShareDataService) {
+    if (tokenStorageService.getUsername() != undefined){
+      router.navigateByUrl('')
+    }
     this.formLogin = new FormGroup({
         username: new FormControl('', [Validators.maxLength(30), Validators.required]),
         password: new FormControl('', [Validators.maxLength(30), Validators.required]),
@@ -26,15 +34,14 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.tokenStorageService.getRoles())
-    console.log(this.tokenStorageService.getUsername())
-    console.log(this.tokenStorageService.getJwt())
-    console.log(this.tokenStorageService.getEmployeeCode())
+    this.data.changeLoginStatus(false)
+    this.subscription = this.data.currentLoginStatus.subscribe(status => this.isLogin = status)
   }
 
   login() {
     let loginRequest = this.formLogin.value;
     this.loginService.login(loginRequest).subscribe(loginResponse => {
+      this.data.changeLoginStatus(true)
       if (loginRequest.rememberMe) {
         this.tokenStorageService.saveLocalStorage(loginResponse);
       } else {
