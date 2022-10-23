@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row pt-5">
     <div class="col-md-3 col-lg-3 col-sm-3 d-flex justify-content-center align-content-center">
-      <a routerLink="customer-add" class="p-btn" >
+      <a routerLink="/customer-add" class="p-btn" >
         <i class="fa-solid fa-plus"></i>
         THÊM MỚI KHÁCH HÀNG
       </a>
@@ -45,7 +45,7 @@
       <td *ngIf="customer.gender == 1">Nam</td>
       <td>{{customer.amountContract}}</td>
       <td><img src="{{customer.imgUrl}}" alt="" width="60"></td>
-      <td><button class="btn"  ><i class="fa-solid fa-pen-to-square"></i></button></td>
+      <td><button class="btn"  [routerLink]="['/customer-update',customer.id]"><i class="fa-solid fa-pen-to-square"></i></button></td>
       <td><button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="elementDelete(customer.id,customer.name,customer.imgUrl)"><i class="fa-solid fa-trash text-danger"></i></button></td>
     </tr>
 
@@ -94,5 +94,4 @@
       <li class="page-item" *ngIf="page != totalPage - 1"><a class="page-link text-dark" (click)="next()">&raquo;</a></li>
     </ul>
   </div>
-
 </div>

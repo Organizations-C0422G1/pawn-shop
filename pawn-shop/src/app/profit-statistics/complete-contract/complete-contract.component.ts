@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Contract} from "../../model/finance/contract";
 import {CompleteContractService} from "../../service/complete-contract.service";
-import {ExportExcelService} from "../../service/export-excel.service";
 import {Chart, registerables} from "chart.js";
+import {ExportExcelService} from "../../service/export-excel.service";
 
 Chart.register(...registerables);
 
@@ -33,6 +33,9 @@ export class CompleteContractComponent implements OnInit {
   totalProfit = 0;
   myChart: Chart;
   validateEndDate: number;
+  validateStartDate: number;
+  header = ["Id", "Type", "Status", "Return date", "Liquid price", "Rate", "Item price", "Start date", "End date"
+    , "Customer", "Code", "Employee", "Pawn item", "Profit"];
 
   constructor(private completeContractService: CompleteContractService,
               private exportExcelService: ExportExcelService) {
@@ -263,6 +266,13 @@ export class CompleteContractComponent implements OnInit {
     })
   }
 
+  validateStart() {
+    this.validateStartDate = 0;
+    if (get_day_of_time(this.endReturnDate, this.startReturnDate) < 0) {
+      this.validateStartDate = 1;
+    }
+  }
+
   validateEnd() {
     this.validateEndDate = 0;
     if (get_day_of_time(this.endReturnDate, this.startReturnDate) < 0) {
@@ -271,14 +281,13 @@ export class CompleteContractComponent implements OnInit {
     console.log(get_day_of_time(this.endReturnDate, this.startReturnDate));
   }
 
-  exportExcel(): void {
-    this.exportExcelService.exportToExcel({
+  exportToExcel() {
+    let reportData = {
+      title: 'Contracts Sales Report',
       data: this.completeContractOnlyList,
-      fileName: 'contract',
-      sheetName: 'ContractList',
-      header: [],
-      table: null
-    })
+      headers: this.header,
+    };
+    this.exportExcelService.exportExcel(reportData);
   }
 
   previousPage() {

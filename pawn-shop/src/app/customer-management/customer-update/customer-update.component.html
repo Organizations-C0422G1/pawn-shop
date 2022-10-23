@@ -12,6 +12,15 @@
                   <label class="col-form-label" for="name">
                     Họ tên:
                     <span style="color: red">*</span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.name.hasError('pattern')) &&
+                         (customerForm.controls.name.dirty)">
+                                Tên không đúng định dạng
+                            </span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.name.hasError('required'))
+                        &&(customerForm.controls.name.touched)">Vui lòng điền họ và tên
+                  </span>
                   </label>
                   <input type="text" class="form-control pl-2" id="name"
                          placeholder="Họ và tên" formControlName="name">
@@ -20,6 +29,11 @@
                   <label class="col-form-label" for="dateOfBirth">
                     Ngày sinh:
                     <span style="color: red">*</span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.dateOfBirth.hasError('invalidStartDate')) &&
+                         (customerForm.controls.dateOfBirth.dirty)">
+                               Số tuổi ko đủ 18 hoặc lớn hơn 120 !
+                            </span>
                   </label>
                   <input id="dateOfBirth" type="date" class="form-control pl-2" formControlName="dateOfBirth">
                 </div>
@@ -27,8 +41,14 @@
                   <label class="col-form-label" for="gender">
                     Giới tính:
                     <span style="color: red">*</span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.gender.hasError('required')) &&
+                         (customerForm.controls.gender.touched) ">
+                               Chọn giới tính
+                            </span>
                   </label>
                   <select id="gender" class="custom-select form-select" formControlName="gender">
+                    <option [value]="" disabled selected>--Vui lòng chọn giới tính--</option>
                     <option [value]="true">Nam</option>
                     <option [value]="false">Nữ</option>
                   </select>
@@ -37,35 +57,73 @@
                   <label class="col-form-label" for="idCard">
                     CMND/Hộ chiếu:
                     <span style="color: red">*</span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.idCard.hasError('pattern')) &&
+                         (customerForm.controls.idCard.dirty)">
+                               CMND không đúng định dạng
+                            </span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.idCard.hasError('required'))
+                        &&(customerForm.controls.idCard.touched)">Vui lòng điền CMND
+                  </span>
                   </label>
                   <input id="idCard" type="text" class="form-control pl-2" formControlName="idCard">
+                </div>
+                <div class="col-md-12 form-group mb-3">
+                  <label class="col-form-label">
+                    File ảnh:
+                    <span style="color: red">*</span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.imgUrl.hasError('required'))
+                        &&(customerForm.controls.imgUrl.touched)">Vui lòng thêm ảnh
+                  </span>
+                  </label>
+                  <input type="file" class="form-control pl-2" (change)="show($event)" multiple>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div formGroupName="address">
-                  <div class="col-md-12 form-group mb-3">
-                    <label class="col-form-label" for="city">Thành phố:
-                      <span style="color: red">*</span>
-                    </label>
-                    <select class="form-select" id="city" formControlName="city"
-                            (change)="changeCity($event.target)">
-                      <option value="0"> Chọn thành phố</option>
-                      <option *ngFor="let city of cityList " [value]="city.id">{{city.name}} </option>
-                    </select>
-                  </div>
-                  <div cclass="col-md-12 form-group mb-3">
-                    <label class="col-form-label" for="district">Quận:
-                      <span style="color: red">*</span>
-                    </label>
-                    <select class="form-select" id="district" formControlName="district">
-                      <option value="0"> Chọn quận/huyện</option>
-                      <option *ngFor="let district of districtList" [ngValue]="district">{{district.name}}</option>
-                    </select>
+                  <div formGroupName="district">
+                    <div class="col-md-12 form-group mb-3" formGroupName="city">
+                      <label class="col-form-label" for="city">Thành phố:
+                        <span style="color: red">*</span>
+                        <span class="text-danger"
+                              *ngIf="(customerForm.get('address').get('district').get('city').hasError('required')) &&
+                          (customerForm.get('address').get('city').touched)">Vui lòng chọn thành phố
+                    </span>
+                      </label>
+                      <select class="form-select" id="city" formControlName="id"
+                              (change)="changeCity($event.target)">
+                        <option [value]="0" disabled selected> Chọn thành phố</option>
+                        <option *ngFor="let city of cityList " [value]="city.id">{{city.name}} </option>
+                      </select>
+                    </div>
+                    <div class="col-md-12 form-group mb-3">
+                      <label class="col-form-label" for="district">Quận:
+                        <span style="color: red">*</span>
+                        <span class="text-danger"
+                              *ngIf="(customerForm.get('address').get('district').hasError('required')) &&
+                          (customerForm.get('address').get('district').touched)">Vui lòng chọn quận/huyện
+                    </span>
+                      </label>
+                      <select class="form-select" id="district" formControlName="id">
+                        <option [value]="0" selected disabled> Chọn quận/huyện</option>
+                        <option *ngFor="let district of districtList" [ngValue]="district.id">{{district.name}}</option>
+                      </select>
+                    </div>
                   </div>
                   <div class="col-md-12 form-group mb-3">
                     <label class="col-form-label" for="street">
                       Tên đường:
                       <span style="color: red">*</span>
+                      <span class="text-danger"
+                            *ngIf="(customerForm.get('address').get('street').hasError('required')) &&
+                         (customerForm.get('address').get('street').touched)">Vui lòng điền tên đường
+                    </span>
+                      <span class="text-danger"
+                            *ngIf="(customerForm.get('address').get('street').hasError('pattern')) &&
+                          (customerForm.get('address').get('street').dirty)">Tên không đúng định dạng
+                    </span>
                     </label>
                     <input id="street" type="text" class="form-control pl-2" formControlName="street">
                   </div>
@@ -74,6 +132,15 @@
                   <label class="col-form-label" for="phoneNumber">
                     SĐT:
                     <span style="color: red">*</span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.phoneNumber.hasError('pattern')) &&
+                         (customerForm.controls.phoneNumber.dirty)">
+                                SĐT không đúng định dạng (0XXXXXXXXX)
+                            </span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.phoneNumber.hasError('required'))
+                        &&(customerForm.controls.phoneNumber.touched)">Vui lòng điền SĐT
+                  </span>
                   </label>
                   <input id="phoneNumber" type="text" class="form-control pl-2" formControlName="phoneNumber">
                 </div>
@@ -81,17 +148,21 @@
                   <label class="col-form-label" for="email">
                     Email:
                     <span style="color: red">*</span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.email.hasError('email')) &&
+                         (customerForm.controls.email.dirty)">
+                                Email không đúng định dạng
+                            </span>
+                    <span class="text-danger"
+                          *ngIf="(customerForm.controls.email.hasError('required'))
+                        &&(customerForm.controls.email.touched)">Vui lòng điền Email
+                  </span>
                   </label>
                   <input id="email" type="email" class="form-control pl-2" formControlName="email">
                 </div>
               </div>
-              <div class="col-md-12 form-group mb-3">
-                <label class="col-form-label" for="imgUrl">
-                  File ảnh:
-                  <span style="color: red">*</span>
-                </label>
-                <input id="imgUrl" type="file" class="form-control pl-2"
-                       accept="image/png, image/jpg" formControlName="imgUrl">
+              <div *ngFor="let url of urlList" class="col-md-3 form-group mb-3">
+                <img [src]="url" style="height: 150px; width: 150px">
               </div>
               <div class="row">
                 <div class="col-lg-6">
@@ -116,4 +187,3 @@
     </div>
   </div>
 </div>
-

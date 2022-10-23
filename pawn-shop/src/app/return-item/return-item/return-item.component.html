@@ -3,82 +3,83 @@
     <div class="col-md-7 col-lg-6 ml-auto shadow-lg bg-light p-4">
       <div style="background: linear-gradient(to right,#f37214,#ff3300);"
            class="modal-header justify-content-center d-flex mb-4">
-        <h1 class="modal-title fs-5 text-white">GIAO DIỆN TRẢ ĐỒ</h1>
+        <h1 class="modal-title fs-5 text-white">TRẢ ĐỒ</h1>
       </div>
-      <div class="form-group-lg col-lg-12 mx-auto mb-3">
-        <button class="p-btn btn-block ps-lg-5 pe-lg-5"
+      <div class="input-group-sm col-lg-12 mx-auto mb-3">
+        <button class="p-btn btn-block ps-lg-4 pe-lg-4"
                 data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="chooseContract()">Chọn hợp đồng
         </button>
       </div>
-      <!--      <form>-->
+
       <div class="row">
-        <div class="input-group-lg col-lg-4 mx-auto mb-2">
+        <div class="input-group-sm col-lg-4 mx-auto mb-2">
           <label for="code" class="form-label font-weight-bold">Mã hợp đồng</label>
-          <input readonly id="code" type="text" name="code" placeholder="Mã hợp đồng"
-                 class="form-control bg-white border-left-0 border-md" [ngModel]="code">
+          <input disabled id="code" name="code" type="text" class="form-control" [ngModel]="code"
+                 placeholder="Mã hợp đồng">
+
         </div>
-        <div class="input-group-lg col-lg-8 mb-3">
+        <div class="input-group-sm col-lg-8 mb-3">
           <label for="customer" class="form-label font-weight-bold">Tên khách hàng</label>
-          <input disabled id="customer" type="text" name="customer" placeholder="Tên khách hàng"
-                 class="form-control bg-white border-left-0 border-md" [ngModel]="customerName">
+          <input disabled id="customer" name="code" type="text" class="form-control" [ngModel]="customerName"
+                 placeholder="Tên khách hàng">
         </div>
 
-        <div class="input-group-lg col-lg-12 mb-3">
+        <div class="input-group-sm col-lg-12 mb-3">
           <label for="pawnItem" class="form-label font-weight-bold">Đồ cầm</label>
           <input disabled id="pawnItem" type="text" name="pawnItem" placeholder="Đồ cầm"
-                 class="form-control bg-white border-left-0 border-md" [ngModel]="pawnItem">
+                 class="form-control" [ngModel]="pawnItem">
         </div>
 
-        <div class="input-group-lg col-lg-6 mb-3">
+        <div class="input-group-sm col-lg-6 mb-3">
           <label for="interest" class="form-label font-weight-bold">Tiền cho vay(VND)</label>
           <input disabled id="interest" type="text" name="interest" placeholder="Tiền cho vay"
-                 class="form-control bg-white border-left-0 border-md"
+                 class="form-control"
                  [ngModel]="itemPrice | currency: ' ': ' ': '6.0'">
         </div>
 
-        <div class="input-group-lg col-lg-6 mb-3">
+        <div class="input-group-sm col-lg-6 mb-3">
           <label for="interestRate" class="form-label font-weight-bold">Lãi suất(%)</label>
-          <input disabled id="interestRate" type="text" name="interestRate" placeholder="Tiền lãi"
-                 class="form-control bg-white border-left-0 border-md" [ngModel]="interestRate">
+          <input disabled id="interestRate" type="text" name="interestRate" placeholder="Lãi suất"
+                 class="form-control" [ngModel]="interestRate">
         </div>
 
-        <div class="input-group-lg col-lg-6 mb-3">
+        <div class="input-group-sm col-lg-6 mb-3">
           <label for="startDate" class="form-label font-weight-bold">Ngày bắt đầu</label>
           <input *ngIf="code != ''" disabled id="startDate" type="text" name="startDate" placeholder="Ngày bắt đầu"
-                 class="form-control bg-white border-left-0 border-md" [ngModel]="startDate | date: 'dd/MM/yyyy'">
+                 class="form-control" [ngModel]="startDate | date: 'dd/MM/yyyy'">
 
           <input *ngIf="code == ''" disabled type="text" name="startDate" placeholder="Ngày bắt đầu"
-                 class="form-control bg-white border-left-0 border-md">
+                 class="form-control">
         </div>
 
-        <div class="input-group-lg col-lg-6 mb-3">
+        <div class="input-group-sm col-lg-6 mb-3">
           <label for="endDate" class="form-label font-weight-bold">Ngày kết thúc</label>
           <input *ngIf="code != ''" disabled id="endDate" type="text" name="endDate" placeholder="Ngày kết thúc"
-                 class="form-control bg-white border-left-0 border-md" [ngModel]="endDate | date:'dd/MM/yyyy'">
+                 class="form-control" [ngModel]="endDate | date:'dd/MM/yyyy'">
 
           <input *ngIf="code == ''" disabled type="text" name="endDate" placeholder="Ngày kết thúc"
-                 class="form-control bg-white border-left-0 border-md">
+                 class="form-control">
         </div>
 
-        <div class="input-group-lg col-lg-12 mb-3">
+        <div class="input-group-sm col-lg-12 mb-3">
           <label for="returnDate" class="form-label font-weight-bold">Ngày trả đồ</label>
-          <input *ngIf="code != ''" id="returnDate" type="text" name="returnDate" placeholder="Ngày trả đồ"
-                 class="form-control bg-white border-left-0 border-md data-pro"
+          <input disabled *ngIf="code != ''" id="returnDate" type="text" name="returnDate" placeholder="Ngày trả đồ"
+                 class="form-control data-pro"
                  [ngModel]="returnDate | date:'dd/MM/yyyy'">
 
-          <input *ngIf="code == ''" type="text" name="returnDate" placeholder="Ngày trả đồ"
-                 class="form-control bg-white border-left-0 border-md data-pro">
+          <input disabled *ngIf="code == ''" type="text" name="returnDate" placeholder="Ngày trả đồ"
+                 class="form-control data-pro">
         </div>
 
-        <div class="input-group-lg col-lg-12 mb-4">
-          <label for="liquidationPrice" class="form-label font-weight-bold">Số tiền thanh toán(VND)</label>
-          <input disabled id="liquidationPrice" type="text" name="liquidationPrice" placeholder="Số tiền thanh toán"
-                 class="form-control bg-white border-left-0 border-md"
+        <div class="input-group-sm col-lg-12 mb-4">
+          <label for="paymentAmount" class="form-label font-weight-bold">Số tiền thanh toán(VND)</label>
+          <input disabled id="paymentAmount" type="text" name="paymentAmount" placeholder="Số tiền thanh toán"
+                 class="form-control"
                  [ngModel]="liquidationPrice | currency: ' ': ' ': '6.0'">
         </div>
 
       </div>
-      <div style="text-align: right" class="form-group-lg">
+      <div style="text-align: right" class="form-group-sm">
         <button class="btn btn-secondary btn-block mx-2 ps-lg-4 pe-lg-4" (click)="reset()">Làm mới
         </button>
         <button *ngIf="code != ''" type="submit" class="p-btn btn-block mx-2 ps-lg-3 pe-lg-3"
@@ -88,7 +89,6 @@
                 style="opacity: 0.5;" data-bs-toggle="modal" data-bs-target="#confirmPayModal">Thanh toán
         </button>
       </div>
-      <!--      </form>-->
     </div>
   </div>
 </div>
@@ -121,7 +121,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div style="background: linear-gradient(to right,#f37214,#ff3300);" class="modal-header">
-        <h1 class=" modal-title fs-5 text-white" id="exampleModalLabel">DANH SÁCH HỢP ĐỒNG</h1>
+        <h2 class=" modal-title fs-5 text-white" id="exampleModalLabel">DANH SÁCH HỢP ĐỒNG</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -129,7 +129,7 @@
           <div class="row">
             <div class="input-group-sm col-lg-3 mb-2">
               <label for="idSearch" class="form-label font-weight-bold">Mã hợp đồng</label>
-              <input id="idSearch" type="text" name="idSearch" placeholder="VD: HD-0001"
+              <input id="idSearch" type="text" name="idSearch" placeholder="VD: HD-NV001"
                      class="form-control bg-white border-left-0 border-md" [(ngModel)]="codeSearch">
             </div>
 
@@ -151,10 +151,10 @@
               <input id="dateSearch" type="date" name="dateSearch"
                      class="form-control bg-white border-left-0 border-md" [(ngModel)]="startDateSearch">
             </div>
-            <div class="form-group-lg col-lg-2 mx-auto mb-4 justify-content-center d-flex">
+            <div class="form-group-sm col-lg-2 mx-auto mb-4 justify-content-center d-flex">
               <button type="submit"
                       class="p-btn btn-block ps-lg-3 pe-lg-3 page-link" (click)="search()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
                      class="bi bi-search" viewBox="0 0 16 16">
                   <path
                     d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -169,11 +169,11 @@
             <thead>
             <tr class="p-bg-warning">
               <th align="center">#</th>
-              <th align="center">Mã HĐ</th>
+              <th align="center">Mã hợp đồng</th>
               <th align="center">Tên khách hàng</th>
               <th align="center">Đồ cầm</th>
               <th align="center">Tiền cho vay(VND)</th>
-              <th align="center">Ngày làm HĐ</th>
+              <th align="center">Ngày làm hợp đồng</th>
               <th align="center">Hoạt động</th>
             </tr>
             </thead>
@@ -186,7 +186,8 @@
               <td>{{item.itemPrice |  currency: ' ': ' ': '6.0'}}đ</td>
               <td>{{item.startDate | date: 'dd/MM/yyyy'}}</td>
               <td>
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="getContract(item)">Chọn
+                <button style="color: white" type="button" class="btn btn-warning" data-bs-dismiss="modal"
+                        (click)="getContract(item)">Chọn
                 </button>
               </td>
             </tr>
@@ -219,6 +220,3 @@
     </div>
   </div>
 </div>
-
-
-

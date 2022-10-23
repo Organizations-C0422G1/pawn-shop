@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Contract} from "../../model/finance/contract";
 import {Chart, registerables} from "chart.js";
 import {LiquidationContractService} from "../../service/liquidation-contract.service";
@@ -34,6 +34,9 @@ export class LiquidationContractComponent implements OnInit {
   totalProfit = 0;
   myChart: Chart;
   validateEndDate: number;
+  validateStartDate: number;
+  header = ["Id", "Type", "Status", "Return date", "Liquid price", "Rate", "Item price", "Start date", "End date"
+    , "Customer", "Code", "Employee", "Pawn item", "Profit"];
 
   constructor(private liquidationContractService: LiquidationContractService,
               private exportExcelService: ExportExcelService) {
@@ -259,15 +262,22 @@ export class LiquidationContractComponent implements OnInit {
     console.log(get_day_of_time(this.endReturnDate, this.startReturnDate));
   }
 
-  exportExcel(): void {
-    this.exportExcelService.exportToExcel({
-      data: this.liquidationContractOnlyList,
-      fileName: 'contract',
-      sheetName: 'ContractList',
-      header: [],
-      table: null
-    })
+  validateStart() {
+    this.validateStartDate = 0;
+    if (get_day_of_time(this.endReturnDate, this.startReturnDate) < 0) {
+      this.validateStartDate = 1;
+    }
   }
+
+  exportToExcel() {
+    let reportData = {
+      title: 'Contracts Sales Report',
+      data: this.liquidationContractOnlyList,
+      headers: this.header,
+    };
+    this.exportExcelService.exportExcel(reportData);
+  }
+
 
   previousPage() {
     this.pageSelect.splice(0, this.totalPage);
@@ -283,8 +293,7 @@ export class LiquidationContractComponent implements OnInit {
         }
       }
       for (let i of this.liquidationContractList) {
-        let day = get_day_of_time(i.endDate, i.startDate);
-        i.profit = day * (i.itemPrice * (i.interestRate) / 100);
+        i.profit = i.liquidationPrice - i.itemPrice
       }
     });
   }
@@ -303,8 +312,7 @@ export class LiquidationContractComponent implements OnInit {
         }
       }
       for (let i of this.liquidationContractList) {
-        let day = get_day_of_time(i.endDate, i.startDate);
-        i.profit = day * (i.itemPrice * (i.interestRate) / 100);
+        i.profit = i.liquidationPrice - i.itemPrice
       }
     });
   }
@@ -323,9 +331,10 @@ export class LiquidationContractComponent implements OnInit {
         }
       }
       for (let i of this.liquidationContractList) {
-        let day = get_day_of_time(i.endDate, i.startDate);
-        i.profit = day * (i.itemPrice * (i.interestRate) / 100);
+        i.profit = i.liquidationPrice - i.itemPrice
       }
     });
   }
+
+
 }

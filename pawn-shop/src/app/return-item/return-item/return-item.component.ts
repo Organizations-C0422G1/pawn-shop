@@ -39,7 +39,7 @@ export class ReturnItemComponent implements OnInit {
 
   chooseContract() {
     this.pageSelect.splice(0, this.totalRecords);
-    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+    this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
       this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
       if (contracts == null) {
         this.contractList = [];
@@ -47,7 +47,7 @@ export class ReturnItemComponent implements OnInit {
         this.pageSelect = [];
         this.contractList = contracts.content;
         this.totalRecords = contracts.totalPages;
-        for (let i = 0; i < this.totalRecords; i++){
+        for (let i = 0; i < this.totalRecords; i++) {
           this.pageSelect.push(i);
         }
       }
@@ -78,7 +78,8 @@ export class ReturnItemComponent implements OnInit {
 
   search() {
     this.pageSelect.splice(0, this.totalRecords);
-    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+    this.indexPagination = 0;
+    this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
       this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
       if (contracts == null) {
         this.contractList = [];
@@ -86,7 +87,7 @@ export class ReturnItemComponent implements OnInit {
         this.pageSelect = [];
         this.contractList = contracts.content;
         this.totalRecords = contracts.totalPages;
-        for (let i = 0; i < this.totalRecords; i++){
+        for (let i = 0; i < this.totalRecords; i++) {
           this.pageSelect.push(i);
         }
       }
@@ -113,7 +114,7 @@ export class ReturnItemComponent implements OnInit {
   previousPage() {
     this.pageSelect.splice(0, this.totalRecords);
     this.indexPagination = this.indexPagination - 1;
-    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+    this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
       this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
       if (contracts == null) {
         this.contractList = [];
@@ -130,7 +131,7 @@ export class ReturnItemComponent implements OnInit {
   nextPage() {
     this.pageSelect.splice(0, this.totalRecords);
     this.indexPagination = this.indexPagination + 1;
-    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+    this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
       this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
       if (contracts == null) {
         this.contractList = [];
@@ -145,15 +146,13 @@ export class ReturnItemComponent implements OnInit {
   }
 
   changePage(pageNow: number) {
-
     this.indexPagination = pageNow;
     this.pageSelect.splice(0, this.totalRecords);
-    return this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
+    this.contractService.getAllPaginationAndSearch(this.indexPagination, this.codeSearch,
       this.customerNameSearch, this.pawnItemSearch, this.startDateSearch).subscribe((contracts: any) => {
       if (contracts == null) {
         this.contractList = [];
       } else {
-
         this.contractList = contracts.content;
         this.totalRecords = contracts.totalPages;
         for (let i = 0; i < this.totalRecords; i++) {
@@ -187,4 +186,3 @@ function getMonth(startDatePram: Date, endDate: Date) {
   const endDateValue = new Date(endDate);
   return endDateValue.getMonth() - startValue.getMonth();
 }
-

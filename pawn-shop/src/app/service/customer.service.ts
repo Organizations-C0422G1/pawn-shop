@@ -37,35 +37,35 @@ export class CustomerService {
   }
 
   createNewCustomer(customer: Customer) {
-    return this.http.post('http://localhost:8080/api/employee/pawnShop/goCreateCustomer', customer, this.httpOptions);
+    return this.http.post('http://localhost:8080/api/employee/customer/goCreateCustomer', customer, this.httpOptions);
   }
 
   getAllCity(): Observable<City[]> {
     // @ts-ignore
-    return this.http.get<City[]>('http://localhost:8080/api/employee/pawnShop/goFindCity', this.httpOptions);
+    return this.http.get<City[]>('http://localhost:8080/api/public/cities', this.httpOptions);
   }
 
   getAllDistrict(id: number): Observable<District[]> {
     // @ts-ignore
-    return this.http.get<District[]>('http://localhost:8080/api/employee/pawnShop/goFindDistrict?city=' + id, this.httpOptions);
+    return this.http.get<District[]>('http://localhost:8080/api/public/districts?city=' + id, this.httpOptions);
   }
 
   getCityById(id: number): Observable<City> {
     // @ts-ignore
-    return this.http.get('http://localhost:8080/api/employee/pawnShop/findCityById?id=' + id, this.httpOptions);
+    return this.http.get('http://localhost:8080/api/public/cities/findCityById?id=' + id, this.httpOptions);
   }
 
   saveAddress(address: Address) {
-    return this.http.post<Address>('http://localhost:8080/api/employee/pawnShop/saveAddress', address, this.httpOptions);
+    return this.http.post<Address>('http://localhost:8080/api/employee/customer/saveAddress', address, this.httpOptions);
   }
 
   findCustomerById(id: number): Observable<Customer> {
     // @ts-ignore
-    return this.http.get<Customer>('http://localhost:8080/api/employee/pawnShop/findCustomer?id=' + id, this.httpOptions);
+    return this.http.get<Customer>('http://localhost:8080/api/employee/findCustomerById?id=' + id, this.httpOptions);
   }
 
   updateCustomer(customer: Customer) {
-    return this.http.patch('http://localhost:8080/api/employee/pawnShop/goUpdateCustomer', customer, this.httpOptions);
+    return this.http.patch('http://localhost:8080/api/employee/customer/goUpdateCustomer', customer, this.httpOptions);
   }
 }
 

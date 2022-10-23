@@ -33,11 +33,6 @@ export class  ContractService {
       + code + '&customerName=' + customerName + '&pawnItem=' + pawnItem + '&startDate=' + startDate, this.httpOptions);
   }
 
-  getAllNotPagination(): Observable<Contract[]> {
-    // @ts-ignore
-    return this.http.get<Contract[]>(API_URL + '/api/employee/contracts/listNotPagination', this.httpOptions);
-  }
-
   returnItem(id: number, email: string, customerName: string, liquidationPrice: string): Observable<Contract> {
     // @ts-ignore
     return this.http.get<Contract>(API_URL + '/api/employee/contracts/returnItem/'
