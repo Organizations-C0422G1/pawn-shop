@@ -9,13 +9,19 @@ import {TopTenTransactionService} from "../../service/top-ten-transaction.servic
 })
 export class TopTenTransactionComponent implements OnInit {
   contractList: Contract[];
+  noContent = false;
+
+
   constructor(private topTen: TopTenTransactionService) {
   }
-
   ngOnInit(): void {
     this.topTen.getAll().subscribe(
-      value => this.contractList = value
+      value => {
+        this.contractList = value;
+        if (value.length === 0) {
+          this.noContent = true;
+        }
+      }
     );
   }
-
 }

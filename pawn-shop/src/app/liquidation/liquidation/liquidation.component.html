@@ -8,9 +8,9 @@
               <h3 class="header-color text-center">THANH LÝ HÀNG TỒN KHO</h3>
             </div>
           </div>
-          <form class="mb-5" method="post" id="contactForm" name="contactForm" >
+          <form class="mb-5" method="post" id="contactForm" name="contactForm">
             <div class="row">
-              <div class="col-lg-4">
+              <div class="col-md-4">
                 <label class="col-form-label" for="chonPawn">
                   Đồ thanh lý
                   <span style="color: red">*</span>
@@ -20,6 +20,9 @@
                   Chọn đồ thanh lý
                 </button>
               </div>
+              <div class="col-md-8 form-group mb-3">
+                <p class="text-end">Ngày thanh lý: {{date | date: 'dd/MM/yyyy'}}</p>
+              </div>
             </div>
           </form>
         </div>
@@ -27,39 +30,31 @@
       <p class="text-danger" *ngIf="PawnItemLiquidation">Bạn đã chọn: {{PawnItemLiquidation.namePawnItem}}</p>
       <form [formGroup]="formLiquidation" *ngIf="formLiquidation" (ngSubmit)="updateLiquidation()">
         <div class="row">
-          <div class="col-md-12 form-group mb-3">
+          <div class="col-md-4">
             <label class="col-form-label">
               Tổng tiền (VNĐ)
               <span style="color: red">*</span>
             </label>
+          </div>
+          <div class="col-md-8">
             <input type="text" class="form-control pl-2" placeholder="1.000.000" formControlName="liquidationPrice">
           </div>
           <div class="text-danger" *ngIf="!liquidationPrice.valid &&  liquidationPrice.touched">
             <div [hidden]="!liquidationPrice.errors.min">Tổng tiền không được nhỏ hơn {{PriceValidate}}!</div>
           </div>
         </div>
-
-        <div class="row">
-          <div class="col-md-12 form-group mb-3">
-            <label class="col-form-label">
-              Ngày thanh lý
-              <span style="color: red">*</span>
-            </label>
-            <input type="date" class="form-control pl-2" formControlName="returnDate">
-          </div>
-          <div class="text-danger" *ngIf="!returnDate.valid &&  returnDate.touched">
-            <div [hidden]="!returnDate.errors.required">Bạn chưa chọn ngày!</div>
-            <div [hidden]="!returnDate.errors.invalidReturnDate">Không phải ngày hiện tại!</div>
+        <div class="row mt-5" *ngIf="imgUrl">
+          <div class="col-md-4" *ngFor="let url of imgUrl">
+            <img [src]="url" width="100%">
           </div>
         </div>
-        <div class="row ">
+        <div class="row mt-3">
           <div class="col-md-12 form-group d-flex justify-content-end mb-3">
             <button type="reset" class="btn btn-secondary px-2 me-2 ">Huỷ</button>
             <button type="submit" class="btn p-btn">Thanh lý</button>
           </div>
         </div>
       </form>
-
     </div>
   </div>
 </div>
@@ -67,14 +62,14 @@
 
 <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog" >
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header p-bg">
         <h5 class="modal-title" id="staticBackdropLabel">Chọn đồ thanh lý</h5>
       </div>
       <div class="modal-body">
         <div class="row">
-          <form [formGroup]="search" (ngSubmit)="changeNamePawnItem()" *ngIf="search" >
+          <form [formGroup]="search" (ngSubmit)="changeNamePawnItem()" *ngIf="search">
             <div class="col-md-9 form-group mb-3">
               <div class="row">
                 <div class="col-md-4">
@@ -106,7 +101,8 @@
                   </label>
                 </div>
                 <div class="col-md-8">
-                  <input type="text" class="form-control pl-3" placeholder="1000000" [(ngModel)]="price" formControlName="price">
+                  <input type="text" class="form-control pl-3" placeholder="1000000" [(ngModel)]="price"
+                         formControlName="price">
                 </div>
               </div>
             </div>
@@ -128,7 +124,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let pawnItem of PawnItemList">
+          <tr *ngFor="let pawnItem of pawnItemPage">
             <td>{{pawnItem.idPawnItem}}</td>
             <td>{{pawnItem.namePawnItem}}</td>
             <td>{{pawnItem.namePawnType}}</td>
@@ -139,6 +135,27 @@
           </tr>
           </tbody>
         </table>
+        <div class="row c">
+          <div class="col-md-12  d-flex justify-content-center">
+            <ul class="p-pagination modal-2 shadow">
+              <li class="page-item" *ngIf="page">
+                <a class="page-link text-dark" (click)="previousPage()">&laquo;</a>
+              </li>
+              <ng-container *ngFor="let pageNow of pageSelect">
+                <ng-container *ngIf="pageNow == page">
+                  <li class="page-item"><a class="page-link text-light active">{{pageNow + 1}}</a></li>
+                </ng-container>
+                <ng-container *ngIf="pageNow != page">
+                  <li class="page-item"><a class="page-link text-dark" (click)="changePage(pageNow)">{{pageNow + 1}}</a>
+                  </li>
+                </ng-container>
+              </ng-container>
+              <li class="page-item" *ngIf="page != totalPage - 1">
+                <a class="page-link text-dark" (click)="nextPage()">&raquo;</a>
+              </li>
+            </ul>
+          </div>
+        </div>
         <div class="modal-footer d-flex justify-content-end">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
         </div>

@@ -4,4 +4,5 @@ export interface PawnImg {
   id?:number;
   imgUrl?:string;
   pawnItem?:PawnItem;
+  statusDelete?: number;
 }

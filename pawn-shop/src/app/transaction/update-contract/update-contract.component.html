@@ -27,25 +27,21 @@
                 <label class="col-form-label">
                   Khách hàng
                 </label>
-                <select [compareWith]="compareWithId" class="custom-select form-select" formControlName="customer">
+                <select data-live-search="true" [compareWith]="compareWithId" class="selectpicker custom-select form-select" formControlName="customer">
                   <option *ngFor="let customer of customerList" [ngValue]="customer">{{customer.name}} (Mã
                     KH: {{customer.id}})
                   </option>
+                  <!--                  <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>-->
+                  <!--                  <option data-tokens="mustard">Burger, Shake and a Smile</option>-->
+                  <!--                  <option data-tokens="frosting">Sugar, Spice and all things nice</option>-->
                 </select>
+                <!--                <select [compareWith]="compareWithId" class="custom-select form-select" formControlName="customer">-->
+                <!--                  <option *ngFor="let customer of customerList" [ngValue]="customer">{{customer.name}} (Mã-->
+                <!--                    KH: {{customer.id}})-->
+                <!--                  </option>-->
+                <!--                </select>-->
               </div>
             </div>
-
-            <!--            <div class="col-md-6 form-group mb-3">-->
-            <!--              <label for="exampleDataList" class="form-label">-->
-            <!--                Khách hàng-->
-            <!--                <span style="color: red">*</span>-->
-            <!--              </label>-->
-            <!--              <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..."formControlName="customer">-->
-            <!--              <datalist id="datalistOptions">-->
-            <!--                <option *ngFor="let customer of customerList" [ngValue]="customer">{{customer.name}} (Mã KH: {{customer.id}})</option>-->
-            <!--              </datalist>-->
-            <!--            </div>-->
-            <!--        </div>-->
 
             <div class="row" formGroupName="pawnItem">
               <div class="col-md-6 form-group mb-3">
@@ -113,9 +109,9 @@
                 <label class="col-form-label">
                   Ngày làm hợp đồng
                 </label>
-                <span style="color: red; font-size: 0.8rem" *ngIf="contractForm.get('startDate').touched
+                <span style="color: red; font-size: 0.8rem" *ngIf="(contractForm.get('startDate').touched || contractForm.get('startDate').dirty)
                && contractForm.hasError('required', 'startDate')"> Ngày không được để trống.</span>
-                <span style="color: red" *ngIf="contractForm.get('startDate').dirty
+                <span style="color: red" *ngIf="(contractForm.get('startDate').touched || contractForm.get('startDate').dirty)
                 && contractForm.hasError('checkDate')"> Không được lớn hơn ngày kết thúc.</span>
                 <input type="date" class="form-control pl-2" formControlName="startDate">
 
@@ -125,9 +121,9 @@
                   Ngày kết thúc hợp đồng
                 </label>
                 <span style="color: red"
-                      *ngIf="contractForm.get('endDate').touched && contractForm.hasError('required', 'endDate')"> Không được để trống</span>
+                      *ngIf="(contractForm.get('endDate').touched || contractForm.get('endDate').dirty) && contractForm.hasError('required', 'endDate')"> Không được để trống</span>
                 <span style="color: red"
-                      *ngIf="contractForm.get('endDate').dirty && contractForm.hasError('checkDate')"> Không được lớn hơn ngày bắt đầu</span>
+                      *ngIf="(contractForm.get('endDate').touched || contractForm.get('endDate').dirty) && contractForm.hasError('checkDate')"> Không được lớn hơn ngày bắt đầu</span>
 
                 <input type="date" class="form-control pl-2" formControlName="endDate">
               </div>
@@ -152,11 +148,6 @@
                 <label class="col-form-label">
                   Trạng thái
                 </label>
-                <!--                <select class="custom-select form-select">-->
-                <!--                  <option value="0">Đóng</option>-->
-                <!--                  <option value="1">Mở</option>-->
-                <!--                  <option value="2">Đang xử lý</option>-->
-                <!--                </select>-->
                 <input hidden type="text" class="form-control pl-2" formControlName="status">
                 <div *ngIf="contractForm.value.status === 0 "
                      class="form-control pl-2">
@@ -180,15 +171,38 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+
+              <div class="col-md-12 form-group mb-3">
+                <label class="col-form-label">
+                  Chọn ảnh
+                  <span style="color: red" *ngIf="checkImgSize">Dung lượng ảnh quá lớn</span>
+                  <span style="color: red" *ngIf="regexImg">Không đúng định dạng ảnh</span>
+                </label>
+                <input type="file" class="form-control pl-2" (change)="onFileSelected($event)">
+              </div>
+            </div>
+            <div class="row">
+              <div [hidden]="pawnItem.statusDelete == 1" class="img-box container-app geeks col-md-2 center-box" *ngFor="let pawnItem of urlListDisplayHtml; index as i" >
+                <img  [src]="pawnItem.imgUrl" class="image" style="width: 150px; height: 150px; max-width: 100%; max-height: 100%; float: left">
+                <div class="middle">
+                  <button class="btn delete-file mr-2" (click)="delete(i)">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <div class="row">
               <div class="col-md-9 form-group"></div>
               <div class="col-md-3 form-group" style="float: right">
-                <button style="margin-left:40px " value="Chỉnh sửa" class="icon p-btn  py-2 px-4" (click)="submit()">
-                  Chỉnh sửa
+                <button [disabled]="isLoading" style="width: 60%" value="Chỉnh sửa" class="icon p-btn m-0 p-0 " (click)="save()">
+                  <span *ngIf="isLoading">
+                    <span  class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...
+                  </span>
+                  <span *ngIf="!isLoading">Chỉnh sửa</span>
                 </button>
-
-                <button style="float: right" value="Đóng" class="icon p-btn-close py-2 px-4">
+                <button style="float: right; width: 30%" value="Đóng" class="icon p-btn-close m-0 p-0">
                   Đóng
                 </button>
               </div>

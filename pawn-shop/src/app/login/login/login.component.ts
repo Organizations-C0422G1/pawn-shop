@@ -26,11 +26,14 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.tokenStorageService.getRoles())
+    console.log(this.tokenStorageService.getUsername())
+    console.log(this.tokenStorageService.getJwt())
+    console.log(this.tokenStorageService.getEmployeeCode())
   }
 
   login() {
     let loginRequest = this.formLogin.value;
-    console.log(this.tokenStorageService.getJwt());
     this.loginService.login(loginRequest).subscribe(loginResponse => {
       if (loginRequest.rememberMe) {
         this.tokenStorageService.saveLocalStorage(loginResponse);
