@@ -1,7 +1,8 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {TokenStorageService} from "../../service/token-storage.service";
 import {ShareDataService} from "../../service/share-data.service";
+import {TokenStorageService} from "../../service/token-storage.service";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -10,22 +11,33 @@ import {Subscription} from "rxjs";
 })
 export class HeaderComponent implements OnInit {
   navbarFixed: boolean = false;
-  isEmployee: boolean;
-  subscription: Subscription;
 
-  @HostListener('window:scroll', ['$event']) onscroll(){
-    if (window.scrollY>100){
+  @HostListener('window:scroll', ['$event']) onscroll() {
+    if (window.scrollY > 100) {
       this.navbarFixed = true;
-    }else {
+    } else {
       this.navbarFixed = false;
     }
   }
-  constructor(private tokenStorageService: TokenStorageService,
-              private data: ShareDataService) {
+
+  isLogin: boolean;
+  subscription: Subscription;
+
+
+  constructor(private data: ShareDataService,
+              private tokenStorageService: TokenStorageService,
+              private router: Router) {
+
   }
 
   ngOnInit(): void {
-    this.subscription = this.data.currentEmployeeStatus.subscribe(status => this.isEmployee = status)
+    this.subscription = this.data.currentEmployeeStatus.subscribe(status => { this.isLogin = status})
   }
 
+  logout() {
+    this.tokenStorageService.clearStorage()
+    this.data.changeLoginStatus(false)
+    this.data.changeIsEmployeeStatus(false)
+    this.router.navigateByUrl("");
+  }
 }

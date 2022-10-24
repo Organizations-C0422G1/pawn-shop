@@ -9,8 +9,7 @@ export class TokenStorageService {
   }
 
   public saveLocalStorage(loginResponse) {
-    localStorage.clear();
-    sessionStorage.clear();
+    this.clearStorage()
     localStorage.setItem('jwt', loginResponse.jwt);
     localStorage.setItem('roles', JSON.stringify(loginResponse.roles));
     localStorage.setItem('username', loginResponse.username);
@@ -18,8 +17,7 @@ export class TokenStorageService {
   }
 
   public saveSessionStorage(loginResponse) {
-    localStorage.clear();
-    sessionStorage.clear();
+    this.clearStorage()
     sessionStorage.setItem('jwt', loginResponse.jwt);
     sessionStorage.setItem('roles', JSON.stringify(loginResponse.roles));
     sessionStorage.setItem('username', loginResponse.username);
@@ -56,5 +54,10 @@ export class TokenStorageService {
     } else {
       return sessionStorage.getItem('roles');
     }
+  }
+
+  public clearStorage(){
+    localStorage.clear();
+    sessionStorage.clear();
   }
 }

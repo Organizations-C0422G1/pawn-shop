@@ -1,7 +1,7 @@
 <ngx-ui-loader></ngx-ui-loader>
 <app-header></app-header>
 <router-outlet *ngIf="!isLogin"></router-outlet>
-<div class="row" *ngIf="isLogin" style="--bs-gutter-x: 0">
+<div class="row mt-2 mb-2" *ngIf="isLogin" style="--bs-gutter-x: 0">
   <div class="col-lg-3">
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
       <div class="position-sticky">
@@ -21,7 +21,7 @@
              class="list-group-item list-group-item-action py-2 ripple">
             <span>Thanh Lý</span>
           </a>
-          <a routerLink="/customer-list" routerLinkActive="p-bg text-light"
+          <a routerLink="/employee-management" routerLinkActive="p-bg text-light"
              class="list-group-item list-group-item-action py-2 ripple">
             <span>Quản lý nhân viên</span>
           </a>

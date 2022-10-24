@@ -82,7 +82,7 @@ export class ExportExcelService {
     for (let i = 1; i <= 15; i++) {
       if (i <= 3 || i == 6) {
         worksheet.getColumn(i).width = 8;
-      } else if (i == 12 || i == 13) {
+      } else if (i == 12 || i == 13 || i== 10) {
         worksheet.getColumn(i).width = 25;
       } else {
         worksheet.getColumn(i).width = 15;

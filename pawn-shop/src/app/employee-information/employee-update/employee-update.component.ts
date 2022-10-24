@@ -27,11 +27,14 @@ export class EmployeeUpdateComponent implements OnInit {
         this.employeeForm = new FormGroup({
           id: new FormControl(this.employee.id),
           userName: new FormControl(this.username),
-          name: new FormControl(this.employee.name,[Validators.required]),
-          email: new FormControl(this.employee.email,[Validators.required]),
+          name: new FormControl(this.employee.name,[Validators.required,Validators.pattern('^([A-VXYỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂĐ]{1})" +\n' +
+            '          "([a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]+)" +\n' +
+            '          "((\\\\s{1}([A-VXYỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂĐ]{1})" +\n' +
+            '          "[a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]+))+$')]),
+          email: new FormControl(this.employee.email,[Validators.required,Validators.email]),
           address: new FormControl(this.employee.address,[Validators.required]),
-          phoneNumber: new FormControl(this.employee.phoneNumber,[Validators.required]),
-          idCard: new FormControl(this.employee.idCard,[Validators.required]),
+          phoneNumber: new FormControl(this.employee.phoneNumber,[Validators.required,Validators.pattern('^((090)|(091)|(\\\\(84\\\\)\\\\+90)|(\\\\(84\\\\)\\\\+91))[0-9]{7}$')]),
+          idCard: new FormControl(this.employee.idCard,[Validators.required,Validators.pattern('^[0-9]{9}|[0-9]{12}$')]),
           dateOfBirth: new FormControl(this.employee.dateOfBirth,[Validators.required]),
           gender: new FormControl(this.employee.gender),
           imgUrl: new FormControl(this.employee.imgUrl)

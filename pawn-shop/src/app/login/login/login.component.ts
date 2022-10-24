@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
     let loginRequest = this.formLogin.value;
     this.loginService.login(loginRequest).subscribe(loginResponse => {
       this.data.changeLoginStatus(true)
+      this.data.changeIsEmployeeStatus(true)
       if (loginRequest.rememberMe) {
         this.tokenStorageService.saveLocalStorage(loginResponse);
       } else {

@@ -15,13 +15,14 @@ import {DistrictService} from "../../service/district.service";
 import {QuickContractService} from "../../service/quick-contract.service";
 import {ToastrService} from "ngx-toastr";
 import {ShareDataService} from "../../service/share-data.service";
+import {TokenStorageService} from "../../service/token-storage.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy{
   cities: City[] = [];
   districts: District[] = [];
   pawnTypes: PawnType[] = [];
@@ -33,13 +34,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   quickPawnItemDto: QuickPawnItemDto = {};
   quickContractForm: FormGroup;
 
+
   constructor(private pawnTypeService: PawnTypeService,
               private cityService: CityService,
               private districtService: DistrictService,
               private quickContractService: QuickContractService,
               private toastrService: ToastrService,
-              private data: ShareDataService) {
-    data.changeLoginStatus(false);
+              private data: ShareDataService,
+              private tokenStorageService: TokenStorageService) {
+    this.data.changeLoginStatus(false)
   }
 
   ngOnInit(): void {
@@ -47,7 +50,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.findAllPawnTypes();
     this.buildForm();
   }
-
 
   findAllCities() {
     this.cityService.findAll().subscribe(next => this.cities = next);
@@ -91,12 +93,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.toastrService.success('Cửa hàng sẽ sớm liên hệ bạn!', 'Đăng ký thành công');
         this.quickContractForm.reset();
       });
-    }else {
-      this.toastrService.error('Vui lòng nhập thông tin cá nhân', 'Lỗi');
     }
   }
 
   ngOnDestroy(): void {
-    this.data.changeLoginStatus(true)
+    this.data.changeLoginStatus(false)
   }
 }

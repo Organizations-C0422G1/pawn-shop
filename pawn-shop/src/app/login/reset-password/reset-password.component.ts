@@ -3,14 +3,15 @@ import {LoginService} from "../../service/login.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {TokenStorageService} from "../../service/token-storage.service";
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
+import {ShareDataService} from "../../service/share-data.service";
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
   jwt: string;
   resetPasswordForm: FormGroup;
 
@@ -18,11 +19,16 @@ export class ResetPasswordComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
               private tokenStorageService: TokenStorageService,
-              private router: Router) {
+              private router: Router,
+              private data: ShareDataService) {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.jwt = paramMap.get("jwt")
       localStorage.setItem("jwt", this.jwt)
     })
+
+    if (tokenStorageService.getUsername() != undefined){
+      data.changeLoginStatus(false)
+    }
   }
 
   ngOnInit(): void {
@@ -50,5 +56,9 @@ export class ResetPasswordComponent implements OnInit {
 
   compare(resetPasswordForm: AbstractControl) {
     return resetPasswordForm.value.newPassword === resetPasswordForm.value.confirmPassword ? null : {passwordNotMatch: true}
+  }
+
+  ngOnDestroy(): void {
+    this.data.changeLoginStatus(true)
   }
 }
