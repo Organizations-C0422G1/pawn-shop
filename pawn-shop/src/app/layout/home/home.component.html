@@ -218,6 +218,7 @@
             <span *ngIf="quickContractForm.controls.name.invalid && quickContractForm.controls.name.touched"
                   class="text-warning">
             <span *ngIf="quickContractForm.controls.name.errors.required">Vui lòng nhập</span>
+            <span *ngIf="quickContractForm.controls.name.errors.pattern">Sai định dạng</span>
               </span>
 
             <input formControlName="name" name="name" id="name"
@@ -232,6 +233,7 @@
               *ngIf="quickContractForm.controls.phoneNumber.invalid && quickContractForm.controls.phoneNumber.touched"
               class="text-warning">
             <span *ngIf="quickContractForm.controls.phoneNumber.errors.required">Vui lòng nhập</span>
+            <span *ngIf="quickContractForm.controls.phoneNumber.errors.pattern">Sai định dạng</span>
               </span>
 
             <input formControlName="phoneNumber" name="phoneNumber" id="phoneNumber"

@@ -163,7 +163,7 @@ nav ul ul ul li{
 
 .nofixed{
   position: static;
-  background-color: transparent;
+  background-color: white;
   transition: 0.2s linear;
   top: -50px;
 }

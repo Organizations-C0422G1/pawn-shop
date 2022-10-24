@@ -123,9 +123,11 @@ export class ContractAddComponent implements OnInit {
       },
       () => {
         this.contractService.createContract(contractNew).subscribe(() => {
+          history.go(),
           this.toast.success("Thông báo", "Thêm mới thành công")
           this.ngOnInit()
         }, error => {
+          history.go(),
           this.toast.error("Thông báo", "Thêm mới thất bại");
           this.isLoading = false;
         },()=>{
@@ -224,4 +226,7 @@ export class ContractAddComponent implements OnInit {
   //   }
   // }
 
+  reset() {
+    history.go()
+  }
 }

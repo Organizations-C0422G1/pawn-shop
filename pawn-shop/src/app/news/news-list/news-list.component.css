@@ -1,7 +1,7 @@
 .p-title {
   background: none;
   position: relative;
-  margin: 40px 0 5px 50px;
+  margin: 10px 0 5px 50px;
   color: orangered;
 }
 
@@ -135,8 +135,73 @@ a {
   margin-left: 5px ;
   display: flex;
   justify-content: end;
+  margin-top: 22px;
 }
 
 button:hover{
   background: forestgreen;
 }
+
+.modal-2 li:first-child a {
+  -moz-border-radius: 50px 0 0 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px 0 0 50px;
+}
+
+.modal-2 li:last-child a {
+  -moz-border-radius: 0 50px 50px 0;
+  -webkit-border-radius: 0;
+  border-radius: 0 50px 50px 0;
+}
+
+.modal-2 a {
+  border-color: #ddd;
+  color: #999;
+  background: #fff;
+}
+
+.modal-2 a:hover {
+  color: #ff3300;
+  background-color: #eee;
+}
+
+.modal-2 a.active, .modal-2 a:active {
+  border-color: #ff3300;
+  background: #ff3300;
+  color: #fff;
+}
+
+.p-pagination {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin-top: 10px;
+  bottom: 10px;
+}
+
+.p-pagination li {
+  display: inline;
+  text-align: center;
+}
+
+.p-pagination a {
+  float: left;
+  display: block;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 5px 12px;
+  color: #fff;
+  margin-left: -1px;
+  border: 1px solid transparent;
+  line-height: 1.5;
+}
+
+.p-pagination a.active {
+  cursor: default;
+}
+
+.p-pagination a:active {
+  outline: none;
+}
+
+

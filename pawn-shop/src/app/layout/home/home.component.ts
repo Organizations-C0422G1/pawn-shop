@@ -43,12 +43,16 @@ export class HomeComponent implements OnInit, OnDestroy{
               private data: ShareDataService,
               private tokenStorageService: TokenStorageService) {
     this.data.changeLoginStatus(false)
+    if (tokenStorageService.getUsername() != undefined){
+      this.data.changeIsEmployeeStatus(true)
+    }
   }
 
   ngOnInit(): void {
     this.findAllCities();
     this.findAllPawnTypes();
     this.buildForm();
+
   }
 
   findAllCities() {
@@ -67,8 +71,9 @@ export class HomeComponent implements OnInit, OnDestroy{
   buildForm() {
     this.quickContractForm = new FormGroup({
       id: new FormControl(),
-      name: new FormControl('', [Validators.required]),
-      phoneNumber: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.pattern("^[A-ZĐ][a-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâ]+" +
+        "( [A-ZĐ][a-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâ]*)+$")]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^0\\d{9}$")]),
       districtId: new FormControl(null, [Validators.required]),
       pawnTypeId: new FormControl(null, [Validators.required])
     });
@@ -93,10 +98,13 @@ export class HomeComponent implements OnInit, OnDestroy{
         this.toastrService.success('Cửa hàng sẽ sớm liên hệ bạn!', 'Đăng ký thành công');
         this.quickContractForm.reset();
       });
-    }
+    }else this.toastrService.error('Vui lòng nhập đúng thông tin');
   }
 
   ngOnDestroy(): void {
     this.data.changeLoginStatus(false)
+    if (this.tokenStorageService.getUsername() != undefined){
+      this.data.changeIsEmployeeStatus(true)
+    }
   }
 }
