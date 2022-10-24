@@ -8,7 +8,7 @@ import {TokenStorageService} from "./token-storage.service";
   providedIn: 'root'
 })
 export class NewsService {
-  private URL_NEWS = 'http://localhost:8080/api/employee/news';
+  private URL_NEWS = 'http://localhost:8080/api/public/news';
   token = '';
   httpOptions: any;
   constructor(private http: HttpClient, private  jwtService: TokenStorageService) {
@@ -22,7 +22,7 @@ export class NewsService {
   }
 
   create(news: News) {
-    return this.http.post('http://localhost:8080/api/news/create', news,this.httpOptions);
+    return this.http.post('http://localhost:8080/api/employee/news/create', news,this.httpOptions);
   }
 
   getAllNews(page: number, firstDate: string, lastDate: string, searchTitle: string): Observable<News[]> {
@@ -43,6 +43,6 @@ export class NewsService {
 
   deleteNews(id: number): Observable<News> {
     // @ts-ignore
-    return this.http.patch<News>(this.URL_NEWS + '/delete/' + id,'',this.httpOptions);
+    return this.http.patch<News>('http://localhost:8080/api/employee/news/delete/' + id,'',this.httpOptions);
   }
 }

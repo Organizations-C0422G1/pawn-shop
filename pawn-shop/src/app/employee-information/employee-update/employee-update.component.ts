@@ -5,6 +5,7 @@ import {EmployeeService} from "../../service/employee.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {finalize} from "rxjs/operators";
 import {AngularFireStorage} from "@angular/fire/storage";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-employee-update',
@@ -17,8 +18,11 @@ export class EmployeeUpdateComponent implements OnInit {
   img: any = '';
   username
 
-  constructor(private employeeService: EmployeeService, private router: Router, private activatedRoute: ActivatedRoute,
-              @Inject(AngularFireStorage) private storage: AngularFireStorage) {
+  constructor(private employeeService: EmployeeService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              @Inject(AngularFireStorage) private storage: AngularFireStorage,
+              private toastrService: ToastrService) {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.username = paramMap.get('username');
       this.employeeService.findByUser(this.username).subscribe(next => {
@@ -64,17 +68,23 @@ export class EmployeeUpdateComponent implements OnInit {
   }
 
   submit() {
-    this.uploadFile().then(() => {
-      console.log(this.employeeForm.value);
-      const employee = this.employeeForm.value;
-      this.employeeService.update(employee).subscribe(next => {
-        this.router.navigateByUrl('/employee/details');
+    if (this.img){
+      this.uploadFile().then(() => {
+        const employee = this.employeeForm.value;
+        this.employeeService.update(employee).subscribe(next => {
+          this.router.navigateByUrl('/employee-information');
+          this.toastrService.success("Chỉnh sửa thông tin cá nhân thành công","Chỉnh sửa thông tin")
+        });
+      })
+    }else {
+      this.employeeService.update(this.employeeForm.value).subscribe(next => {
+        this.router.navigateByUrl('/employee-information');
+        this.toastrService.success("Chỉnh sửa thông tin cá nhân thành công","Chỉnh sửa thông tin")
       });
-    })
+    }
   }
 
   showImg($event: any) {
     this.img = $event.target.files[0];
-    console.log(this.img);
   }
 }

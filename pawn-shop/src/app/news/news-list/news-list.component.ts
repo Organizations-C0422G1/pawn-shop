@@ -101,11 +101,12 @@ export class NewsListComponent implements OnInit {
   }
 
   deleteTitle() {
-    this.newsService.deleteNews(this.idModal).subscribe(data => {
-    }, error => {
-    }, () => {
+    this.newsService.deleteNews(this.idModal).subscribe(() => {
       this.ngOnInit();
-    });
+      this.toast.success("Xóa thành công", "Thông báo")
+    }, error => {
+      this.toast.warning("Xóa thất bại", "Thông báo")
+    })
   }
 
   resetModal() {

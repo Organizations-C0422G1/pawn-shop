@@ -10,6 +10,7 @@ import {formatDate} from "@angular/common";
 import {AngularFireStorage} from "@angular/fire/storage";
 import {ContractService} from "../../service/contract.service";
 import {TokenStorageService} from "../../service/token-storage.service";
+import {Employee} from "../../model/employee/employee";
 
 function startDate() {
   let startDate = new Date();
@@ -38,8 +39,9 @@ export class ContractAddComponent implements OnInit {
   fileList = '';
   selectedFile: File = null;
   selectedFileList: File[] = [];
-  maxLengthUrlInDb= 0;
-  isLoading = false ;
+  maxLengthUrlInDb = 0;
+  isLoading = false;
+  employee: any
 
   constructor(private contractService: ContractService,
               private toast: ToastrService,
@@ -51,10 +53,15 @@ export class ContractAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.employee = {
+      appUser: {
+        username: this.tokenStorageService.getUsername()
+      }
+    }
     this.getAll();
     this.contractForm = new FormGroup({
         id: new FormControl(''),
-        code: new FormControl('HD-'+ this.tokenStorageService.getEmployeeCode()+'-'),
+        code: new FormControl('HD-' + this.tokenStorageService.getEmployeeCode() + '-'),
         itemPrice: new FormControl('', [Validators.required, this.validateItemPrice, Validators.pattern("^[-]*[0-9]*$")]),
         interestRate: new FormControl('', [Validators.required, Validators.min(0.2), Validators.max(0.4)]),
         startDate: new FormControl(startDate()),
@@ -64,12 +71,13 @@ export class ContractAddComponent implements OnInit {
         type: new FormControl(true),
         status: new FormControl(1),
         customer: new FormControl(),
+        employee: new FormControl(this.employee),
         pawnItem: new FormGroup({
           id: new FormControl(''),
           name: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]),
           status: new FormControl(1),
-          pawnType: new FormControl('',[Validators.required]),
-          pawnImg: new FormControl('',[Validators.required])
+          pawnType: new FormControl('', [Validators.required]),
+          pawnImg: new FormControl('', [Validators.required])
         })
       }
     );
@@ -123,15 +131,16 @@ export class ContractAddComponent implements OnInit {
       },
       () => {
         this.contractService.createContract(contractNew).subscribe(() => {
-          history.go(),
-          this.toast.success("Thông báo", "Thêm mới thành công")
+
+          this.toast.success("Thêm mới thành công", "Thông báo")
+          history.go(0)
           this.ngOnInit()
         }, error => {
-          history.go(),
-          this.toast.error("Thông báo", "Thêm mới thất bại");
+          history.go(0),
+            this.toast.error("Thêm mới thất bại", "Thông báo");
           this.isLoading = false;
-        },()=>{
-         this.isLoading = false;
+        }, () => {
+          this.isLoading = false;
         })
       })
   }
@@ -209,9 +218,9 @@ export class ContractAddComponent implements OnInit {
         },
         () => {
           this.contractService.createContract(contract).subscribe(() => {
-            this.toast.success("thông báo", "thêm mới thành công")
+            this.toast.success("Thêm mới thành công", "Thông báo")
           }, error => {
-            this.toast.error("thông báo", "thêm mới fail")
+            this.toast.error("Thêm mới thất bại", "Thông báo")
           })
         })
     })

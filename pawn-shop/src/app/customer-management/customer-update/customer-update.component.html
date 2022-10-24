@@ -65,7 +65,7 @@
                         &&(customerForm.controls.idCard.touched)">Vui lòng điền CMND
                   </span>
                   </label>
-                  <input id="idCard" type="text" class="form-control pl-2" formControlName="idCard">
+                  <input id="idCard" type="text" class="form-control pl-2" placeholder="201790843" formControlName="idCard">
                 </div>
                 <div class="col-md-12 form-group mb-3">
                   <label class="col-form-label">
@@ -123,7 +123,7 @@
                           (customerForm.get('address').get('street').dirty)">Tên không đúng định dạng
                     </span>
                     </label>
-                    <input id="street" type="text" class="form-control pl-2" formControlName="street">
+                    <input id="street" type="text" class="form-control pl-2" placeholder="66 Hùng Vương" formControlName="street">
                   </div>
                 </div>
                 <div class="col-md-12 form-group mb-3">
@@ -140,7 +140,7 @@
                         &&(customerForm.controls.phoneNumber.touched)">Vui lòng điền SĐT
                   </span>
                   </label>
-                  <input id="phoneNumber" type="text" class="form-control pl-2" formControlName="phoneNumber">
+                  <input id="phoneNumber" type="text" class="form-control pl-2" placeholder="0905005005" formControlName="phoneNumber">
                 </div>
                 <div class="col-md-12 form-group mb-3">
                   <label class="col-form-label" for="email">
@@ -156,7 +156,7 @@
                         &&(customerForm.controls.email.touched)">Vui lòng điền Email
                   </span>
                   </label>
-                  <input id="email" type="email" class="form-control pl-2" formControlName="email">
+                  <input id="email" type="email" class="form-control pl-2"  placeholder="httm@gmail.com"formControlName="email">
                 </div>
               </div>
               <div *ngFor="let url of urlList" class="col-md-3 form-group mb-3">
@@ -169,7 +169,7 @@
                   <div class="row">
                     <div class="col-3">
                       <button style="border-radius: 2px !important;" class="btn btn-secondary"
-                              type="reset">Hủy
+                              type="submit" (click)="resetForm()">Hủy
                       </button>
                     </div>
                     <div class="col-9">

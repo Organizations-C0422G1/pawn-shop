@@ -73,7 +73,7 @@
                      href="https://gahalaw.com/kinh-doanh-cam-do-can-lam-nhung-thu-tuc-bat-buoc-gi.html">
                     <h5 class="p-text-title">{{temp.title}}</h5>
                   </a>
-                  <p>{{temp.postingDate | date: "dd/MM/yyyy"}}</p>
+                  <p>{{temp.postingDate}}</p>
                   <p>{{temp.content}}
                   </p>
                 </div>
@@ -115,7 +115,7 @@
           <ul class="p-ul">
             <li class="p-li">
               <a href="">
-                <button class="p-btn">
+                <button routerLink="/news-add" class="p-btn">
                   Thêm tin tức
                 </button>
               </a>

@@ -135,4 +135,7 @@ export class CustomerAddComponent implements OnInit {
       await this.uploadFile(this.links[i])
     }
   }
+  resetForm(){
+    history.go()
+  }
 }

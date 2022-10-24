@@ -4,6 +4,7 @@ import {NewsService} from "../../service/news.service";
 import {AngularFireStorage} from "@angular/fire/storage";
 import {Router} from "@angular/router";
 import {finalize} from "rxjs/operators";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-news-add',
@@ -18,8 +19,8 @@ export class NewsAddComponent implements OnInit {
   // @ts-ignore
   constructor(private newsService: NewsService,
               private router: Router,
-              @Inject(AngularFireStorage) private storage: AngularFireStorage
-  ) {
+              @Inject(AngularFireStorage) private storage: AngularFireStorage,
+              private toastrService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -58,7 +59,8 @@ export class NewsAddComponent implements OnInit {
       this.submitter = true;
       console.log(this.newsForm.value);
       this.newsService.create(this.newsForm.value).subscribe(next => {
-        alert('thành công');
+        this.router.navigateByUrl('/news-list')
+        this.toastrService.success("Thêm mới tin tức thành công", "Thêm mới tin tức")
       });
     });
   }

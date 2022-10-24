@@ -189,18 +189,18 @@
         <table class="table table-striped table-hover">
           <thead>
           <tr>
-            <th>Mã KH</th>
-            <th>Tên KH</th>
-            <th>Hộ Chiếu</th>
-            <th></th>
+            <th style="width: 20%">Mã KH</th>
+            <th style="width: 35%">Tên KH</th>
+            <th style="width: 25%">Hộ Chiếu</th>
+            <th style="width: 20%"></th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let cus of customerList | paginate: { itemsPerPage: 5, currentPage: p}">
-            <td>{{cus.code}}</td>
-            <td>{{cus.name}}</td>
-            <td>{{cus.idCard}}</td>
-            <td>
+            <td style="width: 20%">{{cus.code}}</td>
+            <td style="width: 35%">{{cus.name}}</td>
+            <td style="width: 25%">{{cus.idCard}}</td>
+            <td style="width: 20%">
               <button class="btn btn-warning" data-bs-dismiss="modal" (click)="getId(cus.id,cus)">Chọn</button>
             </td>
           </tr>
