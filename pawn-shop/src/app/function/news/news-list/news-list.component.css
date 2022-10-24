@@ -135,6 +135,7 @@ a {
   margin-left: 5px ;
   display: flex;
   justify-content: end;
+  margin-top: 22px;
 }
 
 button:hover{

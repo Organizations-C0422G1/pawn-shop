@@ -1,9 +1,8 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {News} from '../../model/news';
-import {NewsService} from '../../service/news.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {formatDate} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
+import {NewsService} from '../../../service/news.service';
 
 declare var $: any;
 
@@ -13,6 +12,7 @@ declare var $: any;
   styleUrls: ['./news-list.component.css']
 })
 export class NewsListComponent implements OnInit {
+  // @ts-ignore
   newsList: News[] = [];
   idModal: number;
   titleModal: string;

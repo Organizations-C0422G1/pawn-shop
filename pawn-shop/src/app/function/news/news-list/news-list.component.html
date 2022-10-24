@@ -9,13 +9,15 @@
             </div>
           </div>
           <div class="row">
-            <div style="margin-top: 37px">
+            <div style="margin-top: 12px">
               <form [formGroup]="searchForm" (ngSubmit)="dateSearch()" *ngIf="searchForm">
                 <div class="d-flex col-12 align-content-end">
+
                   <div class="col-4 col-lg-4 col-md-4 col-sm-4 me-3 ms-3" data-bs-toggle="firstDate" data-bs-content=""
                        data-bs-trigger="manual"
                        data-bs-placement="top">
                     <div>
+                      <label>Ngày bắt đầu đăng</label>
                       <input placeholder="Select date" type="date"
                              class="form-control"
                              id="firstDate" formControlName="firstDate"
@@ -25,13 +27,14 @@
                         Ngày đăng không được lớn hơn ngày hiện tại!.
                       </div>
                     </div>
-                    <label>Ngày bắt đầu đăng</label>
+
                   </div>
 
 
                   <div class="col-4 col-lg-4 col-md-4 col-sm-4 me-3" data-bs-toggle="lastDate" data-bs-content=""
                        data-bs-trigger="manual"
                        data-bs-placement="top">
+                    <label for="prefill-example">Đến</label>
                     <div class="input-group has-validation">
                       <input placeholder="Select date" type="date" id="prefill-example"
                              class="form-control" formControlName="lastDate"
@@ -41,7 +44,7 @@
                         Không được nhỏ hơn ngày đăng!.
                       </div>
                     </div>
-                    <label for="prefill-example">Đến</label>
+
                   </div>
                   <div class="col-4 col-lg-4 col-md-4 col-sm-4">
                     <div>
