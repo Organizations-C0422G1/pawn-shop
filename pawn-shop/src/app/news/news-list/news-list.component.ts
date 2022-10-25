@@ -4,6 +4,7 @@ import {formatDate} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
 import {News} from "../../model/news/news";
 import {NewsService} from "../../service/news.service";
+import {TokenStorageService} from "../../service/token-storage.service";
 
 declare var $: any;
 
@@ -26,14 +27,17 @@ export class NewsListComponent implements OnInit {
   lastDate: string = '9000-01-01';
   titleSearch: string = '';
   number: number = 0;
+  isEmployee: boolean;
 
-  constructor(private newsService: NewsService,private toast: ToastrService) {
+  constructor(private newsService: NewsService,private toast: ToastrService,
+              private tokenStorageService: TokenStorageService) {
 
   }
 
   ngOnInit(): void {
     this.getAllNewsList(this.number, this.firstDate, this.lastDate, this.titleSearch);
     this.getFormSearch();
+    this.isEmployee = this.tokenStorageService.getEmployeeCode() != undefined;
   }
 
   getFormSearch() {

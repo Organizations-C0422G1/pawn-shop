@@ -60,7 +60,7 @@
               <li class="row p-ul" *ngFor="let temp of newsList">
                 <div class="col" style="position: relative">
 
-                  <button type="button" class="p-modal-delete" data-bs-toggle="modal"
+                  <button *ngIf="isEmployee" type="button" class="p-modal-delete" data-bs-toggle="modal"
                           data-bs-target="#modelId" (click)="elementDelete(temp.id,temp.title)">
                     X
                   </button>
@@ -115,7 +115,7 @@
           <ul class="p-ul">
             <li class="p-li">
               <a href="">
-                <button routerLink="/news-add" class="p-btn">
+                <button *ngIf="isEmployee" routerLink="/news-add" class="p-btn">
                   Thêm tin tức
                 </button>
               </a>

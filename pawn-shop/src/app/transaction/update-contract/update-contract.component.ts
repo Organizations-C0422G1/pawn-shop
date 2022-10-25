@@ -10,6 +10,7 @@ import {Contract} from "../../model/contract/contract";
 import {formatDate} from "@angular/common";
 import {PawnImg} from "../../model/pawn/pawn-img";
 import {finalize} from "rxjs/operators";
+import {TokenStorageService} from "../../service/token-storage.service";
 
 @Component({
   selector: 'app-update-contract',
@@ -41,7 +42,8 @@ export class UpdateContractComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private storage: AngularFireStorage,
               private router: Router,
-              private toast: ToastrService) {
+              private toast: ToastrService,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit(): void {
@@ -71,8 +73,16 @@ export class UpdateContractComponent implements OnInit {
 
     this.updateService.findById(Number(id)).subscribe(
       value => {
+        if (value.code.split("-").length == 1){
+          value.code = 'HD-'+ this.tokenStorageService.getEmployeeCode()+ "-" + value.code;
+        }
+        let employee = {
+          appUser: {
+            username: this.tokenStorageService.getUsername()
+          }
+        }
         this.contractForm.patchValue(value);
-        console.log(value);
+        this.contractForm.patchValue({employee: employee})
         this.urlListDisplayHtml = value.pawnItem.pawnImg.slice();
         this.maxLengthUrlInDb = value.pawnItem.pawnImg.length;
       }
@@ -178,11 +188,9 @@ export class UpdateContractComponent implements OnInit {
     if (this.contractForm.invalid) {
       this.contractForm.markAllAsTouched();
     } else {
-      this.isLoading = true;
+      // this.isLoading = true;
       this.handleFiles().then(() => {
         this.urlListToCreate = this.fileList.split(',');
-        console.log(this.fileList);
-        console.log(this.urlListToCreate);
         const contract: Contract = this.contractForm.value;
         for (let i = 0; i < this.urlListToCreate.length - 1; i++) {
           const pawnImg: PawnImg = {
@@ -190,17 +198,14 @@ export class UpdateContractComponent implements OnInit {
           };
           contract.pawnItem.pawnImg.push(pawnImg);
         }
-        console.log(contract);
         this.updateService.updateContract(contract).subscribe(
           value => {
             history.back();
             this.toast.success('Chỉnh sửa thành công');
           }, error => {
-            console.log(error);
             this.toast.error('Chỉnh sửa thất bại');
-            this.isLoading = false;
-          },
-          () => this.isLoading = false);
+            // this.isLoading = false;
+          });
       });
     }
   }
