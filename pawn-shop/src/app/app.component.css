@@ -120,3 +120,8 @@ thead {
   transform: translateY(-0.3rem);
   transition: .3s;
 }
+
+.function-bar:hover {
+  background: linear-gradient(to right, #f37214, #ff3300);
+  color: white;
+}
