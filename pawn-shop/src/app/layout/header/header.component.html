@@ -43,7 +43,7 @@
     <li><a  routerLink="/news-list">Tin tức</a></li>
     <li><a  [routerLink]="['/login']" *ngIf="!isLogin" data-bs-toggle="tooltip" data-bs-placement="top"
            title="Đăng nhập"><i class="fa-solid fa-right-to-bracket"></i></a></li>
-    <li><a  [routerLink]="['/login']" *ngIf="isLogin" data-bs-toggle="tooltip" data-bs-placement="top" (click)="logout()"
+    <li><a  [routerLink]="['']" *ngIf="isLogin" data-bs-toggle="tooltip" data-bs-placement="top" (click)="logout()"
            title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></a></li>
   </ul>
 </nav>

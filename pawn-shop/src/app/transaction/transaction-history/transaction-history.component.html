@@ -163,7 +163,8 @@
           <p>Mã HĐ: {{contract.code}}</p>
           <p>Tên KH: {{contract.customer}}</p>
           <p>Tên Đồ: {{contract.pawnItem}}</p>
-          <p>Email: {{contract.email}}</p>
+          <p>Email: {{contract.customerEmail}}</p>
+          <p>SĐT: {{contract.phoneNumber}}</p>
           <p>Ngày Bắt Đầu: {{contract.startDate | date:"dd/MM/yyyy"}}</p>
           <p>Ngày Kết Thúc: {{contract.endDate | date:"dd/MM/yyyy"}}</p>
           <p *ngIf="contract.status == 0">Trạng Thái: Hơp đồng cầm đồ còn hạn </p>

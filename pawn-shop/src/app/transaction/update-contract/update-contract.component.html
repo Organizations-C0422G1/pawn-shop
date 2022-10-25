@@ -62,6 +62,8 @@
                     Không được để trống
                   </span>
                 </label>
+                <span style="color: red"> *</span>
+
                 <input type="text" class="form-control pl-2" formControlName="name">
               </div>
             </div>
@@ -79,8 +81,11 @@
                         (contractForm.get('itemPrice').touched || contractForm.get('itemPrice').dirty)">
                     Không được để trống
                   </span>
+                  <span *ngIf="contractForm.controls.itemPrice.valid">{{money | number : '1.2-2'}} VNĐ</span>
                 </label>
-                <input type="number" class="form-control pl-2" formControlName="itemPrice">
+                <span style="color: red"> *</span>
+                <input [(ngModel)]="money" type="number" class="form-control pl-2" formControlName="itemPrice">
+
               </div>
               <div class="col-md-6 form-group mb-3">
                 <label class="col-form-label">
@@ -101,6 +106,7 @@
                     Không được lớn hơn 0.4%
                   </span>
                 </label>
+                <span style="color: red"> *</span>
                 <input type="text" class="form-control pl-2" formControlName="interestRate">
               </div>
             </div>
@@ -109,6 +115,7 @@
                 <label class="col-form-label">
                   Ngày làm hợp đồng
                 </label>
+                <span style="color: red"> *</span>
                 <span style="color: red; font-size: 0.8rem" *ngIf="(contractForm.get('startDate').touched || contractForm.get('startDate').dirty)
                && contractForm.hasError('required', 'startDate')"> Ngày không được để trống.</span>
                 <span style="color: red" *ngIf="(contractForm.get('startDate').touched || contractForm.get('startDate').dirty)
@@ -120,6 +127,7 @@
                 <label class="col-form-label">
                   Ngày kết thúc hợp đồng
                 </label>
+                <span style="color: red"> *</span>
                 <span style="color: red"
                       *ngIf="(contractForm.get('endDate').touched || contractForm.get('endDate').dirty) && contractForm.hasError('required', 'endDate')"> Không được để trống</span>
                 <span style="color: red"
@@ -176,6 +184,7 @@
               <div class="col-md-12 form-group mb-3">
                 <label class="col-form-label">
                   Chọn ảnh
+                  <span style="color: red"> *</span>
                   <span style="color: red" *ngIf="checkImgSize">Dung lượng ảnh quá lớn</span>
                   <span style="color: red" *ngIf="regexImg">Không đúng định dạng ảnh</span>
                 </label>

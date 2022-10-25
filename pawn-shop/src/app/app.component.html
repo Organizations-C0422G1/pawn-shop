@@ -2,7 +2,7 @@
 <app-header></app-header>
 <router-outlet *ngIf="!isLogin"></router-outlet>
 <div class="row mt-2 mb-2" *ngIf="isLogin" style="--bs-gutter-x: 0">
-  <div class="col-lg-3">
+  <div class="col-lg-2">
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
@@ -66,7 +66,7 @@
       </div>
     </nav>
   </div>
-  <div class="col-lg-9">
+  <div class="col-lg-10">
     <router-outlet *ngIf="isLogin" style="width: 100%"></router-outlet>
   </div>
 </div>

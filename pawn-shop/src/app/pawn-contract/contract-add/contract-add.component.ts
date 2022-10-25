@@ -33,7 +33,7 @@ export class ContractAddComponent implements OnInit {
   checkImgSize = false;
   regexImg = false;
   isExits = false;
-
+  money: any;
   urlListDisplayHtml: any[] = [];
   urlListToCreate: string[] = [];
   fileList = '';
@@ -69,13 +69,13 @@ export class ContractAddComponent implements OnInit {
         returnDate: new FormControl(null),
         liquidationPrice: new FormControl(null),
         type: new FormControl(true),
-        status: new FormControl(1),
+        status: new FormControl(0),
         customer: new FormControl(),
         employee: new FormControl(this.employee),
         pawnItem: new FormGroup({
           id: new FormControl(''),
           name: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]),
-          status: new FormControl(0),
+          status: new FormControl(1),
           pawnType: new FormControl('', [Validators.required]),
           pawnImg: new FormControl('', [Validators.required])
         })
@@ -133,7 +133,6 @@ export class ContractAddComponent implements OnInit {
         this.contractService.createContract(contractNew).subscribe(() => {
 
           this.toast.success("Thêm mới thành công", "Thông báo")
-          history.go(0)
           this.ngOnInit()
         }, error => {
           history.go(0),
@@ -218,6 +217,7 @@ export class ContractAddComponent implements OnInit {
         },
         () => {
           this.contractService.createContract(contract).subscribe(() => {
+            history.go()
             this.toast.success("Thêm mới thành công", "Thông báo")
           }, error => {
             this.toast.error("Thêm mới thất bại", "Thông báo")

@@ -21,8 +21,8 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.subscription = this.data.currentLoginStatus.subscribe(status => this.isLogin = status)
     if (this.tokenStorageService.getUsername() != undefined){
-      this.isLogin = true;
-      this.isEmployee = true;
+     this.data.changeIsEmployeeStatus(true)
+      this.data.changeLoginStatus(true)
     }
   }
 

@@ -40,7 +40,6 @@ export class HeaderComponent implements OnInit {
     this.tokenStorageService.clearStorage()
     this.data.changeLoginStatus(false)
     this.data.changeIsEmployeeStatus(false)
-    this.router.navigateByUrl('')
     window.location.reload()
   }
 }

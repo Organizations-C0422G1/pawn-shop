@@ -21,10 +21,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
               private tokenStorageService: TokenStorageService,
               private router: Router,
               private data: ShareDataService) {
-    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      this.jwt = paramMap.get("jwt")
-      localStorage.setItem("jwt", this.jwt)
-    })
 
     if (tokenStorageService.getUsername() != undefined){
       data.changeLoginStatus(false)
@@ -32,6 +28,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      this.jwt = paramMap.get("jwt")
+    })
+
     this.resetPasswordForm = new FormGroup({
       newPassword: new FormControl("", [Validators.required, Validators.maxLength(30)]),
       confirmPassword: new FormControl("", [Validators.required, Validators.maxLength(30)])
@@ -41,6 +42,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   resetPassword() {
     this.loginService.resetPassword(this.resetPasswordForm.value.newPassword, this.jwt).subscribe(loginResponse => {
       this.tokenStorageService.saveSessionStorage(loginResponse)
+      this.data.changeLoginStatus(true)
+      this.data.changeIsEmployeeStatus(true)
       this.router.navigateByUrl("contract-add")
       this.toastr.success('Chào ' + this.tokenStorageService.getUsername(), 'Đặt lại mật khẩu thành công', {
         extendedTimeOut: 1500,

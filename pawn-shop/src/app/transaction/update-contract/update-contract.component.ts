@@ -34,6 +34,8 @@ export class UpdateContractComponent implements OnInit {
   maxLengthUrlInDb = 0;
   deleteCount = 0;
   isLoading = false;
+  itemPrice: number = 0;
+  money: any;
 
   constructor(private updateService: UpdateContractService,
               private activatedRoute: ActivatedRoute,
@@ -89,6 +91,7 @@ export class UpdateContractComponent implements OnInit {
       this.contractForm.patchValue({pawnImg: value});
     });
   }
+
   compareWithId(item1, item2) {
     return item1 && item2 && item1.id === item2.id;
   }
@@ -139,6 +142,7 @@ export class UpdateContractComponent implements OnInit {
       this.urlListDisplayHtml.push(pawnImg);
     };
   }
+
   delete(index: number) {
     if (index < this.maxLengthUrlInDb) {
       this.urlListDisplayHtml[index].statusDelete = 1;
@@ -171,30 +175,33 @@ export class UpdateContractComponent implements OnInit {
   }
 
   save() {
-    this.isLoading = true;
-    this.handleFiles().then(() => {
-      this.urlListToCreate = this.fileList.split(',');
-      console.log(this.fileList);
-      console.log(this.urlListToCreate);
-      const contract: Contract = this.contractForm.value;
-      for (let i = 0; i < this.urlListToCreate.length - 1; i++) {
-        const pawnImg: PawnImg = {
-          imgUrl: this.urlListToCreate[i]
-        };
-        contract.pawnItem.pawnImg.push(pawnImg);
-      }
-      console.log(contract);
-      this.updateService.updateContract(contract).subscribe(
-        value => {
-          // this.router.navigateByUrl('/top10-contract');
-          // history.back();
-          this.toast.success('Chỉnh sửa thành công');
-        }, error => {
-          console.log(error);
-          this.toast.error('Chỉnh sửa thất bại');
-          this.isLoading = false;
-        },
-        () => this.isLoading = false);
-    });
+    if (this.contractForm.invalid) {
+      this.contractForm.markAllAsTouched();
+    } else {
+      this.isLoading = true;
+      this.handleFiles().then(() => {
+        this.urlListToCreate = this.fileList.split(',');
+        console.log(this.fileList);
+        console.log(this.urlListToCreate);
+        const contract: Contract = this.contractForm.value;
+        for (let i = 0; i < this.urlListToCreate.length - 1; i++) {
+          const pawnImg: PawnImg = {
+            imgUrl: this.urlListToCreate[i]
+          };
+          contract.pawnItem.pawnImg.push(pawnImg);
+        }
+        console.log(contract);
+        this.updateService.updateContract(contract).subscribe(
+          value => {
+            history.back();
+            this.toast.success('Chỉnh sửa thành công');
+          }, error => {
+            console.log(error);
+            this.toast.error('Chỉnh sửa thất bại');
+            this.isLoading = false;
+          },
+          () => this.isLoading = false);
+      });
+    }
   }
 }
