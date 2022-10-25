@@ -15,7 +15,7 @@ export class CheckCanActiveService implements CanActivate{
     if (this.tokenStorageService.getJwt() != undefined){
       return true
     }
-    this.router.navigateByUrl('/login')
+    this.router.navigateByUrl('')
     return false;
   }
 }
