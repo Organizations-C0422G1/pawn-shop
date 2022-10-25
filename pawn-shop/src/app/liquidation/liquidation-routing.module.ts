@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {LiquidationComponent} from "./liquidation/liquidation.component";
+import {CustomerAddComponent} from "../customer-management/customer-add/customer-add.component";
+import {CheckCanActiveService} from "../service/check-can-active.service";
 
 
 const routes: Routes = [
-  {path: 'liquidation', component: LiquidationComponent}
+  {path: 'liquidation', component: LiquidationComponent, canActivate: [CheckCanActiveService]}
 ];
 
 @NgModule({

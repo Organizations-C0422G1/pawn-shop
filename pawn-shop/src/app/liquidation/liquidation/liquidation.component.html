@@ -22,12 +22,13 @@
               </div>
               <div class="col-md-8 form-group mb-3">
                 <p class="text-end">Ngày thanh lý: {{date | date: 'dd/MM/yyyy'}}</p>
+                <p class="text-end">Tổng tiền: {{price | currency : " "}} VNĐ</p>
               </div>
             </div>
           </form>
         </div>
       </div>
-      <p class="text-danger" *ngIf="PawnItemLiquidation">Bạn đã chọn: {{PawnItemLiquidation.namePawnItem}}</p>
+      <p class="text-danger" *ngIf="pawnItemLiquidation">Bạn đã chọn: {{pawnItemLiquidation.namePawnItem}}</p>
       <form [formGroup]="formLiquidation" *ngIf="formLiquidation" (ngSubmit)="updateLiquidation()">
         <div class="row">
           <div class="col-md-4">
@@ -37,10 +38,10 @@
             </label>
           </div>
           <div class="col-md-8">
-            <input type="text" class="form-control pl-2" placeholder="1.000.000" formControlName="liquidationPrice">
+            <input type="text" class="form-control pl-2" placeholder="1.000.000" [(ngModel)]="price" formControlName="liquidationPrice">
           </div>
           <div class="text-danger" *ngIf="!liquidationPrice.valid &&  liquidationPrice.touched">
-            <div [hidden]="!liquidationPrice.errors.min">Tổng tiền không được nhỏ hơn {{PriceValidate}}!</div>
+            <div [hidden]="!liquidationPrice.errors.min">Tổng tiền không được nhỏ hơn {{priceValidate}}!</div>
           </div>
         </div>
         <div class="row mt-5" *ngIf="imgUrl">
@@ -50,7 +51,7 @@
         </div>
         <div class="row mt-3">
           <div class="col-md-12 form-group d-flex justify-content-end mb-3">
-            <button type="reset" class="btn btn-secondary px-2 me-2 ">Huỷ</button>
+            <button type="reset" class="btn btn-secondary px-2 me-2 " (click)="resetForm()">Huỷ</button>
             <button type="submit" class="btn p-btn">Thanh lý</button>
           </div>
         </div>
@@ -90,7 +91,7 @@
                 <div class="col-md-8">
                   <select class="form-select mb-2" id="inputGroupSelect01" formControlName="idPawnType">
                     <option value="null" selected>Chọn loại đồ</option>
-                    <option *ngFor="let pawnType of PawnTypeList" [value]="pawnType.id">{{pawnType.name}}</option>
+                    <option *ngFor="let pawnType of pawnTypeList" [value]="pawnType.id">{{pawnType.name}}</option>
                   </select>
                 </div>
               </div>

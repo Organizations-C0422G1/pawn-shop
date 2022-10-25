@@ -31,13 +31,16 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.data.currentEmployeeStatus.subscribe(status => { this.isLogin = status})
+    this.subscription = this.data.currentEmployeeStatus.subscribe(status => {
+      this.isLogin = status
+    })
   }
 
   logout() {
     this.tokenStorageService.clearStorage()
     this.data.changeLoginStatus(false)
     this.data.changeIsEmployeeStatus(false)
-    this.router.navigateByUrl("");
+    this.router.navigateByUrl('')
+    window.location.reload()
   }
 }

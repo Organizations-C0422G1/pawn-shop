@@ -1,4 +1,4 @@
-<nav (scroll)="onscroll()" [ngClass]="navbarFixed?'fixed':'nofixed'">
+<nav (scroll)="onscroll()" [ngClass]="navbarFixed?'fixed':'nofixed'" style="z-index: 1000">
   <div class="logo">
     <a href="#">
       <img src="assets/img/logo.png" alt="" width="auto" height="70">
@@ -40,10 +40,10 @@
         </li>
       </ul>
     </li>
-    <li><a routerLink="/new-list">Tin tức</a></li>
-    <li><a routerLink="/login" *ngIf="!isLogin" data-bs-toggle="tooltip" data-bs-placement="top"
+    <li><a  routerLink="/news-list">Tin tức</a></li>
+    <li><a  [routerLink]="['/login']" *ngIf="!isLogin" data-bs-toggle="tooltip" data-bs-placement="top"
            title="Đăng nhập"><i class="fa-solid fa-right-to-bracket"></i></a></li>
-    <li><a routerLink="/login" *ngIf="isLogin" data-bs-toggle="tooltip" data-bs-placement="top" (click)="logout()"
+    <li><a  [routerLink]="['/login']" *ngIf="isLogin" data-bs-toggle="tooltip" data-bs-placement="top" (click)="logout()"
            title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></a></li>
   </ul>
 </nav>

@@ -70,10 +70,9 @@ export class ReturnItemComponent implements OnInit {
       this.totalMonth = 1;
     }
 
-    const lateDay = getDay(item.endDate, new Date());
+    const totalDay = getDay(item.returnDate, item.startDate);
 
-    this.liquidationPrice = item.itemPrice + (((item.itemPrice * item.interestRate) / 100) * this.totalMonth)
-      + (((item.itemPrice * item.interestRate) / 100) / 30) * lateDay;
+    this.liquidationPrice = item.itemPrice + (item.itemPrice * item.interestRate / 100)  * totalDay;
   }
 
   search() {

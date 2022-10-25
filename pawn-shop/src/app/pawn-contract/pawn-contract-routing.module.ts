@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {ContractAddComponent} from "./contract-add/contract-add.component";
+import {CheckCanActiveService} from "../service/check-can-active.service";
 
 
 const routes: Routes = [
-  {path: 'contract-add', component: ContractAddComponent}
+  {path: 'contract-add', component: ContractAddComponent, canActivate: [CheckCanActiveService]}
 ];
 
 @NgModule({

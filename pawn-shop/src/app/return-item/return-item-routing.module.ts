@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {ReturnItemComponent} from "./return-item/return-item.component";
+import {CheckCanActiveService} from "../service/check-can-active.service";
 
 
 const routes: Routes = [
-  {path: 'return-item', component: ReturnItemComponent}
+  {path: 'return-item', component: ReturnItemComponent, canActivate: [CheckCanActiveService]}
 ];
 
 @NgModule({

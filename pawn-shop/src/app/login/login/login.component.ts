@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
               private toastr: ToastrService,
               private router: Router,
               private data: ShareDataService) {
-    if (tokenStorageService.getUsername() != undefined){
+    if (tokenStorageService.getRoles() != undefined) {
       router.navigateByUrl('')
     }
     this.formLogin = new FormGroup({
@@ -48,6 +48,8 @@ export class LoginComponent implements OnInit {
       } else {
         this.tokenStorageService.saveSessionStorage(loginResponse);
       }
+      this.tokenStorageService.getRoles() == 'ROLE_ADMIN' ? this.data.changeIsAdminStatus(true) : this.data.changeIsAdminStatus(false)
+
       this.router.navigateByUrl("contract-add")
       this.toastr.success('Chào ' + this.tokenStorageService.getUsername(), 'Đăng nhập thành công', {
         extendedTimeOut: 1500,

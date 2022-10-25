@@ -52,7 +52,6 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.findAllCities();
     this.findAllPawnTypes();
     this.buildForm();
-
   }
 
   findAllCities() {
@@ -102,8 +101,8 @@ export class HomeComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.data.changeLoginStatus(false)
     if (this.tokenStorageService.getUsername() != undefined){
+      this.data.changeLoginStatus(true)
       this.data.changeIsEmployeeStatus(true)
     }
   }

@@ -10,7 +10,7 @@ import {TokenStorageService} from "./service/token-storage.service";
 })
 export class AppComponent implements OnInit, OnDestroy{
   title = 'pawn-shop';
-  isLogin: boolean;
+  isLogin: boolean = false;
   subscription: Subscription;
   isEmployee: boolean;
   constructor(private data: ShareDataService,

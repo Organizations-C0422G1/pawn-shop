@@ -67,7 +67,7 @@
     </nav>
   </div>
   <div class="col-lg-9">
-    <router-outlet style="width: 100%"></router-outlet>
+    <router-outlet *ngIf="isLogin" style="width: 100%"></router-outlet>
   </div>
 </div>
 <app-footer></app-footer>

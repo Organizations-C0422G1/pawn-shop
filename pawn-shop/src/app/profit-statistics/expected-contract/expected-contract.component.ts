@@ -285,7 +285,7 @@ export class ExpectedContractComponent implements OnInit {
     let reportData = {
       title: 'Contracts Sales Report',
       data: this.expectedContractOnlyList,
-      headers: this.header,
+
     };
     this.exportExcelService.exportExcel(reportData);
   }

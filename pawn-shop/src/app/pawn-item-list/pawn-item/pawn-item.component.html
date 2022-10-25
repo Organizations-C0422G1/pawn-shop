@@ -1,3 +1,4 @@
+<div class="container">
   <form [formGroup]="searchForm" style="position: relative">
     <div class="row">
       <div class="col-lg-3"></div>
@@ -29,14 +30,16 @@
       </div>
     </div>
   </form>
+</div>
 ​
+<div class="container ">
   <div class="row">
     <table class="table table-striped text-center w-75 container">
       <thead>
       <tr class="p-bg">
         <th style="width: 10%">STT</th>
-        <th style="width: 20%">Tên đồ</th>
-        <th style="width: 10%">Loại đồ</th>
+        <th class="p-tooltip" style="width: 20%">Tên đồ</th>
+        <th class="p-tooltip" style="width: 10%">Loại đồ</th>
         <th style="width: 20%">Ngày đến hạn</th>
         <th style="width: 15%">Giá mua (VNĐ)</th>
         <th style="width: 10%">Trạng thái</th>
@@ -44,35 +47,38 @@
       </tr>
       </thead>
       <tbody>
-      <tr><td colspan="7" *ngIf="pawnItems == null"><b></b><i class="text-danger">Không có dữ liệu</i></td></tr>
       <tr *ngFor="let pawnItem of pawnItems ; index as i">
         <td>{{i + 1}}</td>
-        <td data-toggle="tooltip" data-placement="bottom"
+        <td class="p-tooltip" data-toggle="tooltip" data-placement="bottom"
             title="{{pawnItem.namePawnItem}}">{{pawnItem.namePawnItem}}</td>
-        <td data-toggle="tooltip" data-placement="bottom"
+        <td class="p-tooltip" data-toggle="tooltip" data-placement="bottom"
             title="{{pawnItem.namePawnType}}">{{pawnItem.namePawnType}}</td>
         <td>{{pawnItem.endDate | date:"dd/MM/yyyy"}}</td>
         <td>{{pawnItem.itemPrice | currency: " "}}</td>
-        <td *ngIf="pawnItem.status === 0" class="text-center" style="color: lawngreen" data-toggle="tooltip"
+        <td *ngIf="pawnItem.status === 0" class="text-center" style="color: lawngreen"
             data-placement="bottom" title="Đang tồn tại">
           <i class="fa-solid fa-circle"></i>
         </td>
         <td>
           <button class="text-primary" style="border: none;background: none" data-bs-toggle="modal"
                   (click)="getDetailModal(pawnItem)"
-                  data-toggle="tooltip" data-placement="bottom" title="Chi tiết" data-bs-target="#deTailModal">
+                  data-placement="bottom" title="Chi tiết" data-bs-target="#deTailModal">
             <i class="fa-solid fa-circle-info"></i>
           </button>
         </td>
         <td>
-          <button  style="border: none;background: none" (click)="updateStatusContract(pawnItem.idContract)"
-                   data-toggle="tooltip" data-placement="bottom" title="Thanh lý">
+          <button style="border: none;background: none" (click)="updateStatusContract(pawnItem.idContract)"
+                  data-placement="bottom" title="Thanh lý">
             <i class="fa-solid fa-sack-dollar"></i>
           </button>
         </td>
       </tr>
+      <tr *ngIf="pawnItems== null">
+        <td colspan="8">Không có kết quả phù hợp</td>
+      </tr>
       </tbody>
     </table>
+    ​
     ​
     <!--    Start Pagination-->
     <div class="container d-flex justify-content-center align-items-center mt-5">
@@ -149,3 +155,4 @@
     <!--    End Modal Detail-->
     ​
   </div>
+</div>

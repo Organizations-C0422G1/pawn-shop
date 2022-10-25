@@ -273,7 +273,7 @@ export class LiquidationContractComponent implements OnInit {
     let reportData = {
       title: 'Contracts Sales Report',
       data: this.liquidationContractOnlyList,
-      headers: this.header,
+
     };
     this.exportExcelService.exportExcel(reportData);
   }

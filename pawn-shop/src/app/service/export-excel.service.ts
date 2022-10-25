@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
+import {Workbook} from 'exceljs/dist/exceljs.min.js';
 import * as fs from 'file-saver';
 import {DatePipe} from "@angular/common";
-import {Workbook} from "exceljs";
 
 
 @Injectable({
@@ -12,10 +12,10 @@ export class ExportExcelService {
   constructor(private datePipe: DatePipe) {
   }
 
-  exportExcel(excelData: { title: any; data: any; headers: any }) {
+  exportExcel(excelData: { title: any; data: any }) {
     //Title, Header & Data
     const title = excelData.title;
-    const header = excelData.headers;
+    // const header = excelData.headers;
     const data = excelData.data;
 
     //Create a workbook with a worksheet
@@ -30,6 +30,7 @@ export class ExportExcelService {
       name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true
     };
     titleRow.alignment = {vertical: 'middle', horizontal: 'center'};
+    console.log(titleRow)
     worksheet.addRow([]);
     // Date
     let subTitleRow = worksheet.addRow(['Date : ' + this.datePipe.transform(new Date(), 'medium')])
@@ -38,27 +39,108 @@ export class ExportExcelService {
     worksheet.addRow([]);
 
     //Adding Header Row
-    let headerRow = worksheet.addRow(header);
-    headerRow.eachCell((cell, number) => {
-      cell.fill = {
+    // let headerRow = worksheet.addRow(header);
+    worksheet.views = [{}]
+    let headerRow = Object.keys(data[0]);
+
+    let columnHeader = [];
+    let changeNameHeader = [];
+    // headerRow.forEach(key => {
+    //   if (key == 'pawnItem') {
+    //     columnHeader.push({key, width: 27})
+    //   } else if (key == 'employee' || key == 'liquidationPrice' || key == 'customer' || key == 'itemPrice' || key == 'profit') {
+    //     columnHeader.push({key, width: 20})
+    //   } else if (key == 'interestRate' || key == 'startDate' || key == 'returnDate' ||
+    //     key == 'code' || key == 'endDate') {
+    //     columnHeader.push({key, width: 15})
+    //   } else {
+    //     columnHeader.push({key, width: 10})
+    //   }
+    // });
+
+    headerRow.forEach(key => {
+      switch (key) {
+        case 'pawnItem':
+          changeNameHeader.push('Pawn item') && columnHeader.push({key, width: 27})
+          break;
+        case 'employee':
+          changeNameHeader.push('Employee') && columnHeader.push({key, width: 20})
+          break;
+        case 'liquidationPrice':
+          changeNameHeader.push('Liquid Price') && columnHeader.push({key, width: 20})
+          break;
+        case 'customer':
+          changeNameHeader.push('Customer') && columnHeader.push({key, width: 20})
+          break;
+        case 'itemPrice':
+          changeNameHeader.push('Item price') && columnHeader.push({key, width: 20})
+          break;
+        case 'profit':
+          changeNameHeader.push('Profit') && columnHeader.push({key, width: 20})
+          break;
+        case 'interestRate':
+          changeNameHeader.push('Rate') && columnHeader.push({key, width: 15})
+          break;
+        case 'startDate':
+          changeNameHeader.push('Start date') && columnHeader.push({key, width: 15})
+          break;
+        case 'returnDate':
+          changeNameHeader.push('Return date') && columnHeader.push({key, width: 15})
+          break;
+        case 'endDate':
+          changeNameHeader.push('End date') && columnHeader.push({key, width: 15})
+          break;
+        case 'code':
+          changeNameHeader.push('Code') && columnHeader.push({key, width: 15})
+          break;
+        case 'id':
+          changeNameHeader.push('Id') && columnHeader.push({key, width: 10})
+          break;
+        case 'type':
+          changeNameHeader.push('Type') && columnHeader.push({key, width: 10})
+          break;
+        case 'status':
+          changeNameHeader.push('Status') && columnHeader.push({key, width: 10})
+          break;
+      }
+    });
+    console.log(columnHeader);
+    console.log(changeNameHeader);
+    worksheet.columns = columnHeader;
+
+    console.log(headerRow);
+    const header = {
+      money: false,
+      fill: {
         type: 'pattern',
         pattern: 'solid',
         fgColor: {argb: 'ff3300'},
         bgColor: {argb: 'ff3300'}
-      }
-      cell.border = {top: {style: 'thin'}, left: {style: 'thin'}, bottom: {style: 'thin'}, right: {style: 'thin'}};
-      cell.font = {
+      },
+      border: true,
+      font: {
         bold: true,
         color: {argb: 'FFFFFF'},
         size: 12,
-      };
-      cell.alignment = {vertical: 'middle', horizontal: 'center'};
+      },
+      alignment: {vertical: 'middle', horizontal: 'center'},
+    }
 
-    });
+    addRows(worksheet, changeNameHeader, header);
 
     // Adding Data with Conditional Formatting
     data.forEach((d: any) => {
       let row = worksheet.addRow(Object.values(d));
+
+      row.eachCell({includeEmpty: true}, (cell) => {
+        if (typeof cell.value === 'number') {
+          if (cell.value > 1000) {
+            cell.numFmt = '$#,##0';
+          } else if (cell.value < 1 && cell.value > 0) {
+            cell.numFmt = '#,#0.00"%"';
+          }
+        }
+      });
       let sales = row.getCell(14);
       let color = 'FF99FF99';
       let sales_val = sales.value || 0;
@@ -66,28 +148,25 @@ export class ExportExcelService {
       if (sales_val < 200000) {
         color = 'FF9999';
       }
+
       sales.fill = {
         type: 'pattern',
         pattern: 'solid',
         fgColor: {argb: color},
       };
-      for(let j=1; j<=14;j++){
-        row.getCell(j).border = {top: {style: 'thin'}, left: {style: 'thin'}, bottom: {style: 'thin'}, right: {style: 'thin'}};
+      for (let j = 1; j <= 14; j++) {
+        row.getCell(j).border = {
+          top: {style: 'thin'},
+          left: {style: 'thin'},
+          bottom: {style: 'thin'},
+          right: {style: 'thin'}
+        };
       }
 
       row.alignment = {vertical: 'middle', horizontal: 'center'};
 
     });
 
-    for (let i = 1; i <= 15; i++) {
-      if (i <= 3 || i == 6) {
-        worksheet.getColumn(i).width = 8;
-      } else if (i == 12 || i == 13 || i== 10) {
-        worksheet.getColumn(i).width = 25;
-      } else {
-        worksheet.getColumn(i).width = 15;
-      }
-    }
 
     worksheet.addRow([]);
     worksheet.addRow([]);
@@ -118,10 +197,7 @@ export class ExportExcelService {
 
 // Merge Cells
     worksheet.mergeCells(`A${footerRow.number}:N${footerRow.number}`);
-    worksheet.getColumn(5).numFmt = '$#,##0';
-    worksheet.getColumn(7).numFmt = '$#,##0';
-    worksheet.getColumn(14).numFmt = '$#,##0';
-    worksheet.getColumn(6).numFmt = '#,#0.00"%"';
+
     //Generate & Save Excel File
     workbook.xlsx.writeBuffer().then((data) => {
       let blob = new Blob([data], {
@@ -130,7 +206,34 @@ export class ExportExcelService {
       fs.saveAs(blob, title + '.xlsx');
     });
   }
+
 }
 
+function addRows(workSheet, data, section) {
+  const borderStyles = {
+    top: {style: 'thin'}, left: {style: 'thin'}, bottom: {style: 'thin'}, right: {style: 'thin'},
+  }
+  const row = workSheet.addRow(data);
+  row.eachCell({includeEmpty: true}, (cell, colNumber) => {
+    if (section?.border) {
+      cell.border = borderStyles;
+    }
+    if (section?.money && typeof cell.value === 'number') {
+      cell.alignment = {horizontal: 'right', vertical: 'middle'};
+      cell.numFmt = '$#,##0.00;[Red]-$#0.00';
+    }
+    if (section?.alignment) {
+      cell.alignment = section.alignment;
+    } else {
+      cell.alignment = {vertical: 'middle'};
+    }
+    if (section?.font) {
+      cell.font = section.font;
+    }
+    if (section?.fill) {
+      cell.fill = section.fill;
+    }
+  });
+  return row;
 
-
+}

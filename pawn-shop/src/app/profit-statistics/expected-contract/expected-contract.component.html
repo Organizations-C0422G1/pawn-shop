@@ -84,7 +84,7 @@
         <td>{{contract.endDate| date: 'dd/MM/yyyy'}}</td>
         <td>{{contract.profit | currency: "VND"}}</td>
         <td>
-          <button type="button" style="border: none;background: none" data-bs-toggle="modal" (click)="detailContract(contract.id)"
+          <button type="button" style="border: none;background: none" class="text-primary" data-bs-toggle="modal" (click)="detailContract(contract.id)"
                   data-bs-target="#Modal">
             <i class="fa-solid fa-circle-info"></i>
           </button>

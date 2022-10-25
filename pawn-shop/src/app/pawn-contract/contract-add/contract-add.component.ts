@@ -75,7 +75,7 @@ export class ContractAddComponent implements OnInit {
         pawnItem: new FormGroup({
           id: new FormControl(''),
           name: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]),
-          status: new FormControl(1),
+          status: new FormControl(0),
           pawnType: new FormControl('', [Validators.required]),
           pawnImg: new FormControl('', [Validators.required])
         })

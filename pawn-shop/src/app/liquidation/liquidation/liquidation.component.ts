@@ -15,11 +15,11 @@ import {LiquidationServiceService} from "../../service/liquidation-service.servi
 export class LiquidationComponent implements OnInit {
   date = new Date().toDateString();
 
-  PawnItemLiquidation: PawnItemDto;
+  pawnItemLiquidation: PawnItemDto;
 
-  PawnTypeList: PawnTypeDto[] = [];
+  pawnTypeList: PawnTypeDto[] = [];
 
-  PriceValidate: number = 10;
+  priceValidate: number = 10;
 
   imgUrl: string[] = [];
 
@@ -55,14 +55,14 @@ export class LiquidationComponent implements OnInit {
     this.findAllPawnItem(this.searchPawnItem);
     this.findAllPawnType();
     this.formLiquidation = new FormGroup({
-      liquidationPrice: new FormControl(this.price, [Validators.min(this.PriceValidate)])
+      liquidationPrice: new FormControl(this.price, [Validators.min(this.priceValidate)])
     });
   }
 
 
   buildForm() {
     this.formLiquidation = new FormGroup({
-      liquidationPrice: new FormControl(this.price, [Validators.min(this.PriceValidate)])
+      liquidationPrice: new FormControl(this.price, [Validators.min(this.priceValidate)])
     });
   }
 
@@ -83,7 +83,7 @@ export class LiquidationComponent implements OnInit {
 
   findAllPawnType() {
     this.liquidationServiceService.findAllPawnType().subscribe(n => {
-      this.PawnTypeList = n;
+      this.pawnTypeList = n;
     }, error => {
       console.log(error);
     })
@@ -95,9 +95,9 @@ export class LiquidationComponent implements OnInit {
   }
 
   findPawnItemById(pawnIten1: PawnItemDto) {
-    this.PawnItemLiquidation = pawnIten1;
+    this.pawnItemLiquidation = pawnIten1;
     this.price = pawnIten1.itemPrice * 2 * 70 / 100;
-    this.PriceValidate = pawnIten1.itemPrice * 2 * 70 / 100;
+    this.priceValidate = pawnIten1.itemPrice * 2 * 70 / 100;
     this.idPawnItem = pawnIten1.idPawnItem;
     this.liquidationServiceService.findImgUrl(pawnIten1.idPawnItem).subscribe(urls => {
       this.imgUrl = urls;
@@ -120,7 +120,7 @@ export class LiquidationComponent implements OnInit {
           this.imgUrl = []
           this.toast.success("Thanh lý thành công!");
           this.formLiquidation.reset();
-          this.PawnItemLiquidation = null;
+          this.pawnItemLiquidation = null;
           // this.router.navigateByUrl("liquidation");
           this.findAllPawnItem(this.searchPawnItem);
         }, error => {
@@ -150,4 +150,7 @@ export class LiquidationComponent implements OnInit {
     this.findAllPawnItem(this.search.value)
   }
 
+  resetForm() {
+    this.pawnItemLiquidation = null;
+  }
 }
