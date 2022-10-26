@@ -110,11 +110,9 @@
         <div class="col-12 title-right">
           <ul class="p-ul">
             <li class="p-li">
-              <a href="">
                 <button *ngIf="isEmployee" routerLink="/news-add" class="p-btn">
                   Thêm tin tức
                 </button>
-              </a>
             </li>
             <li class="p-li">
               <form [formGroup]="searchTitleForm" (ngSubmit)="searchTitle()">
