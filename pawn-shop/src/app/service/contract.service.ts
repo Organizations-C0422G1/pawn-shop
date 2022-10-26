@@ -38,11 +38,12 @@ export class ContractService {
     return this.http.get<Contract[]>(API_URL + '/api/employee/contracts/listNotPagination',this.httpOptions);
   }
 
-  returnItem(id: number, email: string, customerName: string, liquidationPrice: string): Observable<Contract> {
+  returnItem(id: number, email: string, customerName: string, liquidationPrice: string, pawnItem: string, returnDate: Date): Observable<Contract> {
     // @ts-ignore
     return this.http.get<Contract>(API_URL + '/api/employee/contracts/returnItem/'
-      + id + '?email=' + email + '&customerName=' + customerName + '&liquidationPrice=' + liquidationPrice,this.httpOptions);
+      + id + '?email=' + email + '&customerName=' + customerName + '&liquidationPrice=' + liquidationPrice + '&pawnItem=' + pawnItem + '&returnDate' + returnDate, this.httpOptions);
   }
+
   findAllCustomer(): Observable<Customer[]> {
     // @ts-ignore
     return this.http.get<Customer[]>('http://localhost:8080/api/employee/customer/list',this.httpOptions);

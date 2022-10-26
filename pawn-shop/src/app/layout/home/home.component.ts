@@ -16,6 +16,8 @@ import {QuickContractService} from "../../service/quick-contract.service";
 import {ToastrService} from "ngx-toastr";
 import {ShareDataService} from "../../service/share-data.service";
 import {TokenStorageService} from "../../service/token-storage.service";
+import {News} from "../../model/news/news";
+import {NewsService} from "../../service/news.service";
 
 @Component({
   selector: 'app-home',
@@ -33,9 +35,10 @@ export class HomeComponent implements OnInit, OnDestroy{
   quickPawnTypeDto: QuickPawnTypeDto = {};
   quickPawnItemDto: QuickPawnItemDto = {};
   quickContractForm: FormGroup;
+  newsList: News[] = [];
 
-
-  constructor(private pawnTypeService: PawnTypeService,
+  constructor(private newsService: NewsService,
+              private pawnTypeService: PawnTypeService,
               private cityService: CityService,
               private districtService: DistrictService,
               private quickContractService: QuickContractService,
@@ -51,6 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.findAllCities();
     this.findAllPawnTypes();
+    this.getAllNewsList();
     this.buildForm();
   }
 
@@ -98,6 +102,13 @@ export class HomeComponent implements OnInit, OnDestroy{
         this.quickContractForm.reset();
       });
     }else this.toastrService.error('Vui lòng nhập đúng thông tin');
+  }
+
+  getAllNewsList() {
+    this.newsService.getAllNews(0, '0001-01-01', '9000-01-01', '').subscribe(data => {
+      // @ts-ignore
+      this.newsList = data.content;
+    });
   }
 
   ngOnDestroy(): void {

@@ -73,7 +73,7 @@
                      href="https://gahalaw.com/kinh-doanh-cam-do-can-lam-nhung-thu-tuc-bat-buoc-gi.html">
                     <h5 class="p-text-title">{{temp.title}}</h5>
                   </a>
-                  <p>{{temp.postingDate}}</p>
+                  <p>{{temp.postingDay}}</p>
                   <p>{{temp.content}}
                   </p>
                 </div>
@@ -87,13 +87,10 @@
             </div>
           </div>
         </div>
-        <nav aria-label="Page navigation example" *ngIf="newsList.length >0">
           <ul class="p-pagination modal-2">
-            <ng-container *ngIf="number">
-            <li class="page-item">
+            <li class="page-item" *ngIf="number">
               <a class="page-link text-dark" (click)="previousPage()">&laquo;</a>
             </li>
-            </ng-container>
             <ng-container *ngFor="let count of pageSelect">
               <ng-container *ngIf="count == number">
                 <li class="page-item"><a class="page-link text-dark active">{{count + 1}}</a></li>
@@ -106,7 +103,6 @@
               <a class="page-link text-dark" (click)="nextPage()">&raquo;</a>
             </li>
           </ul>
-        </nav>
       </div>
     </div>
     <div class="col-4 col-lg-4 col-md-4 col-sm-4 " >

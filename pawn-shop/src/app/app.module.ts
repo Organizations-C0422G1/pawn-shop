@@ -45,7 +45,8 @@ import {NgxUiLoaderHttpModule, NgxUiLoaderModule} from "ngx-ui-loader";
     ToastrModule.forRoot({
       timeOut: 2500,
       progressBar: true,
-      preventDuplicates: true
+      preventDuplicates: true,
+      closeButton: true
     }),
     CustomerManagementModule,
     ReturnItemModule,

@@ -70,9 +70,9 @@ export class ReturnItemComponent implements OnInit {
       this.totalMonth = 1;
     }
 
-    const totalDay = getDay(item.returnDate, item.startDate);
+    const totalDay = getDay(this.startDate, this.returnDate);
 
-    this.liquidationPrice = item.itemPrice + (item.itemPrice * item.interestRate / 100)  * totalDay;
+    this.liquidationPrice = this.itemPrice + (this.itemPrice * this.interestRate / 100)  * totalDay;
   }
 
   search() {
@@ -98,15 +98,15 @@ export class ReturnItemComponent implements OnInit {
   }
 
   returnItem() {
-    this.contractService.returnItem(this.idDelete, this.email, this.customerName, this.liquidationPrice.toFixed(2)).subscribe(() => {
+    this.contractService.returnItem(this.idDelete, this.email, this.customerName, this.liquidationPrice.toFixed(2), this.pawnItem, this.returnDate).subscribe(() => {
       this.toastrService.success('Thanh toán thành công', 'Thông báo');
       this.code = '';
       this.customerName = '';
       this.pawnItem = '';
-      this.itemPrice = 0;
-      this.interestRate = 0;
+      this.itemPrice = undefined;
+      this.interestRate = undefined;
       this.email = '';
-      this.liquidationPrice = 0;
+      this.liquidationPrice = undefined;
     });
   }
 
@@ -172,10 +172,10 @@ export class ReturnItemComponent implements OnInit {
   }
 }
 
-function getDay(startDatePram: Date, endDate: Date) {
-  const startValue = new Date(startDatePram);
-  const endDateValue = new Date(endDate);
-  const millisBetween = endDateValue.getTime() - startValue.getTime();
+function getDay(startDatePram: Date, returnDate: Date) {
+  const startDateValue = new Date(startDatePram);
+  const returnDateValue = new Date(returnDate);
+  const millisBetween = returnDateValue.getTime() - startDateValue.getTime();
   const days = millisBetween / (1000 * 3600 * 24);
   return Math.round(Math.abs(days));
 }

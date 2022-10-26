@@ -20,7 +20,6 @@ export class NewsListComponent implements OnInit {
   searchForm: FormGroup;
   searchTitleForm: FormGroup;
   delete = [];
-  page: number = 0;
   totalPage: number = 0;
   pageSelect: number[] = [];
   firstDate: string = '0001-01-01';
@@ -29,12 +28,13 @@ export class NewsListComponent implements OnInit {
   number: number = 0;
   isEmployee: boolean;
 
-  constructor(private newsService: NewsService,private toast: ToastrService,
+  constructor(private newsService: NewsService, private toast: ToastrService,
               private tokenStorageService: TokenStorageService) {
 
   }
 
   ngOnInit(): void {
+    this.number = 0;
     this.getAllNewsList(this.number, this.firstDate, this.lastDate, this.titleSearch);
     this.getFormSearch();
     this.isEmployee = this.tokenStorageService.getEmployeeCode() != undefined;
@@ -61,7 +61,7 @@ export class NewsListComponent implements OnInit {
         this.pageSelect = new Array(data.totalPage);
         // @ts-ignore
         this.number = data.number;
-        for (let i = 0; i < this.totalPage; i++){
+        for (let i = 0; i < this.totalPage; i++) {
           this.pageSelect.push(i);
         }
       }
@@ -76,19 +76,15 @@ export class NewsListComponent implements OnInit {
   dateSearch() {
     this.firstDate = this.searchForm.value.firstDate;
     this.lastDate = this.searchForm.value.lastDate;
-    if( this.firstDate != "" && this.lastDate  == ""){
+    if (this.firstDate != "" && this.lastDate == "") {
       this.toast.warning("Vui lòng nhập đầy đủ khoảng thời gian")
-    }
-    else if ( this.firstDate == "" && this.lastDate  != ""){
+    } else if (this.firstDate == "" && this.lastDate != "") {
       this.toast.warning("Vui lòng nhập đầy đủ khoảng thời gian")
-    }
-    else if( this.firstDate == "" && this.lastDate  == ""){
+    } else if (this.firstDate == "" && this.lastDate == "") {
       this.getAllNewsList(0, this.firstDate, this.lastDate, this.titleSearch);
-    }
-    else if (this.searchForm.valid) {
-      this.getAllNewsList(this.page, this.firstDate, this.lastDate , this.titleSearch);
-    }
-    else {
+    } else if (this.searchForm.valid) {
+      this.getAllNewsList(this.number , this.firstDate, this.lastDate, this.titleSearch);
+    } else {
       return null;
     }
 
@@ -119,21 +115,14 @@ export class NewsListComponent implements OnInit {
 
   previousPage() {
     this.pageSelect.splice(0, this.totalPage);
-    let numberPage: number = this.number;
-    if (numberPage > 0) {
-      numberPage--;
-      this.getAllNewsList(numberPage, this.firstDate, this.lastDate, this.titleSearch);
-    }
-
+    this.number = this.number - 1;
+    this.getAllNewsList(this.number, this.firstDate, this.lastDate, this.titleSearch);
   }
 
   nextPage() {
     this.pageSelect.splice(0, this.totalPage);
-    let numberPage: number = this.number;
-    if (numberPage < this.totalPage - 1) {
-      numberPage++;
-    }
-    this.getAllNewsList(numberPage, this.firstDate, this.lastDate, this.titleSearch);
+    this.number = this.number + 1;
+    this.getAllNewsList(this.number, this.firstDate, this.lastDate, this.titleSearch);
 
   }
 

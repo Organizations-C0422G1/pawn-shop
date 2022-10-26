@@ -121,6 +121,7 @@ export class CustomerUpdateComponent implements OnInit {
       })
     } else {
       console.log(this.customerForm.errors)
+      this.toast.error('Vui lòng điền đúng thông tin')
     }
   }
 

@@ -92,6 +92,7 @@ export class CustomerAddComponent implements OnInit {
       })
     } else {
       console.log(this.customerForm)
+      this.toast.error('Vui lòng nhập đúng thông tin')
     }
   }
 

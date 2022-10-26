@@ -20,8 +20,8 @@
       <select id="contractType" name="typeContract" class="form-select bg-white border-left-0 border-md" [(ngModel)]="typeContract"
               >
         <option value="" selected class="text-secondary">Chọn loại hợp đồng</option>
-        <option [value]="0">Thanh lý</option>
-        <option [value]="1">Cầm đồ</option>
+        <option [value]="1">Thanh lý</option>
+        <option [value]="0">Cầm đồ</option>
       </select>
     </div>
 
@@ -59,14 +59,14 @@
     <thead>
     <tr class="p-bg-warning bg-gradient">
       <th class="font-weight-bold" style="width: 1%;">STT</th>
-      <th class="font-weight-bold" style="width: 4%;">Mã HĐ</th>
-      <th class="font-weight-bold" style="width: 4%;">Tên KH</th>
-      <th class="font-weight-bold" style="width: 4%;">Tên Đồ</th>
-      <th class="font-weight-bold" style="width: 4%;">Ngày Bắt Đầu</th>
-      <th class="font-weight-bold" style="width: 4%;">Ngày Kết Thúc</th>
-      <th class="font-weight-bold" style="width: 4%">Loại HĐ</th>
-      <th class="font-weight-bold text-center" style="width: 4%;">Trạng thái</th>
-      <th class="font-weight-bold text-center" colspan="3" style="width: 2%">Chức năng</th>
+      <th class="font-weight-bold" style="width: 15%;">Mã HĐ</th>
+      <th class="font-weight-bold" style="width: 15%;">Tên KH</th>
+      <th class="font-weight-bold" style="width: 15%;">Tên Đồ</th>
+      <th class="font-weight-bold" style="width: 15%;">Ngày Bắt Đầu</th>
+      <th class="font-weight-bold" style="width: 15%;">Ngày Kết Thúc</th>
+      <th class="font-weight-bold" style="width: 8%">Loại HĐ</th>
+      <th class="font-weight-bold text-center" style="width: 10%;">Trạng thái</th>
+      <th class="font-weight-bold text-center" colspan="3" style="width: 1%">Chức năng</th>
     </tr>
     </thead>
     <tbody>
@@ -80,10 +80,10 @@
         </td>
         <td>{{contracts.startDate | date:"dd/MM/yyyy"}}</td>
         <td>{{contracts.endDate | date: "dd/MM/yyyy"}}</td>
-        <ng-container *ngIf="contracts.type == 0">
+        <ng-container *ngIf="contracts.type == 1">
           <td>Thanh lý</td>
         </ng-container>
-        <ng-container *ngIf="contracts.type == 1">
+        <ng-container *ngIf="contracts.type == 0">
           <td>Cầm đồ</td>
         </ng-container>
         <td class="text-center" *ngIf="!contracts.status">

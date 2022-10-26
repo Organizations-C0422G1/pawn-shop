@@ -151,6 +151,7 @@ export class LiquidationComponent implements OnInit {
   }
 
   resetForm() {
+    this.imgUrl = [];
     this.pawnItemLiquidation = null;
   }
 }

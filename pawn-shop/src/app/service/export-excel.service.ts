@@ -61,46 +61,46 @@ export class ExportExcelService {
     headerRow.forEach(key => {
       switch (key) {
         case 'pawnItem':
-          changeNameHeader.push('Pawn item') && columnHeader.push({key, width: 27})
+          changeNameHeader.push('Đồ cầm') && columnHeader.push({key, width: 27})
           break;
         case 'employee':
-          changeNameHeader.push('Employee') && columnHeader.push({key, width: 20})
+          changeNameHeader.push('Nhân viên') && columnHeader.push({key, width: 20})
           break;
         case 'liquidationPrice':
-          changeNameHeader.push('Liquid Price') && columnHeader.push({key, width: 20})
+          changeNameHeader.push('Tiền thanh lý') && columnHeader.push({key, width: 20})
           break;
         case 'customer':
-          changeNameHeader.push('Customer') && columnHeader.push({key, width: 20})
+          changeNameHeader.push('Khách hàng') && columnHeader.push({key, width: 20})
           break;
         case 'itemPrice':
-          changeNameHeader.push('Item price') && columnHeader.push({key, width: 20})
+          changeNameHeader.push('Tiền cầm đồ') && columnHeader.push({key, width: 20})
           break;
         case 'profit':
-          changeNameHeader.push('Profit') && columnHeader.push({key, width: 20})
+          changeNameHeader.push('Lợi nhuận') && columnHeader.push({key, width: 20})
           break;
         case 'interestRate':
-          changeNameHeader.push('Rate') && columnHeader.push({key, width: 15})
+          changeNameHeader.push('Lãi suất') && columnHeader.push({key, width: 15})
           break;
         case 'startDate':
-          changeNameHeader.push('Start date') && columnHeader.push({key, width: 15})
+          changeNameHeader.push('Ngày bắt đầu') && columnHeader.push({key, width: 15})
           break;
         case 'returnDate':
-          changeNameHeader.push('Return date') && columnHeader.push({key, width: 15})
+          changeNameHeader.push('Ngày trả đồ') && columnHeader.push({key, width: 15})
           break;
         case 'endDate':
-          changeNameHeader.push('End date') && columnHeader.push({key, width: 15})
+          changeNameHeader.push('Ngày kết thúc') && columnHeader.push({key, width: 15})
           break;
         case 'code':
-          changeNameHeader.push('Code') && columnHeader.push({key, width: 15})
+          changeNameHeader.push('Mã hợp đồng') && columnHeader.push({key, width: 15})
           break;
         case 'id':
           changeNameHeader.push('Id') && columnHeader.push({key, width: 10})
           break;
         case 'type':
-          changeNameHeader.push('Type') && columnHeader.push({key, width: 10})
+          changeNameHeader.push('Kiểu') && columnHeader.push({key, width: 10})
           break;
         case 'status':
-          changeNameHeader.push('Status') && columnHeader.push({key, width: 10})
+          changeNameHeader.push('Trạng thái') && columnHeader.push({key, width: 10})
           break;
       }
     });
@@ -133,11 +133,19 @@ export class ExportExcelService {
       let row = worksheet.addRow(Object.values(d));
 
       row.eachCell({includeEmpty: true}, (cell) => {
+        console.log( cell.value);
         if (typeof cell.value === 'number') {
           if (cell.value > 1000) {
             cell.numFmt = '$#,##0';
           } else if (cell.value < 1 && cell.value > 0) {
             cell.numFmt = '#,#0.00"%"';
+          }
+        }
+        if(typeof cell.value === 'boolean'){
+          if(cell.value === false){
+            cell.value = 'Cầm đồ'
+          }else {
+            cell.value = 'Thanh lý'
           }
         }
       });
@@ -162,18 +170,15 @@ export class ExportExcelService {
           right: {style: 'thin'}
         };
       }
-
       row.alignment = {vertical: 'middle', horizontal: 'center'};
 
     });
-
-
     worksheet.addRow([]);
     worksheet.addRow([]);
 
     //Footer Row
     const footerRow = worksheet.addRow([
-      'Contracts Report Generated from Pawn-Shop-Number1-VN',
+      'Bảng thống kê hợp đồng từ tiệm cầm đồ số 1 VN',
     ]);
     footerRow.getCell(1).fill = {
       type: 'pattern',

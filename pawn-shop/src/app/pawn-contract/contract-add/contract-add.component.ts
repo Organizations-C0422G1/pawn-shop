@@ -68,7 +68,7 @@ export class ContractAddComponent implements OnInit {
         endDate: new FormControl('', [Validators.required, this.validateEndDate]),
         returnDate: new FormControl(null),
         liquidationPrice: new FormControl(null),
-        type: new FormControl(true),
+        type: new FormControl(false),
         status: new FormControl(0),
         customer: new FormControl(),
         employee: new FormControl(this.employee),

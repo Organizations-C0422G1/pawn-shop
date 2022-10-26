@@ -283,7 +283,7 @@ export class CompleteContractComponent implements OnInit {
 
   exportToExcel() {
     let reportData = {
-      title: 'Contracts Sales Report',
+      title: 'Báo cáo sales',
       data: this.completeContractOnlyList,
     };
     this.exportExcelService.exportExcel(reportData);
