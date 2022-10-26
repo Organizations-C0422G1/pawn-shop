@@ -125,3 +125,6 @@ thead {
   background: linear-gradient(to right, #f37214, #ff3300);
   color: white;
 }
+.function-bar{
+  border-radius: 0.25rem !important;
+}
