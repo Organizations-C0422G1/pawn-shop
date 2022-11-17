@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {EmployeeInformationComponent} from "./employee-information/employee-information.component";
 import {EmployeeUpdateComponent} from "./employee-update/employee-update.component";
-import {CustomerAddComponent} from "../customer-management/customer-add/customer-add.component";
 import {CheckCanActiveService} from "../service/check-can-active.service";
 
 

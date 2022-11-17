@@ -9,12 +9,18 @@ export class ShareDataService {
   private isLogin = new BehaviorSubject(false);
   private isEmployee = new BehaviorSubject(false)
   private isAdmin = new BehaviorSubject(false)
+  private username = new BehaviorSubject('')
 
   currentLoginStatus = this.isLogin.asObservable();
   currentEmployeeStatus = this.isEmployee.asObservable()
   currentAdminStatus = this.isAdmin.asObservable()
+  currentUsername = this.username.asObservable()
 
   constructor() {
+  }
+
+  changeUsername(username: string){
+    this.username.next(username)
   }
 
   changeLoginStatus(status: boolean){

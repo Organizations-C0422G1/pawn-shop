@@ -41,6 +41,7 @@
       </ul>
     </li>
     <li><a  routerLink="/news-list">Tin tức</a></li>
+    <li *ngIf="username"><a routerLink="/employee-information" style="color: #ff3300">{{username}}</a></li>
     <li><a  [routerLink]="['/login']" *ngIf="!isLogin" data-bs-toggle="tooltip" data-bs-placement="top"
            title="Đăng nhập"><i class="fa-solid fa-right-to-bracket"></i></a></li>
     <li><a  [routerLink]="['']" *ngIf="isLogin" data-bs-toggle="tooltip" data-bs-placement="top" (click)="logout()"

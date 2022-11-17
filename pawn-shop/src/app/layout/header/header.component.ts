@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   }
 
   isLogin: boolean;
+  username: string;
   subscription: Subscription;
 
 
@@ -34,6 +35,7 @@ export class HeaderComponent implements OnInit {
     this.subscription = this.data.currentEmployeeStatus.subscribe(status => {
       this.isLogin = status
     })
+    this.subscription = this.data.currentUsername.subscribe(username => {this.username = username})
   }
 
   logout() {

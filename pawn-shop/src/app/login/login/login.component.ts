@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login(loginRequest).subscribe(loginResponse => {
       this.data.changeLoginStatus(true)
       this.data.changeIsEmployeeStatus(true)
+      // @ts-ignore
+      this.data.changeUsername(loginResponse.username)
       if (loginRequest.rememberMe) {
         this.tokenStorageService.saveLocalStorage(loginResponse);
       } else {
@@ -56,7 +58,6 @@ export class LoginComponent implements OnInit {
         timeOut: 3000
       });
     }, error => {
-      console.log(error);
       this.toastr.error("Tài khoản hoặc mật khẩu không đúng", 'Đăng nhập không thành công', {
         extendedTimeOut: 1500,
         timeOut: 3000
